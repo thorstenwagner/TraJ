@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi=
+"http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>de.biomedical-imaging.TraJ</groupId>
+	<artifactId>traj</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+ 
+	<name>Library for diffusion trajectory analysis</name>
+	<url>https://github.com/thorstenwagner/TraJ.git</url>
+	
+	<profiles>
+	  <profile>
+		<id>doclint-java8-disable</id>
+		<activation>
+		  <jdk>[1.8,)</jdk>
+		</activation>
+
+		<build>
+		  <plugins>
+		    <plugin>
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-javadoc-plugin</artifactId>
+		      <configuration>
+		        <additionalparam>-Xdoclint:none</additionalparam>
+		      </configuration>
+		    </plugin>
+		  </plugins>
+		</build>
+	  </profile>
+	</profiles>
+	
+ 	<dependencies>
+ 		<dependency>
+    			<groupId>javax.vecmath</groupId>
+    			<artifactId>vecmath</artifactId>
+    			<version>1.5.2</version>
+		</dependency>
+		<dependency>
+   		 		<groupId>edu.ucar</groupId>
+   		 		<artifactId>udunits</artifactId>
+    			<version>4.5.5</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.jscience</groupId>
+   			 <artifactId>jscience</artifactId>
+    		<version>4.3.1</version>
+		</dependency>
+	</dependencies>
+	<developers>
+		<developer>
+			<id>twagner</id>
+			<name>Thorsten Wagner</name>
+			<email>wagner@biomedical-imaging.de</email>
+			<properties>
+				<active>true</active>
+			</properties>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/thorstenwagner/ij-robust-split</url>
+		<connection>scm:git:git://github.com/thorstenwagner/TraJ.git</connection>
+		<developerConnection>scm:git:git@github.com:thorstenwagner/TraJ.git</developerConnection>
+   </scm>
+
+
+</project>
