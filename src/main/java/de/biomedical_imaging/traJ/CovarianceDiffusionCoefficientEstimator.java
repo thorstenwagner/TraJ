@@ -57,10 +57,12 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		}
 		
 		double msdX = (sumX/(N));
+		
 		double msdY = (sumY/(N));
 		double msdZ = (sumY/(N));
 		
 		double covX = (sumX2/(M) );
+		System.out.println("covX: " + covX);
 		double covY = (sumY2/(M) );
 		double covZ = (sumY2/(M) );
 		

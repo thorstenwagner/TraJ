@@ -11,6 +11,7 @@ public  class Trajectory {
 	
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
+		positions = new ArrayList<Point3d>();
 	}
 	
 	public  ArrayList<Point3d> getPositions(){
