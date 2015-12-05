@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.CovarianceDiffusionCoefficientEstimator;
-import de.biomedical_imaging.traJ.MSDCaclulator;
+import de.biomedical_imaging.traJ.MSDCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
 
 public class ConvarianceDiffusionCoefficientEstimatorTest {

@@ -5,7 +5,7 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.MSDCaclulator;
+import de.biomedical_imaging.traJ.MSDCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
 
 public class MSDCalculatorTest {
@@ -34,7 +34,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 1;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(2.0, result[0], DOUBLE_PRECISION);
 	}
 	
@@ -54,7 +54,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(8, result[0], DOUBLE_PRECISION);
 	}
 	
@@ -75,7 +75,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {1,0,0};
 		int timelag = 1;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(2.0, result[0], DOUBLE_PRECISION);
 	}
 	
@@ -96,7 +96,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {1,0,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(8.0, result[0], DOUBLE_PRECISION);
 	}
 	
@@ -120,7 +120,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 1;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(2.0, result[0], DOUBLE_PRECISION);
 	}
 	
@@ -145,7 +145,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {1,0,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(8.0, result[0], DOUBLE_PRECISION);
 	}
 	
@@ -172,7 +172,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 1;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(2.0, result[0], 0);
 	}
 	
@@ -191,7 +191,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(8, result[0], 0);
 	}
 	
@@ -212,7 +212,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {1,1,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(8, result[0], 0);
 	}
 	
@@ -237,7 +237,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {1,1,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(8, result[0], 0);
 	}
 	
@@ -261,7 +261,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 1;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(3.0, result[0], 0);
 	}
 	
@@ -279,7 +279,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {0,0,0};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(4*3, result[0], 0);
 	}
 	
@@ -300,7 +300,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {driftx,drifty,driftz};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(4*3, result[0], 0);
 	}
 	
@@ -325,7 +325,7 @@ public class MSDCalculatorTest {
 		
 		double[] drift = {driftx,drifty,driftz};
 		int timelag = 2;
-		double[] result = MSDCaclulator.getMeanSquaredDisplacment(t, timelag, drift);
+		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag, drift);
 		Assert.assertEquals(4*3, result[0], 0);
 	}
 }

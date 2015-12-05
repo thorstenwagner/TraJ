@@ -52,7 +52,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 			reg.addData(i*1.0/fps, msdhelp);
 		}
 		
-		double[] D = {reg.getSlope()/(2)}; 
+		double[] D = {reg.getSlope()/(2*t.getDimension())}; 
 		return D;
 
 	}
