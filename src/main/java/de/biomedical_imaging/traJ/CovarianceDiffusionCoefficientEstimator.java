@@ -4,21 +4,21 @@ package de.biomedical_imaging.traJ;
 public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCoefficientEstimator {
 	
 	private double getDistanceProductX(Trajectory t, double driftx, int n,int m){
-		double xn = t.getPositions().get(n).getX() - t.getPositions().get(n-1).getX() + driftx;
-		double xm = t.getPositions().get(m).getX() - t.getPositions().get(m-1).getX() + driftx; 
+		double xn = t.getPositions().get(n+1).getX() - t.getPositions().get(n).getX() - driftx;
+		double xm = t.getPositions().get(m+1).getX() - t.getPositions().get(m).getX() - driftx; 
 
 		return xn*xm;
 	}
 	
 	private double getDistanceProductY(Trajectory t, double drifty,int n,int m){
-		double xn = t.getPositions().get(n).getY() - t.getPositions().get(n-1).getY() + drifty;
-		double xm = t.getPositions().get(m).getY() - t.getPositions().get(m-1).getY() + drifty;
+		double xn = t.getPositions().get(n+1).getY() - t.getPositions().get(n).getY() - drifty;
+		double xm = t.getPositions().get(m+1).getY() - t.getPositions().get(m).getY() - drifty;
 		return xn*xm;
 	}
 	
 	private double getDistanceProductZ(Trajectory t, double driftz,int n,int m){
-		double xn = t.getPositions().get(n).getZ() - t.getPositions().get(n-1).getZ() + driftz;
-		double xm = t.getPositions().get(m).getZ() - t.getPositions().get(m-1).getZ() + driftz;
+		double xn = t.getPositions().get(n+1).getZ() - t.getPositions().get(n).getZ() - driftz;
+		double xm = t.getPositions().get(m+1).getZ() - t.getPositions().get(m).getZ() - driftz;
 		return xn*xm;
 	}
 	
@@ -32,6 +32,9 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		return cov;
 	}
 	
+	/*
+	 * TODO: Add supoort for gaps
+	 */
 	private double[] getCovData(Trajectory track, double fps, double[] drift, double R){
 		
 		double sumX = 0;
@@ -42,13 +45,16 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		double sumZ2 = 0;
 		int N=0;
 		int M=0;
-
-		for(int i = 1; i < track.getPositions().size(); i++){
+		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(track, 1);
+		//for(int i = 0; i < track.getPositions().size()-1; i++){
+		while(it.hasNext()){
+			int i = it.next();
 			sumX = sumX + getDistanceProductX(track,drift[0],i, i) ;
 			sumY = sumY + getDistanceProductY(track,drift[1],i, i) ;
 			sumZ = sumZ + getDistanceProductZ(track,drift[2],i, i) ;
 			N++;
-			if(i < (track.getPositions().size()-1)){
+			//if(i < (track.getPositions().size()-2)){
+			if((i+2) < track.getPositions().size() &&  track.getPositions().get(i+2) !=null){
 				sumX2 = sumX2 + getDistanceProductX(track,drift[0],i, i+1) ;
 				sumY2 = sumY2 + getDistanceProductY(track,drift[1],i, i+1);
 				sumZ2 = sumZ2 + getDistanceProductZ(track,drift[2],i, i+1);

@@ -31,18 +31,21 @@ public class MSDCaclulator {
 		if(timelag<1){
 			throw new IllegalArgumentException("Timelag can not be smaller than 1");
 		}
-
-		for(int i = timelag; i < t.getPositions().size(); ++i){
+		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t, timelag);
+		int N = 0;
+		while(it.hasNext()){
+			int i = it.next();
 			msd = msd + 
-					Math.pow(t.getPositions().get(i-timelag).getX()-t.getPositions().get(i).getX() - timelag*drift[0],2) + 
-					Math.pow(t.getPositions().get(i-timelag).getY()-t.getPositions().get(i).getY()-timelag*drift[1],2) +
-					Math.pow(t.getPositions().get(i-timelag).getZ()-t.getPositions().get(i).getZ()-timelag*drift[2],2);
+					Math.pow(t.getPositions().get(i).getX()-t.getPositions().get(i+timelag).getX()+timelag*drift[0],2) + 
+					Math.pow(t.getPositions().get(i).getY()-t.getPositions().get(i+timelag).getY()+timelag*drift[1],2) +
+					Math.pow(t.getPositions().get(i).getZ()-t.getPositions().get(i+timelag).getZ()+timelag*drift[2],2);
+			N++;
 		}
 		
-		msd = msd/(t.getPositions().size()-timelag); //- 1.0/3;
+		msd = msd/N; 
 		
 		result[0] = msd;
-		result[1] = (timelag*(2*timelag*timelag+1.0))/(t.getPositions().size()-timelag+1.0); //Variance
+		result[1] = (timelag*(2*timelag*timelag+1.0))/(N-timelag+1.0); //Variance
 		
 		return result;
 	}

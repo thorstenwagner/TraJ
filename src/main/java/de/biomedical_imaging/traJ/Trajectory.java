@@ -18,6 +18,11 @@ public  class Trajectory {
 		return positions;
 	}
 	
+	/**
+	 * Adds an position the trajectory. Between two position should the same timelag.
+	 * If there is a gap in the trajectory, please add null.
+	 * @param pos The next position of the trajectory. Add null for a gap.
+	 */
 	public void addPosition(Point3d pos){
 		positions.add(pos);
 	}
