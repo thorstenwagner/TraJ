@@ -58,7 +58,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 	@Test
 	public void testGetDiffusionCoefficient1D_WithDrift_WithGaps(){
 		/*
-		 * Tes test generates a track with a covariance of -2 and a mean squared displacment of 2. 
+		 * Test generates a track with a covariance of -2 and a mean squared displacment of 2. 
 		 * When the timelag is 1 then the diffusion coefficient D has to be D = MSD/2*TIMELAG+COV*TIMELAG = -1
 		 * This actually makes no sense but it is an easy example.
 		 */
