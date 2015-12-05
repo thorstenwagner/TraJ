@@ -74,6 +74,9 @@ public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{
 		return false;
 	}
 
+	/**
+	 * Give next index i where i and i+timelag is valid 
+	 */
 	public Integer next() {
 		for(int i = currentIndex; i < t.getPositions().size(); i++){
 			if(i+timelag>=t.getPositions().size()){
