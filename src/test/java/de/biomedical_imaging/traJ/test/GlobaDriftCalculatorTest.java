@@ -11,6 +11,11 @@ import org.junit.Test;
 import de.biomedical_imaging.traJ.GlobalDriftCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * Calculates the global linear drift in x-, y-, and z-direction
+ * @author Thorsten Wagner (wagner@biomedical-imaging.de)
+ *
+ */
 public class GlobaDriftCalculatorTest {
 	private static final double DOUBLE_PRECISION = 0.000000001;
 	
