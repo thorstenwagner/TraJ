@@ -28,7 +28,7 @@ package de.biomedical_imaging.traJ;
  * @author Thorsten Wagner (wagner at biomedical - imaging.de
  *
  */
-public class MSDCaclulator {
+public class MSDCalculator {
 	
 	/**
 	 * 
