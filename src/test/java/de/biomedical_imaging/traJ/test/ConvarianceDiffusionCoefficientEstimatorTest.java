@@ -124,6 +124,20 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 	}
 	
 	@Test
+	public void testGetDiffusionCoefficient2D_Brownian_WithDrift_CustomSettings(){
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		double diffusioncoefficient = 100;
+		double fps = 30;
+		int dimension = 2;
+		double[] drift = {5,2,0};
+		int numberOfSteps = 1000000;
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
+		double[] result = dcEst.getDiffusionCoefficient(t, fps, drift);
+		Assert.assertEquals(diffusioncoefficient, result[0],1);
+	}
+	
+	@Test
 	public void testGetDiffusionCoefficient3D_Brownian(){
 		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
 		double diffusioncoefficient = 5;
