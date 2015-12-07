@@ -22,42 +22,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package de.biomedical_imaging.traJ;
+package de.biomedical_imaging.traJ.drift;
 
-import java.util.ArrayList;
+import javax.vecmath.Point3d;
 
-public class LinearDriftCalculator {
-	
+import de.biomedical_imaging.traJ.Trajectory;
+
+/**
+ * 
+ * @author Thorsten Wagner (wagner@biomedical-imaging.de)
+ *
+ */
+public class LinearDriftCorrector extends AbstractDriftCorrector {
+
+	private double[] drift;
+
 	/**
-	 * Calculates the global linear drift.
 	 * 
-	 * @param tracks Tracks which seems to exhibit a local drift
-	 * @return The global drift over  trajectories
+	 * @param [0] = Drift in x direction, [1] = Drift in y direction, [2] = Drift in z direction
 	 */
-	public double[] calculateDrift(ArrayList<Trajectory> tracks){
-		double[] result = new double[3];
-		
-		double sumX =0;
-		double sumY = 0;
-		double sumZ = 0;
-		int N=0;
-		for(int i = 0; i < tracks.size(); i++){
-			Trajectory t = tracks.get(i);
-			TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t,1);
-	
-			//for(int j = 1; j < t.getPositions().size(); j++){
-			while(it.hasNext()) {
-				int j = it.next();
-				sumX += t.getPositions().get(j+1).x - t.getPositions().get(j).x;
-				sumY += t.getPositions().get(j+1).y - t.getPositions().get(j).y;
-				sumZ += t.getPositions().get(j+1).z - t.getPositions().get(j).z;
-				N++;
+	public LinearDriftCorrector(double[] drift) {
+		this.drift = drift;
+	}
+
+	@Override
+	public Trajectory removeDrift(Trajectory t) {
+		Trajectory tNew = new Trajectory(t.getDimension());
+		tNew.addPosition(new Point3d(t.getPositions().get(0).x, t
+				.getPositions().get(0).y, t.getPositions().get(0).z));
+
+		for (int i = 1; i < t.getPositions().size(); i++) {
+			if (t.getPositions().get(i) != null) {
+				tNew.addPosition(new Point3d(t.getPositions().get(i).x - i
+						* drift[0], t.getPositions().get(i).y - i * drift[1], t
+						.getPositions().get(i).z - i * drift[2]));
+			} else {
+				tNew.addPosition(null);
 			}
+
 		}
-		result[0] = sumX/N;
-		result[1] = sumY/N;
-		result[2] = sumZ/N;
-		return result;
+		return tNew;
 	}
 
 }

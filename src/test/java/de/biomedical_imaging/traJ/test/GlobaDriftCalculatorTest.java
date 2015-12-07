@@ -8,8 +8,8 @@ import javax.vecmath.Point3d;
 
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.LinearDriftCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.drift.LinearDriftCalculator;
 
 /**
  * Calculates the global linear drift in x-, y-, and z-direction
