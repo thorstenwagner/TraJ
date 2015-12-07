@@ -66,9 +66,7 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		return cov;
 	}
 	
-	/*
-	 * TODO: Add supoort for gaps
-	 */
+	
 	private double[] getCovData(Trajectory track, double fps, double R){
 		
 		double sumX = 0;

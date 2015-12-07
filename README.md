@@ -1,5 +1,5 @@
 # TraJ
-Library for diffusion trajectory analysis
+Java library for diffusion trajectory analysis
 
 Implemented features so far:
 - Mean squared displacement calculation

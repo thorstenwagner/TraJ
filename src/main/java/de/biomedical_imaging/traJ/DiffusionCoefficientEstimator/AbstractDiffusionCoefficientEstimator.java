@@ -31,8 +31,6 @@ import de.biomedical_imaging.traJ.Trajectory;
 public abstract class AbstractDiffusionCoefficientEstimator {
 	
 	/**
-	 * 
-	 * 
 	 * @param t Trajectory
 	 * @param fps Frames per second [Hz]
 	 * @return Returns the diffusion coefficent
