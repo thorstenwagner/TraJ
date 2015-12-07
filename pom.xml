@@ -3,7 +3,7 @@
 	
 	<groupId>de.biomedical-imaging.TraJ</groupId>
 	<artifactId>traj</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
  
 	<name>Library for diffusion trajectory analysis</name>
