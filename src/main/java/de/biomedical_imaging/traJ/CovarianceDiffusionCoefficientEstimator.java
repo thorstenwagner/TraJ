@@ -74,14 +74,12 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		int N=0;
 		int M=0;
 		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(track, 1);
-		//for(int i = 0; i < track.getPositions().size()-1; i++){
 		while(it.hasNext()){
 			int i = it.next();
 			sumX = sumX + getDistanceProductX(track,drift[0],i, i) ;
 			sumY = sumY + getDistanceProductY(track,drift[1],i, i) ;
 			sumZ = sumZ + getDistanceProductZ(track,drift[2],i, i) ;
 			N++;
-			//if(i < (track.getPositions().size()-2)){
 			if((i+2) < track.getPositions().size() &&  track.getPositions().get(i+2) !=null){
 				sumX2 = sumX2 + getDistanceProductX(track,drift[0],i, i+1) ;
 				sumY2 = sumY2 + getDistanceProductY(track,drift[1],i, i+1);
@@ -93,12 +91,12 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		double msdX = (sumX/(N));
 		
 		double msdY = (sumY/(N));
-		double msdZ = (sumY/(N));
+		double msdZ = (sumZ/(N));
 		
 		double covX = (sumX2/(M) );
 		
 		double covY = (sumY2/(M) );
-		double covZ = (sumY2/(M) );
+		double covZ = (sumZ2/(M) );
 		
 		double termXA = msdX/2 * fps;
 		double termXB = covX * fps ;
@@ -110,7 +108,6 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		double DX = termXA+termXB;	
 		double DY = termYA+termYB;
 		double DZ = termZA+termZB;
-		
 		double D;
 		D= (DX+DY+DZ)/track.getDimension();
 	

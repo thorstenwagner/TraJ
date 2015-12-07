@@ -51,8 +51,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 			msdhelp = MSDCalculator.getMeanSquaredDisplacment(t, i, drift)[0];
 			reg.addData(i*1.0/fps, msdhelp);
 		}
-		
-		double[] D = {reg.getSlope()/(2*t.getDimension())}; 
+		double[] D = {reg.getSlope()/(2.0*t.getDimension())}; 
 		return D;
 
 	}

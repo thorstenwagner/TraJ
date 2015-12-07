@@ -96,7 +96,14 @@ public class StokesEinsteinConverter {
 			break;
 		}
 		return res;
-		
+	}
+	
+	public static double convertCelsiusToKelvin(double tempInCelsius){
+		return tempInCelsius + 273;
+	}
+
+	public static double convertKelvinToCelsius(double tempInKelvin){
+		return tempInKelvin - 273;
 	}
 	
 	
