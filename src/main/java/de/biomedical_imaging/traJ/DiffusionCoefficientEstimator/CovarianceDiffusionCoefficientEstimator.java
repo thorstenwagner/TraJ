@@ -28,7 +28,10 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
 
 /**
- * 
+ * This class implements the covariance estimator as described in:
+ * C. L. Vestergaard, P. C. Blainey, and H. Flyvbjerg, 
+ * “Optimal estimation of diffusion coefficients from single-particle trajectories,” 
+ * Phys. Rev. E - Stat. Nonlinear, Soft Matter Phys., vol. 89, no. 2, p. 022726, Feb. 2014.
  * @author Thorsten Wagner (wagner@biomedical-imaging.de)
  *
  */

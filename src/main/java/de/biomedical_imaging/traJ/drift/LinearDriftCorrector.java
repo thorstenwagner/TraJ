@@ -30,7 +30,7 @@ import de.biomedical_imaging.traJ.Trajectory;
 
 /**
  * 
- * @author Thorsten Wagner (wagner@biomedical-imaging.de)
+ * @author Thorsten Wagner
  *
  */
 public class LinearDriftCorrector extends AbstractDriftCorrector {
