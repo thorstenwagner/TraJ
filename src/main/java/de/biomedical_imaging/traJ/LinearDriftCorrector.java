@@ -24,17 +24,42 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
+import javax.vecmath.Point3d;
 
+/**
+ * 
+ * @author Thorsten Wagner (wagner@biomedical-imaging.de)
+ *
+ */
+public class LinearDriftCorrector extends AbstractDriftCorrector {
 
-public abstract class AbstractDiffusionCoefficientEstimator {
-	
+	private double[] drift;
+
 	/**
 	 * 
-	 * 
-	 * @param t Trajectory
-	 * @param fps Frames per second [Hz]
-	 * @return Returns the diffusion coefficent
+	 * @param [0] = Drift in x direction, [1] = Drift in y direction, [2] = Drift in z direction
 	 */
-	abstract double[] getDiffusionCoefficient(Trajectory t, double fps);
+	public LinearDriftCorrector(double[] drift) {
+		this.drift = drift;
+	}
+
+	@Override
+	public Trajectory removeDrift(Trajectory t) {
+		Trajectory tNew = new Trajectory(t.getDimension());
+		tNew.addPosition(new Point3d(t.getPositions().get(0).x, t
+				.getPositions().get(0).y, t.getPositions().get(0).z));
+
+		for (int i = 1; i < t.getPositions().size(); i++) {
+			if (t.getPositions().get(i) != null) {
+				tNew.addPosition(new Point3d(t.getPositions().get(i).x - i
+						* drift[0], t.getPositions().get(i).y - i * drift[1], t
+						.getPositions().get(i).z - i * drift[2]));
+			} else {
+				tNew.addPosition(null);
+			}
+
+		}
+		return tNew;
+	}
 
 }

@@ -7,7 +7,6 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.CovarianceDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.RandomBrownianTrackGenerator;
 import de.biomedical_imaging.traJ.RegressionDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.Trajectory;
@@ -28,12 +27,11 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		for(int i = 0; i < 100; i++){
 			t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
 		}
-		double[] drift = {0,0,0};
 		
 		int minLag = 1;
 		int maxLag = 1;
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag, maxLag);
-		double[] diffC = dcEst.getDiffusionCoefficient(t, 1, drift);
+		double[] diffC = dcEst.getDiffusionCoefficient(t, 1);
 		
 		assertEquals(1, diffC[0], DOUBLE_PRECISION);
 		
@@ -48,17 +46,15 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		 * lag of 1 because for the MSD  for such a track grows quadratically
 		 */
 		Trajectory t = new Trajectory(1);
-		int y = 0;
 		int z = 0;
 		for(int i = 0; i < 100; i++){
 			t.addPosition(new Point3d(i, i, z));
 		}
-		double[] drift = {0,0,0};
 		
 		int minLag = 1;
 		int maxLag = 1;
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag, maxLag);
-		double[] diffC = dcEst.getDiffusionCoefficient(t, 1, drift);
+		double[] diffC = dcEst.getDiffusionCoefficient(t, 1);
 		
 		assertEquals(1, diffC[0], DOUBLE_PRECISION);
 	}
@@ -73,7 +69,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		int numberOfSteps = 1000000;
 		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
-		double[] result = dcEst.getDiffusionCoefficient(t, fps, drift);
+		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
@@ -89,7 +85,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		int minLag = 1;
 		int maxLag = 2;
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag,maxLag);
-		double[] result = dcEst.getDiffusionCoefficient(t, fps, drift);
+		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
@@ -103,7 +99,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		int numberOfSteps = 1000000;
 		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
-		double[] result = dcEst.getDiffusionCoefficient(t, fps, drift);
+		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
@@ -117,7 +113,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		int numberOfSteps = 1000000;
 		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
-		double[] result = dcEst.getDiffusionCoefficient(t, fps, drift);
+		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
@@ -130,17 +126,14 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		 * lag of 1 because for the MSD  for such a track grows quadratically
 		 */
 		Trajectory t = new Trajectory(1);
-		int y = 0;
-		int z = 0;
 		for(int i = 0; i < 100; i++){
 			t.addPosition(new Point3d(i, i, i));
 		}
-		double[] drift = {0,0,0};
 		
 		int minLag = 1;
 		int maxLag = 1;
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag, maxLag);
-		double[] diffC = dcEst.getDiffusionCoefficient(t, 1, drift);
+		double[] diffC = dcEst.getDiffusionCoefficient(t, 1);
 		
 		assertEquals(1.5, diffC[0], DOUBLE_PRECISION);
 		

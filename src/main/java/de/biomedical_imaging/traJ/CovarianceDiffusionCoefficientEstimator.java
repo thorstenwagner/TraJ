@@ -31,22 +31,22 @@ package de.biomedical_imaging.traJ;
  */
 public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCoefficientEstimator {
 	
-	private double getDistanceProductX(Trajectory t, double driftx, int n,int m){
-		double xn = t.getPositions().get(n+1).getX() - t.getPositions().get(n).getX() - driftx;
-		double xm = t.getPositions().get(m+1).getX() - t.getPositions().get(m).getX() - driftx; 
+	private double getDistanceProductX(Trajectory t, int n,int m){
+		double xn = t.getPositions().get(n+1).getX() - t.getPositions().get(n).getX();
+		double xm = t.getPositions().get(m+1).getX() - t.getPositions().get(m).getX(); 
 
 		return xn*xm;
 	}
 	
-	private double getDistanceProductY(Trajectory t, double drifty,int n,int m){
-		double xn = t.getPositions().get(n+1).getY() - t.getPositions().get(n).getY() - drifty;
-		double xm = t.getPositions().get(m+1).getY() - t.getPositions().get(m).getY() - drifty;
+	private double getDistanceProductY(Trajectory t,int n,int m){
+		double xn = t.getPositions().get(n+1).getY() - t.getPositions().get(n).getY();
+		double xm = t.getPositions().get(m+1).getY() - t.getPositions().get(m).getY();
 		return xn*xm;
 	}
 	
-	private double getDistanceProductZ(Trajectory t, double driftz,int n,int m){
-		double xn = t.getPositions().get(n+1).getZ() - t.getPositions().get(n).getZ() - driftz;
-		double xm = t.getPositions().get(m+1).getZ() - t.getPositions().get(m).getZ() - driftz;
+	private double getDistanceProductZ(Trajectory t,int n,int m){
+		double xn = t.getPositions().get(n+1).getZ() - t.getPositions().get(n).getZ();
+		double xm = t.getPositions().get(m+1).getZ() - t.getPositions().get(m).getZ();
 		return xn*xm;
 	}
 	
@@ -55,15 +55,15 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 	/**
 	 * @return [0] diffusion coefficient [1] localization noise in x-direction [2] loc. noise in y-diretction [3] loc. noise in z-direction
 	 */
-	public double[] getDiffusionCoefficient(Trajectory t, double fps, double[] drift) {
-		double[] cov = getCovData(t, fps, drift,0);
+	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
+		double[] cov = getCovData(t, fps,0);
 		return cov;
 	}
 	
 	/*
 	 * TODO: Add supoort for gaps
 	 */
-	private double[] getCovData(Trajectory track, double fps, double[] drift, double R){
+	private double[] getCovData(Trajectory track, double fps, double R){
 		
 		double sumX = 0;
 		double sumX2 = 0;
@@ -76,14 +76,14 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(track, 1);
 		while(it.hasNext()){
 			int i = it.next();
-			sumX = sumX + getDistanceProductX(track,drift[0],i, i) ;
-			sumY = sumY + getDistanceProductY(track,drift[1],i, i) ;
-			sumZ = sumZ + getDistanceProductZ(track,drift[2],i, i) ;
+			sumX = sumX + getDistanceProductX(track,i, i) ;
+			sumY = sumY + getDistanceProductY(track,i, i) ;
+			sumZ = sumZ + getDistanceProductZ(track,i, i) ;
 			N++;
 			if((i+2) < track.getPositions().size() &&  track.getPositions().get(i+2) !=null){
-				sumX2 = sumX2 + getDistanceProductX(track,drift[0],i, i+1) ;
-				sumY2 = sumY2 + getDistanceProductY(track,drift[1],i, i+1);
-				sumZ2 = sumZ2 + getDistanceProductZ(track,drift[2],i, i+1);
+				sumX2 = sumX2 + getDistanceProductX(track,i, i+1) ;
+				sumY2 = sumY2 + getDistanceProductY(track,i, i+1);
+				sumZ2 = sumZ2 + getDistanceProductZ(track,i, i+1);
 				M++;
 			}
 		}

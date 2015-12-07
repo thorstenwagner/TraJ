@@ -8,7 +8,7 @@ import javax.vecmath.Point3d;
 
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.GlobalDriftCalculator;
+import de.biomedical_imaging.traJ.LinearDriftCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
 
 /**
@@ -34,7 +34,7 @@ public class GlobaDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		GlobalDriftCalculator gdc = new GlobalDriftCalculator();
+		LinearDriftCalculator gdc = new LinearDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,0,0};
 		
@@ -61,7 +61,7 @@ public class GlobaDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		GlobalDriftCalculator gdc = new GlobalDriftCalculator();
+		LinearDriftCalculator gdc = new LinearDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,0,0};
 		
@@ -87,7 +87,7 @@ public class GlobaDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		GlobalDriftCalculator gdc = new GlobalDriftCalculator();
+		LinearDriftCalculator gdc = new LinearDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,1,0};
 		
@@ -112,7 +112,7 @@ public class GlobaDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		GlobalDriftCalculator gdc = new GlobalDriftCalculator();
+		LinearDriftCalculator gdc = new LinearDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,1,1};
 		

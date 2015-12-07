@@ -26,8 +26,14 @@ package de.biomedical_imaging.traJ;
 
 import java.util.ArrayList;
 
-public class GlobalDriftCalculator {
+public class LinearDriftCalculator {
 	
+	/**
+	 * Calculates the global linear drift.
+	 * 
+	 * @param tracks Tracks which seems to exhibit a local drift
+	 * @return The global drift over  trajectories
+	 */
 	public double[] calculateDrift(ArrayList<Trajectory> tracks){
 		double[] result = new double[3];
 		

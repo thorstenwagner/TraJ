@@ -24,17 +24,12 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
+public abstract class AbstractDriftCorrector {
 
-
-public abstract class AbstractDiffusionCoefficientEstimator {
-	
 	/**
 	 * 
-	 * 
-	 * @param t Trajectory
-	 * @param fps Frames per second [Hz]
-	 * @return Returns the diffusion coefficent
+	 * @param t Trajectory which shows a drift
+	 * @return Trajectory without drift
 	 */
-	abstract double[] getDiffusionCoefficient(Trajectory t, double fps);
-
+	public abstract Trajectory removeDrift(Trajectory t);
 }

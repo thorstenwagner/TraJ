@@ -40,10 +40,9 @@ public class MSDCalculator {
 	 * 
 	 * @param t Trajectory
 	 * @param timelag Timeleg for msd caluclation (>= 1)
-	 * @param drift Global dirft [0]=x, [1]=y, and [2] =z direction
 	 * @return Double array [0] =MSD (in position unit squared) and [1] = Relative Variance (unitless)
 	 */
-	public static double[] getMeanSquaredDisplacment(Trajectory t, int timelag, double[] drift){
+	public static double[] getMeanSquaredDisplacment(Trajectory t, int timelag){
 		double msd = 0;
 		double[] result = new double[2];
 		if(t.getPositions().size()==1){
@@ -60,9 +59,9 @@ public class MSDCalculator {
 		while(it.hasNext()){
 			int i = it.next();
 			msd = msd + 
-					Math.pow(t.getPositions().get(i).getX()-t.getPositions().get(i+timelag).getX()+timelag*drift[0],2) + 
-					Math.pow(t.getPositions().get(i).getY()-t.getPositions().get(i+timelag).getY()+timelag*drift[1],2) +
-					Math.pow(t.getPositions().get(i).getZ()-t.getPositions().get(i+timelag).getZ()+timelag*drift[2],2);
+					Math.pow(t.getPositions().get(i).getX()-t.getPositions().get(i+timelag).getX(),2) + 
+					Math.pow(t.getPositions().get(i).getY()-t.getPositions().get(i+timelag).getY(),2) +
+					Math.pow(t.getPositions().get(i).getZ()-t.getPositions().get(i+timelag).getZ(),2);
 			N++;
 		}
 		

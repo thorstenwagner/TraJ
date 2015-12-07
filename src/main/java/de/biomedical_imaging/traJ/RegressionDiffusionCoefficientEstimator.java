@@ -25,7 +25,11 @@ SOFTWARE.
 package de.biomedical_imaging.traJ;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
-
+/**
+ * 
+ * @author Thorste Wagner
+ *
+ */
 public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCoefficientEstimator{
 	private int lagMin;
 	private int lagMax;
@@ -36,7 +40,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 	}
 	
 	@Override
-	public double[] getDiffusionCoefficient(Trajectory t, double fps, double[] drift) {
+	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
 		if(t.getPositions().size()==1){
 			return null;
 		}
@@ -48,7 +52,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 
 		for(int i = lagMin; i < lagMax+1; i++){
 			
-			msdhelp = MSDCalculator.getMeanSquaredDisplacment(t, i, drift)[0];
+			msdhelp = MSDCalculator.getMeanSquaredDisplacment(t, i)[0];
 			reg.addData(i*1.0/fps, msdhelp);
 		}
 		double[] D = {reg.getSlope()/(2.0*t.getDimension())}; 

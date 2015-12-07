@@ -30,16 +30,32 @@ import javax.vecmath.Point3d;
 public  class Trajectory {
 	
 	private ArrayList<Point3d> positions;
-
 	private int dimension;
-	
+	private long id;
+	private static long idCounter=1; 
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
 		positions = new ArrayList<Point3d>();
+		id = idCounter++;
 	}
 	
 	public  ArrayList<Point3d> getPositions(){
 		return positions;
+	}
+	
+	public double[][] getPositionsAsArray(){
+		double[][] posAsArr = new double[positions.size()][3];
+		for(int i = 0; i < positions.size(); i++){
+			if(positions.get(i)!=null){
+				posAsArr[i][0] = positions.get(i).x;
+				posAsArr[i][1] = positions.get(i).y;
+				posAsArr[i][2] = positions.get(i).z;
+			}
+			else{
+				posAsArr[i] = null;
+			}
+		}
+		return posAsArr;
 	}
 	
 	/**
@@ -53,6 +69,10 @@ public  class Trajectory {
 	
 	public int getDimension(){
 		return dimension;
+	}
+	
+	public long getID(){
+		return id;
 	}
 	
 }
