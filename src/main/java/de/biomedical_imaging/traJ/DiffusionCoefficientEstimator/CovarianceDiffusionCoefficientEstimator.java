@@ -22,7 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package de.biomedical_imaging.traJ;
+package de.biomedical_imaging.traJ.DiffusionCoefficientEstimator;
+
+import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
 
 /**
  * 

@@ -6,9 +6,9 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.CovarianceDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.RandomBrownianTrackGenerator;
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.drift.LinearDriftCorrector;
 
 public class ConvarianceDiffusionCoefficientEstimatorTest {

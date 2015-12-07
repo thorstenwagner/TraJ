@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.RandomBrownianTrackGenerator;
-import de.biomedical_imaging.traJ.RegressionDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
 
 public class RegressionDiffusionCoefficientEstimatorTest {
 	private static final double DOUBLE_PRECISION = 0.000000001;

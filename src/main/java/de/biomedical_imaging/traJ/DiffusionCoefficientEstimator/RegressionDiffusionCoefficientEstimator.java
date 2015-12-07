@@ -22,9 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package de.biomedical_imaging.traJ;
+package de.biomedical_imaging.traJ.DiffusionCoefficientEstimator;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+
+import de.biomedical_imaging.traJ.MSDCalculator;
+import de.biomedical_imaging.traJ.Trajectory;
 /**
  * 
  * @author Thorste Wagner
