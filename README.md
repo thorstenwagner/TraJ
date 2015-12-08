@@ -9,6 +9,7 @@ Implemented features so far:
 - Stokes-Einstein converter to get hydrodynamic diameter
 - Global linear drift calculator
 - Linear drift corrector
+- Brownian motion simulation (free diffusion)
 
 To Do:
 - Size distribution estimation for trajectorie sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012.
