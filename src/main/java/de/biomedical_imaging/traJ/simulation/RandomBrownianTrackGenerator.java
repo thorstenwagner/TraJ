@@ -1,8 +1,10 @@
-package de.biomedical_imaging.traJ;
+package de.biomedical_imaging.traJ.simulation;
 
 import java.util.Random;
 
 import javax.vecmath.Point3d;
+
+import de.biomedical_imaging.traJ.Trajectory;
 
 public class RandomBrownianTrackGenerator {
 	Random r;

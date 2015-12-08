@@ -7,9 +7,9 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.RandomBrownianTrackGenerator;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
+import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackGenerator;
 
 public class RegressionDiffusionCoefficientEstimatorTest {
 	private static final double DOUBLE_PRECISION = 0.000000001;
