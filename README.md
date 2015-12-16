@@ -11,6 +11,7 @@ Implemented features so far:
 - Linear drift corrector
 - Simulation: Brownian motion (free diffusion)
 - Simulation: Active Transport
+- Simulation: Confined diffusion
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
 
