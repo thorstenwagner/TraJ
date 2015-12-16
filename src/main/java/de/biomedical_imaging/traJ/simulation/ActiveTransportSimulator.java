@@ -64,7 +64,7 @@ public class ActiveTransportSimulator extends AbstractSimulator {
 	@Override
 	public Trajectory generateTrajectory() {
 		Trajectory t = new Trajectory(dimension);
-		t.addPosition(new Point3d(0, 0, 0));
+		t.add(new Point3d(0, 0, 0));
 		CentralRandomNumberGenerator r = CentralRandomNumberGenerator.getInstance();
 		double startBeta = direction;
 		double transportStepLength = timelag * velocity;
@@ -75,12 +75,12 @@ public class ActiveTransportSimulator extends AbstractSimulator {
 		switch (dimension) {
 		case 1:
 			
-			lastPos = t.getPositions().get(0);
+			lastPos = t.get(0);
 			for(int i = 0; i < numberOfSteps; i++){
 				newPos = new Point3d(lastPos.x+Math.signum(Math.sin(currentBeta))*transportStepLength, 
 						0, 
 						0);
-				t.addPosition(newPos);
+				t.add(newPos);
 				lastPos = newPos;
 				currentBeta = currentBeta + r.randomSign()*angularChangePerStep;
 			}
@@ -88,13 +88,13 @@ public class ActiveTransportSimulator extends AbstractSimulator {
 		case 2:
 			
 			for(int i = 0; i < numberOfSteps; i++){
-				lastPos = t.getPositions().get(i);
+				lastPos = t.get(i);
 				
 				newPos = new Point3d(lastPos.x+Math.cos(currentBeta)*transportStepLength, 
 						lastPos.y+Math.sin(currentBeta)*transportStepLength, 
 						0);
 				currentBeta = currentBeta + r.randomSign()*angularChangePerStep;
-				t.addPosition(newPos);
+				t.add(newPos);
 				
 			}
 			break;
@@ -103,11 +103,11 @@ public class ActiveTransportSimulator extends AbstractSimulator {
 			double theta = startBeta;
 			double phi = startBeta;
 			for(int i = 0; i < numberOfSteps; i++){
-				lastPos = t.getPositions().get(i);
+				lastPos = t.get(i);
 				newPos = new Point3d(lastPos.x+transportStepLength*Math.cos(theta)*Math.sin(phi), 
 						lastPos.y+transportStepLength*Math.sin(theta)*Math.sin(phi),
 						lastPos.z+transportStepLength*Math.cos(phi));
-				t.addPosition(newPos);
+				t.add(newPos);
 				theta = theta+ r.randomSign()*angularChangePerStep;
 
 				

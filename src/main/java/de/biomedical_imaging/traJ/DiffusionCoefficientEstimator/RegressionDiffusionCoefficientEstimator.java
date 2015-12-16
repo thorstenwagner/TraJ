@@ -44,7 +44,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 	
 	@Override
 	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
-		if(t.getPositions().size()==1){
+		if(t.size()==1){
 			return null;
 		}
 		SimpleRegression reg = new SimpleRegression(true);

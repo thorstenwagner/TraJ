@@ -63,11 +63,11 @@ public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{
 		
 	}
 	public boolean hasNext() {
-		for(int i = currentIndex; i < t.getPositions().size(); i++){
-			if(i+timelag>=t.getPositions().size()){
+		for(int i = currentIndex; i < t.size(); i++){
+			if(i+timelag>=t.size()){
 				return false;
 			}
-			if((t.getPositions().get(i) != null) && (t.getPositions().get(i+timelag) != null)){
+			if((t.get(i) != null) && (t.get(i+timelag) != null)){
 				return true;
 			}
 		}
@@ -78,11 +78,11 @@ public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{
 	 * Give next index i where i and i+timelag is valid 
 	 */
 	public Integer next() {
-		for(int i = currentIndex; i < t.getPositions().size(); i++){
-			if(i+timelag>=t.getPositions().size()){
+		for(int i = currentIndex; i < t.size(); i++){
+			if(i+timelag>=t.size()){
 				return null;
 			}
-			if((t.getPositions().get(i) != null) && (t.getPositions().get(i+timelag) != null)){
+			if((t.get(i) != null) && (t.get(i+timelag) != null)){
 				if(overlap){
 					currentIndex = i+1;
 				}

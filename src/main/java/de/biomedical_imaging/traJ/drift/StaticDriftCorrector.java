@@ -48,16 +48,16 @@ public class StaticDriftCorrector extends AbstractDriftCorrector {
 	@Override
 	public Trajectory removeDrift(Trajectory t) {
 		Trajectory tNew = new Trajectory(t.getDimension());
-		tNew.addPosition(new Point3d(t.getPositions().get(0).x, t
-				.getPositions().get(0).y, t.getPositions().get(0).z));
+		tNew.add(new Point3d(t.get(0).x, t
+				.get(0).y, t.get(0).z));
 
-		for (int i = 1; i < t.getPositions().size(); i++) {
-			if (t.getPositions().get(i) != null) {
-				tNew.addPosition(new Point3d(t.getPositions().get(i).x - i
-						* drift[0], t.getPositions().get(i).y - i * drift[1], t
-						.getPositions().get(i).z - i * drift[2]));
+		for (int i = 1; i < t.size(); i++) {
+			if (t.get(i) != null) {
+				tNew.add(new Point3d(t.get(i).x - i
+						* drift[0], t.get(i).y - i * drift[1], t
+						.get(i).z - i * drift[2]));
 			} else {
-				tNew.addPosition(null);
+				tNew.add(null);
 			}
 
 		}

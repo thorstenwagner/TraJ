@@ -23,8 +23,8 @@ public class LinearDriftCorrectorTest {
 		int y = 0;
 		double[] drift = {1,0,0};
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, y, z));
-			tWithDrift.addPosition(new Point3d(i+ i*drift[0], y, z));
+			t.add(new Point3d(i, y, z));
+			tWithDrift.add(new Point3d(i+ i*drift[0], y, z));
 		}
 		
 		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
@@ -41,8 +41,8 @@ public class LinearDriftCorrectorTest {
 		int z = 0;
 		double[] drift = {1,2,0};
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, z));
-			tWithDrift.addPosition(new Point3d(i+ i*drift[0], i+i*drift[1], z));
+			t.add(new Point3d(i, i, z));
+			tWithDrift.add(new Point3d(i+ i*drift[0], i+i*drift[1], z));
 		}
 		
 		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
@@ -168,13 +168,13 @@ public class LinearDriftCorrectorTest {
 		double[] drift = {1,2,0};
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
-				tWithDrift.addPosition(null);
+				t.add(null);
+				tWithDrift.add(null);
 			}
 			else
 			{
-				t.addPosition(new Point3d(i, i, z));
-				tWithDrift.addPosition(new Point3d(i+ i*drift[0], i+i*drift[1], z));
+				t.add(new Point3d(i, i, z));
+				tWithDrift.add(new Point3d(i+ i*drift[0], i+i*drift[1], z));
 			}
 		}
 		
@@ -191,8 +191,8 @@ public class LinearDriftCorrectorTest {
 		Trajectory tWithDrift = new Trajectory(2);
 		double[] drift = {1,2,3};
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, i));
-			tWithDrift.addPosition(new Point3d(i+ i*drift[0], i+i*drift[1], i+i*drift[2]));
+			t.add(new Point3d(i, i, i));
+			tWithDrift.add(new Point3d(i+ i*drift[0], i+i*drift[1], i+i*drift[2]));
 		}
 		
 		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);

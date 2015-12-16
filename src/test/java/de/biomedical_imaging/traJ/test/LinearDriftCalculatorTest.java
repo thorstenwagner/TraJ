@@ -29,7 +29,7 @@ public class LinearDriftCalculatorTest {
 		int y = 0;
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, y, z));
+			t.add(new Point3d(i, y, z));
 		}
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
@@ -53,9 +53,9 @@ public class LinearDriftCalculatorTest {
 		int z = 0;
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i, y, z));
+				t.add(new Point3d(i, y, z));
 			}
 		}
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
@@ -79,9 +79,9 @@ public class LinearDriftCalculatorTest {
 		int z = 0;
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i, i, z));
+				t.add(new Point3d(i, i, z));
 			}
 		}
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
@@ -104,9 +104,9 @@ public class LinearDriftCalculatorTest {
 		Trajectory t = new Trajectory(1);
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i, i, i));
+				t.add(new Point3d(i, i, i));
 			}
 		}
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();

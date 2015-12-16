@@ -33,7 +33,7 @@ public class ActiveTransportSimulatorTest {
 		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
-		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
+		double distance = t.get(0).distance(t.get(numberOfSteps));
 		
 		assertEquals(numberOfSteps*velocity*timelag, distance,0.001);
 	}
@@ -55,7 +55,7 @@ public class ActiveTransportSimulatorTest {
 		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
-		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
+		double distance = t.get(0).distance(t.get(numberOfSteps));
 		
 		assertEquals(numberOfSteps*velocity*timelag, distance,0.001);
 	}
@@ -75,7 +75,7 @@ public class ActiveTransportSimulatorTest {
 		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
-		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
+		double distance = t.get(0).distance(t.get(numberOfSteps));
 		
 		assertEquals(numberOfSteps*velocity*timelag, distance,0.001);
 	}
@@ -94,9 +94,9 @@ public class ActiveTransportSimulatorTest {
 		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
-		//double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
-		ArrayList<Point3d> pos = t.getPositions();
-		for(int i = 2; i < t.getPositions().size(); i++){
+		//double distance = t.get(0).distance(t.get(numberOfSteps));
+		ArrayList<Point3d> pos = t;
+		for(int i = 2; i < t.size(); i++){
 
 			Point3d h1 = new Point3d(pos.get(i-1).x-pos.get(i-2).x, pos.get(i-1).y-pos.get(i-2).y, pos.get(i-1).z-pos.get(i-2).z);
 			Point3d h2 = new Point3d(pos.get(i).x-pos.get(i-1).x, pos.get(i).y-pos.get(i-1).y, pos.get(i).z-pos.get(i-1).z);
@@ -123,9 +123,9 @@ public class ActiveTransportSimulatorTest {
 		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
-		//double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
-		ArrayList<Point3d> pos = t.getPositions();
-		for(int i = 2; i < t.getPositions().size(); i++){
+		//double distance = t.get(0).distance(t.get(numberOfSteps));
+		ArrayList<Point3d> pos = t;
+		for(int i = 2; i < t.size(); i++){
 
 		    Point3d h1 = new Point3d(pos.get(i-1).x-pos.get(i-2).x, pos.get(i-1).y-pos.get(i-2).y, pos.get(i-1).z-pos.get(i-2).z);
 			

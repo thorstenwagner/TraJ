@@ -24,28 +24,15 @@ public class FreeDiffusionSimulator extends AbstractSimulator {
 	@Override
 	public Trajectory generateTrajectory() {
 		Trajectory t = new Trajectory(dimension);
-		switch (dimension) {
-		case 1:
-			t.addPosition(new Point3d(100, 0, 0));
-			break;
-		case 2:
-			t.addPosition(new Point3d(100, 100, 0));	
-			break;
-		case 3:
-			t.addPosition(new Point3d(100, 100, 100));
-			break;
-
-		default:
-			break;
-		}
+		t.add(new Point3d(0, 0, 0));
 	
 		for(int i = 1; i <= numberOfSteps; i++) {
 			double steplength = Math.sqrt(-2*dimension*diffusioncoefficient*timelag*Math.log(1-r.nextDouble()));
 			Point3d pos = randomPosition(dimension,steplength);
-			pos.setX(t.getPositions().get(i-1).x + pos.x);
-			pos.setY(t.getPositions().get(i-1).y + pos.y);
-			pos.setZ(t.getPositions().get(i-1).z + pos.z);
-			t.addPosition(pos);
+			pos.setX(t.get(i-1).x + pos.x);
+			pos.setY(t.get(i-1).y + pos.y);
+			pos.setZ(t.get(i-1).z + pos.z);
+			t.add(pos);
 		}
 		
 		return t;

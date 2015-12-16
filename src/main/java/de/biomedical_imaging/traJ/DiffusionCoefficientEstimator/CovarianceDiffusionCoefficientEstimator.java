@@ -38,21 +38,21 @@ import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
 public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCoefficientEstimator {
 	
 	private double getDistanceProductX(Trajectory t, int n,int m){
-		double xn = t.getPositions().get(n+1).getX() - t.getPositions().get(n).getX();
-		double xm = t.getPositions().get(m+1).getX() - t.getPositions().get(m).getX(); 
+		double xn = t.get(n+1).getX() - t.get(n).getX();
+		double xm = t.get(m+1).getX() - t.get(m).getX(); 
 
 		return xn*xm;
 	}
 	
 	private double getDistanceProductY(Trajectory t,int n,int m){
-		double xn = t.getPositions().get(n+1).getY() - t.getPositions().get(n).getY();
-		double xm = t.getPositions().get(m+1).getY() - t.getPositions().get(m).getY();
+		double xn = t.get(n+1).getY() - t.get(n).getY();
+		double xm = t.get(m+1).getY() - t.get(m).getY();
 		return xn*xm;
 	}
 	
 	private double getDistanceProductZ(Trajectory t,int n,int m){
-		double xn = t.getPositions().get(n+1).getZ() - t.getPositions().get(n).getZ();
-		double xm = t.getPositions().get(m+1).getZ() - t.getPositions().get(m).getZ();
+		double xn = t.get(n+1).getZ() - t.get(n).getZ();
+		double xm = t.get(m+1).getZ() - t.get(m).getZ();
 		return xn*xm;
 	}
 	
@@ -84,7 +84,7 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 			sumY = sumY + getDistanceProductY(track,i, i) ;
 			sumZ = sumZ + getDistanceProductZ(track,i, i) ;
 			N++;
-			if((i+2) < track.getPositions().size() &&  track.getPositions().get(i+2) !=null){
+			if((i+2) < track.size() &&  track.get(i+2) !=null){
 				sumX2 = sumX2 + getDistanceProductX(track,i, i+1) ;
 				sumY2 = sumY2 + getDistanceProductY(track,i, i+1);
 				sumZ2 = sumZ2 + getDistanceProductZ(track,i, i+1);

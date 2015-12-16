@@ -28,7 +28,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		int y = 0;
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(Math.pow(-1, i)*Math.sqrt(2)/2, y, z));
+			t.add(new Point3d(Math.pow(-1, i)*Math.sqrt(2)/2, y, z));
 		}
 		int fps = 1;
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
@@ -50,9 +50,9 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 	
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(Math.pow(-1, i)*Math.sqrt(2)/2 , y, z));
+				t.add(new Point3d(Math.pow(-1, i)*Math.sqrt(2)/2 , y, z));
 			}
 		}
 

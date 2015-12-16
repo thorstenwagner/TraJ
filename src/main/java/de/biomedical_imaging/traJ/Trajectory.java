@@ -28,29 +28,23 @@ import java.util.ArrayList;
 
 import javax.vecmath.Point3d;
 
-public  class Trajectory {
+public  class Trajectory extends ArrayList<Point3d> {
 	
-	private ArrayList<Point3d> positions;
 	private int dimension;
 	private long id;
 	private static long idCounter=1; 
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
-		positions = new ArrayList<Point3d>();
 		id = idCounter++;
 	}
 	
-	public  ArrayList<Point3d> getPositions(){
-		return positions;
-	}
-	
 	public double[][] getPositionsAsArray(){
-		double[][] posAsArr = new double[positions.size()][3];
-		for(int i = 0; i < positions.size(); i++){
-			if(positions.get(i)!=null){
-				posAsArr[i][0] = positions.get(i).x;
-				posAsArr[i][1] = positions.get(i).y;
-				posAsArr[i][2] = positions.get(i).z;
+		double[][] posAsArr = new double[size()][3];
+		for(int i = 0; i < size(); i++){
+			if(get(i)!=null){
+				posAsArr[i][0] = get(i).x;
+				posAsArr[i][1] = get(i).y;
+				posAsArr[i][2] = get(i).z;
 			}
 			else{
 				posAsArr[i] = null;
@@ -62,19 +56,21 @@ public  class Trajectory {
 	@Override
 	public String toString() {
 		String result="";
-		for(int i = 0; i < positions.size(); i++){
-			result += " x: "+   positions.get(i).x + " y: " +  positions.get(i).y + " z: " + positions.get(i).z + "\n";
+		for(int i = 0; i < size(); i++){
+			result += " x: "+   get(i).x + " y: " +  get(i).y + " z: " + get(i).z + "\n";
 		}
 		return result;
 	}
 	
+	@Override
 	/**
 	 * Adds an position the trajectory. Between two position should the same timelag.
 	 * If there is a gap in the trajectory, please add null.
 	 * @param pos The next position of the trajectory. Add null for a gap.
 	 */
-	public void addPosition(Point3d pos){
-		positions.add(pos);
+	public boolean add(Point3d e) {
+		// TODO Auto-generated method stub
+		return super.add(e);
 	}
 	
 	public int getDimension(){

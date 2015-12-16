@@ -26,7 +26,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		int y = 0;
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
+			t.add(new Point3d(i*Math.sqrt(2), y, z));
 		}
 		
 		int minLag = 1;
@@ -49,7 +49,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		Trajectory t = new Trajectory(1);
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, z));
+			t.add(new Point3d(i, i, z));
 		}
 		
 		int minLag = 1;
@@ -132,7 +132,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		 */
 		Trajectory t = new Trajectory(1);
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, i));
+			t.add(new Point3d(i, i, i));
 		}
 		
 		int minLag = 1;

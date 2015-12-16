@@ -29,7 +29,7 @@ public class MSDCalculatorTest {
 		int y = 0;
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
+			t.add(new Point3d(i*Math.sqrt(2), y, z));
 		}
 		
 		int timelag = 1;
@@ -48,7 +48,7 @@ public class MSDCalculatorTest {
 		int y = 0;
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
+			t.add(new Point3d(i*Math.sqrt(2), y, z));
 		}
 		
 		int timelag = 2;
@@ -68,7 +68,7 @@ public class MSDCalculatorTest {
 		int z = 0;
 	
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
+			t.add(new Point3d(i*Math.sqrt(2), y, z));
 		}
 		
 		int timelag = 2;
@@ -88,9 +88,9 @@ public class MSDCalculatorTest {
 		int z = 0;
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
+				t.add(new Point3d(i*Math.sqrt(2), y, z));
 			}
 		}
 		
@@ -112,9 +112,9 @@ public class MSDCalculatorTest {
 
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i*Math.sqrt(2), y, z));
+				t.add(new Point3d(i*Math.sqrt(2), y, z));
 			}
 		}
 
@@ -141,7 +141,7 @@ public class MSDCalculatorTest {
 		Trajectory t = new Trajectory(2);
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, z));
+			t.add(new Point3d(i, i, z));
 		}
 		
 		int timelag = 1;
@@ -159,7 +159,7 @@ public class MSDCalculatorTest {
 		Trajectory t = new Trajectory(2);
 		int z = 0;
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, z));
+			t.add(new Point3d(i, i, z));
 		}
 		
 		int timelag = 2;
@@ -179,9 +179,9 @@ public class MSDCalculatorTest {
 		int z = 0;
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i, i, z));
+				t.add(new Point3d(i, i, z));
 			}
 		}
 
@@ -205,7 +205,7 @@ public class MSDCalculatorTest {
 		 */
 		Trajectory t = new Trajectory(3);
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, i));
+			t.add(new Point3d(i, i, i));
 		}
 		
 		int timelag = 1;
@@ -222,7 +222,7 @@ public class MSDCalculatorTest {
 		 */
 		Trajectory t = new Trajectory(3);
 		for(int i = 0; i < 100; i++){
-			t.addPosition(new Point3d(i, i, i));
+			t.add(new Point3d(i, i, i));
 		}
 		
 		int timelag = 2;
@@ -241,9 +241,9 @@ public class MSDCalculatorTest {
 		Trajectory t = new Trajectory(3);
 		for(int i = 0; i < 100; i++){
 			if((i+1)%10==0){
-				t.addPosition(null);
+				t.add(null);
 			}else{
-				t.addPosition(new Point3d(i, i, i));
+				t.add(new Point3d(i, i, i));
 			}
 		}
 		

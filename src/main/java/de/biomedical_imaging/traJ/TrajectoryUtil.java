@@ -8,17 +8,17 @@ public class TrajectoryUtil {
 		if(a.getDimension()!=b.getDimension()){
 			throw new IllegalArgumentException("Combination not possible: The trajectorys does not have the same dimension");
 		}
-		if(a.getPositions().size()!=b.getPositions().size()){
+		if(a.size()!=b.size()){
 			throw new IllegalArgumentException("Combination not possible: The trajectorys does not "
-					+ "have the same number of steps a="+a.getPositions().size() + " b="+b.getPositions().size());
+					+ "have the same number of steps a="+a.size() + " b="+b.size());
 		}
 		Trajectory c = new Trajectory(a.getDimension());
 		
-		for(int i = 0 ; i < a.getPositions().size(); i++){
-			Point3d pos = new Point3d(a.getPositions().get(i).x+b.getPositions().get(i).x, 
-					a.getPositions().get(i).y+b.getPositions().get(i).y, 
-					a.getPositions().get(i).z+b.getPositions().get(i).z);
-			c.addPosition(pos);
+		for(int i = 0 ; i < a.size(); i++){
+			Point3d pos = new Point3d(a.get(i).x+b.get(i).x, 
+					a.get(i).y+b.get(i).y, 
+					a.get(i).z+b.get(i).z);
+			c.add(pos);
 		}
 		
 		return c;

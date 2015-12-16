@@ -48,12 +48,12 @@ public class StaticDriftCalculator {
 			Trajectory t = tracks.get(i);
 			TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t,1);
 	
-			//for(int j = 1; j < t.getPositions().size(); j++){
+			//for(int j = 1; j < t.size(); j++){
 			while(it.hasNext()) {
 				int j = it.next();
-				sumX += t.getPositions().get(j+1).x - t.getPositions().get(j).x;
-				sumY += t.getPositions().get(j+1).y - t.getPositions().get(j).y;
-				sumZ += t.getPositions().get(j+1).z - t.getPositions().get(j).z;
+				sumX += t.get(j+1).x - t.get(j).x;
+				sumY += t.get(j+1).y - t.get(j).y;
+				sumZ += t.get(j+1).z - t.get(j).z;
 				N++;
 			}
 		}

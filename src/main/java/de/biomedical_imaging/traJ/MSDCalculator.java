@@ -45,7 +45,7 @@ public class MSDCalculator {
 	public static double[] getMeanSquaredDisplacment(Trajectory t, int timelag){
 		double msd = 0;
 		double[] result = new double[2];
-		if(t.getPositions().size()==1){
+		if(t.size()==1){
 			result[0] =0;
 			result[1] =0;
 			return result;
@@ -59,9 +59,9 @@ public class MSDCalculator {
 		while(it.hasNext()){
 			int i = it.next();
 			msd = msd + 
-					Math.pow(t.getPositions().get(i).getX()-t.getPositions().get(i+timelag).getX(),2) + 
-					Math.pow(t.getPositions().get(i).getY()-t.getPositions().get(i+timelag).getY(),2) +
-					Math.pow(t.getPositions().get(i).getZ()-t.getPositions().get(i+timelag).getZ(),2);
+					Math.pow(t.get(i).getX()-t.get(i+timelag).getX(),2) + 
+					Math.pow(t.get(i).getY()-t.get(i+timelag).getY(),2) +
+					Math.pow(t.get(i).getZ()-t.get(i+timelag).getZ(),2);
 			N++;
 		}
 		
