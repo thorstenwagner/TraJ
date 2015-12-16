@@ -9,7 +9,7 @@ Implemented features so far:
 - Regression estimator for diffusion coefficient
 - Stokes-Einstein converter to get hydrodynamic diameter
 - Global linear drift calculator
-- Linear drift corrector
+- Static drift corrector
 - Simulation: Brownian motion (free diffusion)
 - Simulation: Active Transport
 - Simulation: Confined diffusion
