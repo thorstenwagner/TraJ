@@ -6,22 +6,23 @@ import javax.vecmath.Point3d;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
-public class RandomBrownianTrackGenerator {
+public class RandomBrownianTrackSimulator extends AbstractSimulator {
 	private Random r;
+	double diffusioncoefficient;
+	double timelag;
+	int dimension;
+	int numberOfSteps;
 	
-	public RandomBrownianTrackGenerator() {
+	public RandomBrownianTrackSimulator(double diffusioncoefficient, double timelag, int dimension,int numberOfSteps) {
 		r = CentralRandomNumberGenerator.getInstance();
+		this.diffusioncoefficient = diffusioncoefficient;
+		this.timelag = timelag;
+		this.dimension = dimension;
+		this.numberOfSteps = numberOfSteps;
 	}
-
-	/**
-	 * 
-	 * @param diffusioncoefficient
-	 * @param timelag
-	 * @param dimension
-	 * @param numberOfSteps
-	 * @return
-	 */
-	public Trajectory calculateBrownianTrack(double diffusioncoefficient, double timelag, int dimension,int numberOfSteps){
+	
+	@Override
+	public Trajectory generateTrajectory() {
 		Trajectory t = new Trajectory(dimension);
 		switch (dimension) {
 		case 1:
@@ -50,10 +51,10 @@ public class RandomBrownianTrackGenerator {
 		return t;
 	}
 	
-	public Point3d randomPosition(int dimension, double length){
+	private Point3d randomPosition(int dimension, double length){
 		
 		
-	
+		
 		Point3d p = null;
 		
 		switch (dimension) {

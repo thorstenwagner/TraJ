@@ -10,7 +10,7 @@ import org.junit.Test;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
-import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackGenerator;
+import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackSimulator;
 
 public class RegressionDiffusionCoefficientEstimatorTest {
 	private static final double DOUBLE_PRECISION = 0.000000001;
@@ -63,12 +63,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	@Test
 	public void testGetDiffusionCoefficient1D_Brownian(){
 		CentralRandomNumberGenerator.getInstance().setSeed(3);
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
+		
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 1;
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
+		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, fps, dimension, numberOfSteps);
+		Trajectory t = gen.generateTrajectory();
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
 		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
@@ -77,12 +78,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	@Test
 	public void testGetDiffusionCoefficient2D_Brownian(){
 		CentralRandomNumberGenerator.getInstance().setSeed(3);
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
+		
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 2;
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
+		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, fps, dimension, numberOfSteps);
+		Trajectory t = gen.generateTrajectory();
 		int minLag = 1;
 		int maxLag = 2;
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag,maxLag);
@@ -93,12 +95,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	@Test
 	public void testGetDiffusionCoefficient3D_Brownian(){
 		CentralRandomNumberGenerator.getInstance().setSeed(3);
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
+		
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 3;
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
+		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, fps, dimension, numberOfSteps);
+		Trajectory t = gen.generateTrajectory();
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
 		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
@@ -107,12 +110,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	@Test
 	public void testGetDiffusionCoefficient3D_Brownian_CustomSettings(){
 		CentralRandomNumberGenerator.getInstance().setSeed(3);
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
+		
 		double diffusioncoefficient = 100;
 		double timelag = 1.0/30;
 		int dimension = 3;
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		Trajectory t = gen.generateTrajectory();
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
 		double[] result = dcEst.getDiffusionCoefficient(t, 1.0/timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);

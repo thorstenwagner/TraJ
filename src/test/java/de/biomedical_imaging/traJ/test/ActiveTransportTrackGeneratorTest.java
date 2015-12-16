@@ -11,7 +11,7 @@ import javax.vecmath.Vector3f;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
-import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackGenerator;
+import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackSimulator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 
 public class ActiveTransportTrackGeneratorTest {
@@ -23,14 +23,15 @@ public class ActiveTransportTrackGeneratorTest {
 		 * The sum of distances between each position should be the same as the distance between
 		 * start and endpoint
 		 */
-		ActiveTransportTrackGenerator active = new ActiveTransportTrackGenerator();
+		
 		double velocity = 1;
 		double angularVelocity = 0;
 		double timelag = 1;
 		int dimension = 1;
 		int numberOfSteps = 10;
 		
-		Trajectory t = active.generateActiveTransportTrajectory(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		Trajectory t = active.generateTrajectory();
 		
 		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
 		
@@ -44,14 +45,15 @@ public class ActiveTransportTrackGeneratorTest {
 		 * The sum of distances between each position should be the same as the distance between
 		 * start and endpoint
 		 */
-		ActiveTransportTrackGenerator active = new ActiveTransportTrackGenerator();
+		
 		double velocity = 1;
 		double angularVelocity = 0;
 		double timelag = 1;
 		int dimension = 2;
 		int numberOfSteps = 10;
 		
-		Trajectory t = active.generateActiveTransportTrajectory(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		Trajectory t = active.generateTrajectory();
 		
 		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
 		
@@ -64,14 +66,14 @@ public class ActiveTransportTrackGeneratorTest {
 		 * When the angular velocity is 0, then the trajectory should be straight line.
 		 * The distance between start and endpoint should be numberOfSteps*velocity*timelag
 		 */
-		ActiveTransportTrackGenerator active = new ActiveTransportTrackGenerator();
+		
 		double velocity = 1;
 		double angularVelocity = 0;
 		double timelag = 1;
 		int dimension = 3;
 		int numberOfSteps = 1000;
-		
-		Trajectory t = active.generateActiveTransportTrajectory(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		Trajectory t = active.generateTrajectory();
 		
 		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
 		
@@ -83,14 +85,14 @@ public class ActiveTransportTrackGeneratorTest {
 		/*
 		 * The difference of angles should be constant
 		 */
-		ActiveTransportTrackGenerator active = new ActiveTransportTrackGenerator();
+		
 		double velocity = 1;
 		double angularVelocity = 1;
 		double timelag = 1;
 		int dimension = 2;
 		int numberOfSteps = 100;
-		
-		Trajectory t = active.generateActiveTransportTrajectory(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		Trajectory t = active.generateTrajectory();
 		
 		//double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
 		ArrayList<Point3d> pos = t.getPositions();
@@ -111,14 +113,15 @@ public class ActiveTransportTrackGeneratorTest {
 		/*
 		 * The difference of angles should be constant
 		 */
-		ActiveTransportTrackGenerator active = new ActiveTransportTrackGenerator();
+		
 		double velocity = 1;
 		double angularVelocity = 0.8;
 		double timelag = 1;
 		int dimension = 3;
 		int numberOfSteps = 100;
 		
-		Trajectory t = active.generateActiveTransportTrajectory(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		Trajectory t = active.generateTrajectory();
 		
 		//double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
 		ArrayList<Point3d> pos = t.getPositions();
