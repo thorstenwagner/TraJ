@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryUtil;
 import de.biomedical_imaging.traJ.drift.StaticDriftCorrector;
-import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackSimulator;
+import de.biomedical_imaging.traJ.simulation.ActiveTransportSimulator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
-import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackSimulator;
+import de.biomedical_imaging.traJ.simulation.FreeDiffusionSimulator;
 
 public class LinearDriftCorrectorTest {
 	
@@ -60,11 +60,11 @@ public class LinearDriftCorrectorTest {
 		double timelag = 1;
 		int dimension = 2;
 		int numberOfSteps = 1000;
-		RandomBrownianTrackSimulator rg = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator rg = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = rg.generateTrajectory();
 		double velocity = 5;
 		double angularVelocity = 0;
-		ActiveTransportTrackSimulator atg = new ActiveTransportTrackSimulator(velocity*timelag, angularVelocity,0 ,timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator atg = new ActiveTransportSimulator(velocity*timelag, angularVelocity,0 ,timelag, dimension, numberOfSteps);
 		Trajectory pureDrift = atg.generateTrajectory();
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
@@ -86,12 +86,12 @@ public class LinearDriftCorrectorTest {
 		double timelag = 1/30;
 		int dimension = 2;
 		int numberOfSteps = 1000;
-		RandomBrownianTrackSimulator rg = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator rg = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = rg.generateTrajectory();
 		double velocity = 90;
 		double angularVelocity = 0;
 		double direction = 0; //Measured in 3d. Zero means the direction points to x-axis
-		ActiveTransportTrackSimulator atg = new ActiveTransportTrackSimulator(velocity, angularVelocity,direction ,timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator atg = new ActiveTransportSimulator(velocity, angularVelocity,direction ,timelag, dimension, numberOfSteps);
 		Trajectory pureDrift = atg.generateTrajectory();
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
@@ -114,12 +114,12 @@ public class LinearDriftCorrectorTest {
 		double timelag = 1;
 		int dimension = 3;
 		int numberOfSteps = 1000;
-		RandomBrownianTrackSimulator rg = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator rg = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = rg.generateTrajectory();
 		double velocity = 5;
 		double angularVelocity = 0;
 		double direction = 0; //Mesaured in rad. Zero means the direction points to z-axis
-		ActiveTransportTrackSimulator atg = new ActiveTransportTrackSimulator(velocity*timelag, angularVelocity,direction ,timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator atg = new ActiveTransportSimulator(velocity*timelag, angularVelocity,direction ,timelag, dimension, numberOfSteps);
 		Trajectory pureDrift = atg.generateTrajectory();
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
@@ -141,12 +141,12 @@ public class LinearDriftCorrectorTest {
 		double timelag = 1.0/30;
 		int dimension = 3;
 		int numberOfSteps = 5;
-		RandomBrownianTrackSimulator rg = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator rg = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = rg.generateTrajectory();
 		double velocity = 90;
 		double angularVelocity = 0;
 		double direction = 0; //Measured in rad. Zero means the direction points to z-axis
-		ActiveTransportTrackSimulator atg = new ActiveTransportTrackSimulator(velocity, angularVelocity,direction ,timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator atg = new ActiveTransportSimulator(velocity, angularVelocity,direction ,timelag, dimension, numberOfSteps);
 		Trajectory pureDrift = atg.generateTrajectory();
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 

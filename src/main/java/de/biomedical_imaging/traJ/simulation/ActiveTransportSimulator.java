@@ -6,7 +6,7 @@ import javax.vecmath.Point3d;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
-public class ActiveTransportTrackSimulator extends AbstractSimulator {
+public class ActiveTransportSimulator extends AbstractSimulator {
 	
 	private double velocity;
 	private double angularVelocity;
@@ -26,7 +26,7 @@ public class ActiveTransportTrackSimulator extends AbstractSimulator {
 	 * @param dimension Dimension of the trajectory
 	 * @param numberOfSteps Number of steps
 	 */
-	public ActiveTransportTrackSimulator(double velocity,
+	public ActiveTransportSimulator(double velocity,
 			double angularVelocity, double direction ,double timelag, int dimension,
 			int numberOfSteps) {
 		r = CentralRandomNumberGenerator.getInstance();
@@ -48,7 +48,7 @@ public class ActiveTransportTrackSimulator extends AbstractSimulator {
 	 * @param dimension Dimension of the trajectory
 	 * @param numberOfSteps Number of steps
 	 */
-	public ActiveTransportTrackSimulator(double velocity,
+	public ActiveTransportSimulator(double velocity,
 			double angularVelocity ,double timelag, int dimension,
 			int numberOfSteps) {
 		r = CentralRandomNumberGenerator.getInstance();

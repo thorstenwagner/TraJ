@@ -6,14 +6,14 @@ import javax.vecmath.Point3d;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
-public class RandomBrownianTrackSimulator extends AbstractSimulator {
+public class FreeDiffusionSimulator extends AbstractSimulator {
 	private Random r;
 	double diffusioncoefficient;
 	double timelag;
 	int dimension;
 	int numberOfSteps;
 	
-	public RandomBrownianTrackSimulator(double diffusioncoefficient, double timelag, int dimension,int numberOfSteps) {
+	public FreeDiffusionSimulator(double diffusioncoefficient, double timelag, int dimension,int numberOfSteps) {
 		r = CentralRandomNumberGenerator.getInstance();
 		this.diffusioncoefficient = diffusioncoefficient;
 		this.timelag = timelag;

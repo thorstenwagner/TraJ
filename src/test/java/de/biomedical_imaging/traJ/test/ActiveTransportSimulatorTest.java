@@ -11,10 +11,10 @@ import javax.vecmath.Vector3f;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
-import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackSimulator;
+import de.biomedical_imaging.traJ.simulation.ActiveTransportSimulator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 
-public class ActiveTransportTrackGeneratorTest {
+public class ActiveTransportSimulatorTest {
 	
 	@Test
 	public void generateActiveTransportTrajectory_NoAngularChange_1D_Straight() {
@@ -30,7 +30,7 @@ public class ActiveTransportTrackGeneratorTest {
 		int dimension = 1;
 		int numberOfSteps = 10;
 		
-		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
 		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
@@ -52,7 +52,7 @@ public class ActiveTransportTrackGeneratorTest {
 		int dimension = 2;
 		int numberOfSteps = 10;
 		
-		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
 		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
@@ -72,7 +72,7 @@ public class ActiveTransportTrackGeneratorTest {
 		double timelag = 1;
 		int dimension = 3;
 		int numberOfSteps = 1000;
-		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
 		double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
@@ -91,7 +91,7 @@ public class ActiveTransportTrackGeneratorTest {
 		double timelag = 1;
 		int dimension = 2;
 		int numberOfSteps = 100;
-		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
 		//double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));
@@ -120,7 +120,7 @@ public class ActiveTransportTrackGeneratorTest {
 		int dimension = 3;
 		int numberOfSteps = 100;
 		
-		ActiveTransportTrackSimulator active = new ActiveTransportTrackSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator active = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = active.generateTrajectory();
 		
 		//double distance = t.getPositions().get(0).distance(t.getPositions().get(numberOfSteps));

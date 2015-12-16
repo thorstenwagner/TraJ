@@ -10,9 +10,9 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryUtil;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.drift.StaticDriftCorrector;
-import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackSimulator;
+import de.biomedical_imaging.traJ.simulation.ActiveTransportSimulator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
-import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackSimulator;
+import de.biomedical_imaging.traJ.simulation.FreeDiffusionSimulator;
 
 public class ConvarianceDiffusionCoefficientEstimatorTest {
 
@@ -70,7 +70,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		double timelag = 1;
 		int dimension = 1;
 		int numberOfSteps = 1000000;
-		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator gen = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = gen.generateTrajectory();
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		double[] result = dcEst.getDiffusionCoefficient(t, timelag);
@@ -85,7 +85,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		double timelag = 1;
 		int dimension = 2;
 		int numberOfSteps = 1000000;
-		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator gen = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = gen.generateTrajectory();
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		double[] result = dcEst.getDiffusionCoefficient(t, timelag);
@@ -101,13 +101,13 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		int dimension = 2;
 		
 		int numberOfSteps = 1000000;
-		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator gen = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = gen.generateTrajectory();
 		
 		double velocity = 100;
 		double angularVelocity = 0;
 		double direction = 0;
-		ActiveTransportTrackSimulator atg = new ActiveTransportTrackSimulator(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator atg = new ActiveTransportSimulator(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
 		Trajectory pureDrift = atg.generateTrajectory();
 		t = TrajectoryUtil.combineTrajectory(t, pureDrift);
 		double[] drift = {velocity*timelag,0,0};
@@ -132,13 +132,13 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		 */
 		
 		int numberOfSteps = 100000;
-		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		FreeDiffusionSimulator gen = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = gen.generateTrajectory();
 		
 		double velocity = 1000;
 		double angularVelocity = 0;
 		double direction = 0;
-		ActiveTransportTrackSimulator at = new ActiveTransportTrackSimulator(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
+		ActiveTransportSimulator at = new ActiveTransportSimulator(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
 		Trajectory activeTransport = at.generateTrajectory();
 		t=TrajectoryUtil.combineTrajectory(t, activeTransport);
 		
@@ -158,7 +158,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		double fps = 1;
 		int dimension = 3;
 		int numberOfSteps = 1000000;
-		RandomBrownianTrackSimulator gen = new RandomBrownianTrackSimulator(diffusioncoefficient, fps, dimension, numberOfSteps);
+		FreeDiffusionSimulator gen = new FreeDiffusionSimulator(diffusioncoefficient, fps, dimension, numberOfSteps);
 		Trajectory t = gen.generateTrajectory();
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		double[] result = dcEst.getDiffusionCoefficient(t, fps);
