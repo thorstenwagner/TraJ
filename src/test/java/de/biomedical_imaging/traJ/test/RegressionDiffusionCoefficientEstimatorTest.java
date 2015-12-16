@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
+import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackGenerator;
 
 public class RegressionDiffusionCoefficientEstimatorTest {
@@ -61,13 +62,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	
 	@Test
 	public void testGetDiffusionCoefficient1D_Brownian(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 1;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
 		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
@@ -75,13 +76,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	
 	@Test
 	public void testGetDiffusionCoefficient2D_Brownian(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 2;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
 		int minLag = 1;
 		int maxLag = 2;
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag,maxLag);
@@ -91,13 +92,13 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	
 	@Test
 	public void testGetDiffusionCoefficient3D_Brownian(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 3;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
 		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
@@ -105,15 +106,15 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	
 	@Test
 	public void testGetDiffusionCoefficient3D_Brownian_CustomSettings(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 100;
-		double fps = 30;
+		double timelag = 1.0/30;
 		int dimension = 3;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
-		double[] result = dcEst.getDiffusionCoefficient(t, fps);
+		double[] result = dcEst.getDiffusionCoefficient(t, 1.0/timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	

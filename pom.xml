@@ -125,4 +125,11 @@
   </scm>
 
 
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/thorstenwagner/TraJ/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+	</ciManagement>
 </project>

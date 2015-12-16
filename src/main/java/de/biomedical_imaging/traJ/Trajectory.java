@@ -25,6 +25,7 @@ SOFTWARE.
 package de.biomedical_imaging.traJ;
 
 import java.util.ArrayList;
+
 import javax.vecmath.Point3d;
 
 public  class Trajectory {
@@ -56,6 +57,15 @@ public  class Trajectory {
 			}
 		}
 		return posAsArr;
+	}
+	
+	@Override
+	public String toString() {
+		String result="";
+		for(int i = 0; i < positions.size(); i++){
+			result += " x: "+   positions.get(i).x + " y: " +  positions.get(i).y + " z: " + positions.get(i).z + "\n";
+		}
+		return result;
 	}
 	
 	/**

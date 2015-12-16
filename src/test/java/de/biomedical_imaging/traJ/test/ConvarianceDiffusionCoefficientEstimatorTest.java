@@ -7,8 +7,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.TrajectoryUtil;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.drift.LinearDriftCorrector;
+import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackGenerator;
+import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackGenerator;
 
 public class ConvarianceDiffusionCoefficientEstimatorTest {
@@ -61,75 +64,95 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 	
 	@Test
 	public void testGetDiffusionCoefficient1D_Brownian(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
-		double fps = 1;
+		double timelag = 1;
 		int dimension = 1;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
-		double[] result = dcEst.getDiffusionCoefficient(t, fps);
+		double[] result = dcEst.getDiffusionCoefficient(t, timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
 	@Test
 	public void testGetDiffusionCoefficient2D_Brownian(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
-		double fps = 1;
+		double timelag = 1;
 		int dimension = 2;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
-		double[] result = dcEst.getDiffusionCoefficient(t, fps);
+		double[] result = dcEst.getDiffusionCoefficient(t, timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
 	@Test
 	public void testGetDiffusionCoefficient2D_Brownian_WithDrift(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
-		double fps = 1;
+		double timelag = 1;
 		int dimension = 2;
-		double[] drift = {1,1,0};
-		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
-		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		
+		int numberOfSteps = 1000000;
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackGenerator atg = new ActiveTransportTrackGenerator();
+		double velocity = 100;
+		double angularVelocity = 0;
+		double direction = 0;
+		Trajectory pureDrift = atg.generateActiveTransportTrajectory(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
+		t = TrajectoryUtil.combineTrajectory(t, pureDrift);
+		double[] drift = {velocity*timelag,0,0};
 		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
 		
-		double[] result = dcEst.getDiffusionCoefficient(dcorr.removeDrift(t), fps);
+		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
+		double[] result = dcEst.getDiffusionCoefficient(dcorr.removeDrift(t), timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
 	}
 	
 	@Test
 	public void testGetDiffusionCoefficient2D_Brownian_WithDrift_CustomSettings(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 100;
-		double fps = 30;
+		double timelag = 1.0/30;
 		int dimension = 2;
-		double[] drift = {5,2,0};
-		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
-		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
+		/*
+		 * This drift corresponds to a velocity of 2 length units per second
+		 * In 1/FPS seconds the particle moves 2 length units in a specific direction.
+		 * The velocity is there for 2 * FPS (Lengths units per seconds)
+		 */
 		
+		int numberOfSteps = 100000;
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, timelag, dimension, numberOfSteps);
+		ActiveTransportTrackGenerator at = new ActiveTransportTrackGenerator();
+		double velocity = 1000;
+		double angularVelocity = 0;
+		double direction = 0;
+		Trajectory activeTransport = at.generateActiveTransportTrajectory(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
+		t=TrajectoryUtil.combineTrajectory(t, activeTransport);
+		
+		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
+		double[] drift = {velocity*timelag,0,0}; 
 		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
 		
-		double[] result = dcEst.getDiffusionCoefficient(dcorr.removeDrift(t), fps);
+		double[] result = dcEst.getDiffusionCoefficient(dcorr.removeDrift(t), 1/timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],1);
 	}
 	
 	@Test
 	public void testGetDiffusionCoefficient3D_Brownian(){
-		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator(3);
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		RandomBrownianTrackGenerator gen = new RandomBrownianTrackGenerator();
 		double diffusioncoefficient = 5;
 		double fps = 1;
 		int dimension = 3;
-		double[] drift = {0,0,0};
 		int numberOfSteps = 1000000;
-		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, drift, numberOfSteps);
+		Trajectory t = gen.calculateBrownianTrack(diffusioncoefficient, fps, dimension, numberOfSteps);
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		double[] result = dcEst.getDiffusionCoefficient(t, fps);
 		Assert.assertEquals(diffusioncoefficient, result[0],0.1);

@@ -7,17 +7,21 @@ import javax.vecmath.Point3d;
 import de.biomedical_imaging.traJ.Trajectory;
 
 public class RandomBrownianTrackGenerator {
-	Random r;
+	private Random r;
 	
 	public RandomBrownianTrackGenerator() {
-		r = new Random();
+		r = CentralRandomNumberGenerator.getInstance();
 	}
-	
-	public RandomBrownianTrackGenerator(int seed) {
-		r = new Random(seed);
-	}
-	
-	public Trajectory calculateBrownianTrack(double diffusioncoefficient, double fps, int dimension, double[] drift,int numberOfSteps){
+
+	/**
+	 * 
+	 * @param diffusioncoefficient
+	 * @param timelag
+	 * @param dimension
+	 * @param numberOfSteps
+	 * @return
+	 */
+	public Trajectory calculateBrownianTrack(double diffusioncoefficient, double timelag, int dimension,int numberOfSteps){
 		Trajectory t = new Trajectory(dimension);
 		switch (dimension) {
 		case 1:
@@ -33,14 +37,13 @@ public class RandomBrownianTrackGenerator {
 		default:
 			break;
 		}
-		
-		
-		for(int i = 1; i < numberOfSteps; i++) {
-			double steplength = Math.sqrt(-2*dimension*diffusioncoefficient*1.0/fps*Math.log(1-r.nextDouble()));
+	
+		for(int i = 1; i <= numberOfSteps; i++) {
+			double steplength = Math.sqrt(-2*dimension*diffusioncoefficient*timelag*Math.log(1-r.nextDouble()));
 			Point3d pos = randomPosition(dimension,steplength);
-			pos.setX(t.getPositions().get(i-1).x + pos.x + drift[0]);
-			pos.setY(t.getPositions().get(i-1).y + pos.y + drift[1]);
-			pos.setZ(t.getPositions().get(i-1).z + pos.z + drift[2]);
+			pos.setX(t.getPositions().get(i-1).x + pos.x);
+			pos.setY(t.getPositions().get(i-1).y + pos.y);
+			pos.setZ(t.getPositions().get(i-1).z + pos.z);
 			t.addPosition(pos);
 		}
 		
@@ -52,6 +55,7 @@ public class RandomBrownianTrackGenerator {
 		
 	
 		Point3d p = null;
+		
 		switch (dimension) {
 			case 1:
 				int sign = 1;
@@ -66,8 +70,11 @@ public class RandomBrownianTrackGenerator {
 				break;
 			case 3:
 				double u = 2*r.nextDouble()-1;
+		
 				double theta = 2*Math.PI*r.nextDouble();
+
 				double x = Math.sqrt(1-u*u)*Math.cos(theta)*length;
+
 				double y = Math.sqrt(1-u*u)*Math.sin(theta)*length;
 				double z = u*length;
 				/*
