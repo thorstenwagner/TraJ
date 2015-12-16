@@ -10,6 +10,8 @@ Implemented features so far:
 - Global linear drift calculator
 - Linear drift corrector
 - Simulation: Brownian motion (free diffusion)
+- Simulation: Active Transport
+- Trajectories are combineable
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012.
