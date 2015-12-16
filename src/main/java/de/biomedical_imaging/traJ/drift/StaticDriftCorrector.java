@@ -33,7 +33,7 @@ import de.biomedical_imaging.traJ.Trajectory;
  * @author Thorsten Wagner
  *
  */
-public class LinearDriftCorrector extends AbstractDriftCorrector {
+public class StaticDriftCorrector extends AbstractDriftCorrector {
 
 	private double[] drift;
 
@@ -41,7 +41,7 @@ public class LinearDriftCorrector extends AbstractDriftCorrector {
 	 * 
 	 * @param [0] = Drift in x direction, [1] = Drift in y direction, [2] = Drift in z direction
 	 */
-	public LinearDriftCorrector(double[] drift) {
+	public StaticDriftCorrector(double[] drift) {
 		this.drift = drift;
 	}
 

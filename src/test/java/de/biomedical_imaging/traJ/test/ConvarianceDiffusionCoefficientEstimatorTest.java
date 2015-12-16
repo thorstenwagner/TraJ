@@ -9,7 +9,7 @@ import org.junit.Test;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryUtil;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffusionCoefficientEstimator;
-import de.biomedical_imaging.traJ.drift.LinearDriftCorrector;
+import de.biomedical_imaging.traJ.drift.StaticDriftCorrector;
 import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackGenerator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackGenerator;
@@ -107,7 +107,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		Trajectory pureDrift = atg.generateActiveTransportTrajectory(velocity, angularVelocity, direction, timelag, dimension, numberOfSteps);
 		t = TrajectoryUtil.combineTrajectory(t, pureDrift);
 		double[] drift = {velocity*timelag,0,0};
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		double[] result = dcEst.getDiffusionCoefficient(dcorr.removeDrift(t), timelag);
@@ -138,7 +138,7 @@ public class ConvarianceDiffusionCoefficientEstimatorTest {
 		
 		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator();
 		double[] drift = {velocity*timelag,0,0}; 
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		double[] result = dcEst.getDiffusionCoefficient(dcorr.removeDrift(t), 1/timelag);
 		Assert.assertEquals(diffusioncoefficient, result[0],1);

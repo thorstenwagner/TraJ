@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
 
-public class LinearDriftCalculator {
+public class StaticDriftCalculator {
 	
 	/**
-	 * Calculates the global linear drift.
+	 * Calculates the static drift. Static means, that the drift does not change direction or intensity over time.
 	 * 
 	 * @param tracks Tracks which seems to exhibit a local drift
 	 * @return The global drift over  trajectories

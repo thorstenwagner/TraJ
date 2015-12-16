@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryUtil;
-import de.biomedical_imaging.traJ.drift.LinearDriftCorrector;
+import de.biomedical_imaging.traJ.drift.StaticDriftCorrector;
 import de.biomedical_imaging.traJ.simulation.ActiveTransportTrackGenerator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 import de.biomedical_imaging.traJ.simulation.RandomBrownianTrackGenerator;
@@ -27,7 +27,7 @@ public class LinearDriftCorrectorTest {
 			tWithDrift.addPosition(new Point3d(i+ i*drift[0], y, z));
 		}
 		
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -45,7 +45,7 @@ public class LinearDriftCorrectorTest {
 			tWithDrift.addPosition(new Point3d(i+ i*drift[0], i+i*drift[1], z));
 		}
 		
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -67,7 +67,7 @@ public class LinearDriftCorrectorTest {
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
 		double[] drift = {5,0,0};
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -92,7 +92,7 @@ public class LinearDriftCorrectorTest {
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
 		double[] drift = {velocity*timelag,0,0};
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -118,7 +118,7 @@ public class LinearDriftCorrectorTest {
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
 		double[] drift = {0,0,5};
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -143,7 +143,7 @@ public class LinearDriftCorrectorTest {
 		Trajectory tWithDrift = TrajectoryUtil.combineTrajectory(t, pureDrift);
 
 		double[] drift = {0,0,velocity*timelag};
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -170,7 +170,7 @@ public class LinearDriftCorrectorTest {
 			}
 		}
 		
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		
@@ -187,7 +187,7 @@ public class LinearDriftCorrectorTest {
 			tWithDrift.addPosition(new Point3d(i+ i*drift[0], i+i*drift[1], i+i*drift[2]));
 		}
 		
-		LinearDriftCorrector dcorr = new LinearDriftCorrector(drift);
+		StaticDriftCorrector dcorr = new StaticDriftCorrector(drift);
 		
 		Trajectory tCorrected = dcorr.removeDrift(tWithDrift);
 		

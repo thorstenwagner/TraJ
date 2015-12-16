@@ -9,7 +9,7 @@ import javax.vecmath.Point3d;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
-import de.biomedical_imaging.traJ.drift.LinearDriftCalculator;
+import de.biomedical_imaging.traJ.drift.StaticDriftCalculator;
 
 /**
  * Calculates the global linear drift in x-, y-, and z-direction
@@ -34,7 +34,7 @@ public class LinearDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		LinearDriftCalculator gdc = new LinearDriftCalculator();
+		StaticDriftCalculator gdc = new StaticDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,0,0};
 		
@@ -61,7 +61,7 @@ public class LinearDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		LinearDriftCalculator gdc = new LinearDriftCalculator();
+		StaticDriftCalculator gdc = new StaticDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,0,0};
 		
@@ -87,7 +87,7 @@ public class LinearDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		LinearDriftCalculator gdc = new LinearDriftCalculator();
+		StaticDriftCalculator gdc = new StaticDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,1,0};
 		
@@ -112,7 +112,7 @@ public class LinearDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		LinearDriftCalculator gdc = new LinearDriftCalculator();
+		StaticDriftCalculator gdc = new StaticDriftCalculator();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,1,1};
 		
