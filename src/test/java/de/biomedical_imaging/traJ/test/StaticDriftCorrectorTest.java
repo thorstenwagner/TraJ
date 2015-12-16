@@ -13,7 +13,7 @@ import de.biomedical_imaging.traJ.simulation.ActiveTransportSimulator;
 import de.biomedical_imaging.traJ.simulation.CentralRandomNumberGenerator;
 import de.biomedical_imaging.traJ.simulation.FreeDiffusionSimulator;
 
-public class LinearDriftCorrectorTest {
+public class StaticDriftCorrectorTest {
 	
 	@Test
 	public void removeDriftTest_1d(){

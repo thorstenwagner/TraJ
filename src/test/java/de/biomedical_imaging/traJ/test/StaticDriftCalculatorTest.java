@@ -16,7 +16,7 @@ import de.biomedical_imaging.traJ.drift.StaticDriftCalculator;
  * @author Thorsten Wagner (wagner@biomedical-imaging.de)
  *
  */
-public class LinearDriftCalculatorTest {
+public class StaticDriftCalculatorTest {
 	private static final double DOUBLE_PRECISION = 0.000000001;
 	
 	@Test
