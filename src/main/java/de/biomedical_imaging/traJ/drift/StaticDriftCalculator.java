@@ -35,7 +35,7 @@ public class StaticDriftCalculator {
 	 * Calculates the static drift. Static means, that the drift does not change direction or intensity over time.
 	 * 
 	 * @param tracks Tracks which seems to exhibit a local drift
-	 * @return The global drift over  trajectories
+	 * @return The static drift over all trajectories
 	 */
 	public double[] calculateDrift(ArrayList<Trajectory> tracks){
 		double[] result = new double[3];
