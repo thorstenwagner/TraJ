@@ -27,14 +27,23 @@ package de.biomedical_imaging.traJ;
 import java.util.ArrayList;
 
 import javax.vecmath.Point3d;
+import javax.vecmath.Point4d;
 
 public  class Trajectory extends ArrayList<Point3d> {
 	
 	private int dimension;
+	private int relativeStartTimepoint;
 	private long id;
 	private static long idCounter=1; 
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
+		relativeStartTimepoint = 0;
+		id = idCounter++;
+	}
+	
+	public Trajectory(int dimension, int relativeStartTimepoint) {
+		this.dimension = dimension;
+		this.relativeStartTimepoint = relativeStartTimepoint;
 		id = idCounter++;
 	}
 	
@@ -73,12 +82,31 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return super.add(e);
 	}
 	
+	public boolean add(double x, double y, double z){
+		return super.add(new Point3d(x, y, z));
+	}
+	
+	public void scale(double s){
+		for( int i = 0; i < size(); i++){
+			get(i).scale(s);
+		}
+	}
+	
+	
 	public int getDimension(){
 		return dimension;
 	}
 	
 	public long getID(){
 		return id;
+	}
+	
+	public int getRelativeStartTimepoint(){
+		return relativeStartTimepoint;
+	}
+	
+	public void setRelativStartTimepoint(int timepoint){
+		relativeStartTimepoint = timepoint;
 	}
 	
 }
