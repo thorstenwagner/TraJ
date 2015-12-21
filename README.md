@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/18649/thorstenwagner/TraJ.svg)](https://zenodo.org/badge/latestdoi/18649/thorstenwagner/TraJ)
 # TraJ
 Java library for diffusion trajectory analysis
 
@@ -8,7 +9,7 @@ Implemented features so far:
 - Regression estimator for diffusion coefficient
 - Stokes-Einstein converter to get hydrodynamic diameter
 - Global linear drift calculator
-- Linear drift corrector
+- Static drift corrector
 - Simulation: Brownian motion (free diffusion)
 - Simulation: Active Transport
 - Simulation: Confined diffusion
