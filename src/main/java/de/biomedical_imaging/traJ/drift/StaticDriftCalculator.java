@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
 
-public class StaticDriftCalculator {
+public class StaticDriftCalculator<T extends Trajectory>  {
 	
 	/**
 	 * Calculates the static drift. Static means, that the drift does not change direction or intensity over time.
@@ -37,7 +37,7 @@ public class StaticDriftCalculator {
 	 * @param tracks Tracks which seems to exhibit a local drift
 	 * @return The static drift over all trajectories
 	 */
-	public double[] calculateDrift(ArrayList<Trajectory> tracks){
+	public double[] calculateDrift(ArrayList<T> tracks){
 		double[] result = new double[3];
 		
 		double sumX =0;
@@ -45,7 +45,7 @@ public class StaticDriftCalculator {
 		double sumZ = 0;
 		int N=0;
 		for(int i = 0; i < tracks.size(); i++){
-			Trajectory t = tracks.get(i);
+			T t = tracks.get(i);
 			TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t,1);
 	
 			//for(int j = 1; j < t.size(); j++){

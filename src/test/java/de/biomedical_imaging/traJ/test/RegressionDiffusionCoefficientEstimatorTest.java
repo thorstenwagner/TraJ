@@ -93,6 +93,23 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 	}
 	
 	@Test
+	public void testGetDiffusionCoefficient2D_Brownian_NMSettings(){
+		CentralRandomNumberGenerator.getInstance().setSeed(3);
+		
+		double diffusioncoefficient = 50 * Math.pow(10,-9) * Math.pow(10,-9);
+		double fps = 130;
+		int dimension = 2;
+		int numberOfSteps = 1000000;
+		FreeDiffusionSimulator gen = new FreeDiffusionSimulator(diffusioncoefficient, fps, dimension, numberOfSteps);
+		Trajectory t = gen.generateTrajectory();
+		int minLag = 1;
+		int maxLag = 2;
+		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag,maxLag);
+		double[] result = dcEst.getDiffusionCoefficient(t, fps);
+		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
+	}
+	
+	@Test
 	public void testGetDiffusionCoefficient3D_Brownian(){
 		CentralRandomNumberGenerator.getInstance().setSeed(3);
 		
