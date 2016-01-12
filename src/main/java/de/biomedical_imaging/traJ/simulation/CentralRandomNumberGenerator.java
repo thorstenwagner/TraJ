@@ -28,6 +28,10 @@ public class CentralRandomNumberGenerator extends Random {
 		return instance;
 	}
 	
+	public long getSeed(){
+		return seed;
+	}
+	
 	/**
 	 * 
 	 * @return -1 or 1 randomly

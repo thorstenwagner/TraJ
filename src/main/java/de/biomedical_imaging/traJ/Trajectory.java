@@ -24,10 +24,20 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point4d;
+
+import org.knowm.xchart.Chart;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.Series;
+import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 
 public  class Trajectory extends ArrayList<Point3d> {
 	
@@ -35,6 +45,8 @@ public  class Trajectory extends ArrayList<Point3d> {
 	private int relativeStartTimepoint;
 	private long id;
 	private static long idCounter=1; 
+	private String type = "";
+	
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
 		relativeStartTimepoint = 0;
@@ -69,6 +81,24 @@ public  class Trajectory extends ArrayList<Point3d> {
 			result += " x: "+   get(i).x + " y: " +  get(i).y + " z: " + get(i).z + "\n";
 		}
 		return result;
+	}
+	
+	public void showTrajectory(){
+		if(dimension==2){
+		 	double[] xData = new double[this.size()];
+		    double[] yData = new double[this.size()];
+		    for(int i = 0; i < this.size(); i++){
+		    	xData[i] = this.get(i).x;
+		    	yData[i] = this.get(i).y;
+		    }
+		    // Create Chart
+		    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+	
+		    
+		    //Show it
+		    new SwingWrapper(chart).displayChart();
+		}
+		 
 	}
 	
 	@Override
@@ -109,4 +139,11 @@ public  class Trajectory extends ArrayList<Point3d> {
 		relativeStartTimepoint = timepoint;
 	}
 	
+	public void setType(String type){
+		this.type = type;
+	}
+	
+	public String getType(){
+		return type;
+	}
 }

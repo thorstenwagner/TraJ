@@ -8,11 +8,18 @@ import de.biomedical_imaging.traJ.Trajectory;
 
 public class FreeDiffusionSimulator extends AbstractSimulator {
 	private Random r;
-	double diffusioncoefficient;
-	double timelag;
-	int dimension;
-	int numberOfSteps;
+	private double diffusioncoefficient;
+	private double timelag;
+	private int dimension;
+	private int numberOfSteps;
 	
+	/**
+	 * 
+	 * @param diffusioncoefficient Diffusion coefficient in (length unit)^2 s^-1
+	 * @param timelag Timelag between two positions in [s]
+	 * @param dimension 1D- 2D or 3D
+	 * @param numberOfSteps The number of step which the particle should take
+	 */
 	public FreeDiffusionSimulator(double diffusioncoefficient, double timelag, int dimension,int numberOfSteps) {
 		r = CentralRandomNumberGenerator.getInstance();
 		this.diffusioncoefficient = diffusioncoefficient;

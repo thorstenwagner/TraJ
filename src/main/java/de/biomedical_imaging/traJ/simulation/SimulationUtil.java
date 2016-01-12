@@ -1,10 +1,19 @@
 package de.biomedical_imaging.traJ.simulation;
 
+import java.awt.BasicStroke;
+import java.awt.Graphics2D;
+import java.awt.geom.GeneralPath;
 import java.util.Random;
 
 import javax.vecmath.Point3d;
 
+import de.biomedical_imaging.traJ.Trajectory;
+
 public class SimulationUtil {
+	
+	public static void visulaizeSzeneAndTrajectory(AnomalousDiffusionScene s, Trajectory t){
+			
+	}
 	
 	public static Point3d randomPosition(int dimension, double length){
 			
