@@ -22,27 +22,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package de.biomedical_imaging.traJ;
+package de.biomedical_imaging.traJ.features;
+
+import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
+
 /**
  * Calculates the mean squared displacement
  * @author Thorsten Wagner (wagner at biomedical - imaging.de
  *
  */
-public class MSDCalculator {
+public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature {
+	
+	private Trajectory t;
+	private int timelag;
 	
 	/**
 	 * 
-	 * Calculates the mean squared displacement (MSD) and corrects a global drift. Further more it calculates
+	 * @param t Trajectory
+	 * @param timelag Timeleg for msd caluclation (>= 1)
+	 */
+	public MeanSquaredDisplacmentFeature(Trajectory t, int timelag) {
+		this.t = t;
+		this.timelag = timelag;
+	}
+	
+	public void setTimalag(int timelag){
+		this.timelag = timelag;
+	}
+	
+	public void setTrajectory(Trajectory t){
+		this.t = t;
+	}
+	
+	/**
+	 * 
+	 * Calculates the mean squared displacement (MSD). Further more it calculates
 	 * the relative variance of MSD according to:
 	 * S. Huet, E. Karatekin, V. S. Tran, I. Fanget, S. Cribier, and J.-P. Henry, 
 	 * “Analysis of transient behavior in complex trajectories: application to secretory vesicle dynamics.,” 
 	 * Biophys. J., vol. 91, no. 9, pp. 3542–3559, 2006.
 	 * 
 	 * @param t Trajectory
-	 * @param timelag Timeleg for msd caluclation (>= 1)
-	 * @return Double array [0] =MSD (in position unit squared) and [1] = Relative Variance (unitless)
+	 * @param timelag 
+	 * @return 
 	 */
-	public static double[] getMeanSquaredDisplacment(Trajectory t, int timelag){
+	private double[] getMeanSquaredDisplacment(Trajectory t, int timelag){
 		double msd = 0;
 		double[] result = new double[2];
 		if(t.size()==1){
@@ -71,6 +96,32 @@ public class MSDCalculator {
 		result[1] = (timelag*(2*timelag*timelag+1.0))/(N-timelag+1.0); //Variance
 		
 		return result;
+	}
+
+	@Override
+	/**
+	 * @return Mean squared displacment (in length unit squared) 
+	 */
+	public double[] evaluate() {
+		// TODO Auto-generated method stub
+		return getMeanSquaredDisplacment(t, timelag);
+	}
+	
+	/**
+	 * 
+	 * @return Return the relative variance of MSD according to:
+	 * S. Huet, E. Karatekin, V. S. Tran, I. Fanget, S. Cribier, and J.-P. Henry, 
+	 * “Analysis of transient behavior in complex trajectories: application to secretory vesicle dynamics.,” 
+	 * Biophys. J., vol. 91, no. 9, pp. 3542–3559, 2006.
+	 */
+	public double getRelativeVariance() {
+		return getMeanSquaredDisplacment(t, timelag)[1];
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

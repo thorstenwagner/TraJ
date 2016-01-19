@@ -1,4 +1,4 @@
-package de.biomedical_imaging.traJ.test;
+package de.biomedical_imaging.traj.simulation.test;
 
 import static org.junit.Assert.*;
 

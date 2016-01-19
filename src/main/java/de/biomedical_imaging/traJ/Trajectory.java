@@ -47,6 +47,8 @@ public  class Trajectory extends ArrayList<Point3d> {
 	private static long idCounter=1; 
 	private String type = "";
 	
+	
+	
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
 		relativeStartTimepoint = 0;
@@ -57,6 +59,10 @@ public  class Trajectory extends ArrayList<Point3d> {
 		this.dimension = dimension;
 		this.relativeStartTimepoint = relativeStartTimepoint;
 		id = idCounter++;
+	}
+	
+	public Trajectory() {
+		relativeStartTimepoint = 0;
 	}
 	
 	public double[][] getPositionsAsArray(){
@@ -83,7 +89,7 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return result;
 	}
 	
-	public void showTrajectory(){
+	public void showTrajectory(String title){
 		if(dimension==2){
 		 	double[] xData = new double[this.size()];
 		    double[] yData = new double[this.size()];
@@ -92,13 +98,16 @@ public  class Trajectory extends ArrayList<Point3d> {
 		    	yData[i] = this.get(i).y;
 		    }
 		    // Create Chart
-		    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+		    Chart chart = QuickChart.getChart(title, "X", "Y", "y(x)", xData, yData);
 	
 		    
 		    //Show it
 		    new SwingWrapper(chart).displayChart();
-		}
-		 
+		} 
+	}
+	
+	public void showTrajectory(){
+		showTrajectory("NoTitle");
 	}
 	
 	@Override
@@ -127,10 +136,17 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return dimension;
 	}
 	
+	public void setDimension(int dimension){
+		this.dimension = dimension;
+	}
+	
 	public long getID(){
 		return id;
 	}
 	
+	public void setID(int id) {
+		this.id = id;
+	}
 	public int getRelativeStartTimepoint(){
 		return relativeStartTimepoint;
 	}

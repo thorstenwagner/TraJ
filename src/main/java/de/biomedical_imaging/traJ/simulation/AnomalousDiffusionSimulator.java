@@ -62,9 +62,9 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 			double driftdz = drift.get(i).z-drift.get(i-1).z;
 			double[] drift = {driftdx,driftdy,driftdz};
 			Point3d pos = nextValidStep(t.get(t.size()-1),drift);
-			pos.setX(pos.x);
-			pos.setY(pos.y);
-			pos.setZ(pos.z);
+		//	pos.setX(pos.x);
+		//	pos.setY(pos.y);
+		//	pos.setZ(pos.z);
 			t.add(pos);
 			
 		}
@@ -87,8 +87,9 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 				for(int i = 0; i < candPos.length; i++){
 					nextPos[i] = candPos[i];
 				}
-				takenSubsteps++;
+				
 			}
+			takenSubsteps++;
 		}
 		
 		return new Point3d(nextPos);

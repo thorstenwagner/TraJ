@@ -25,9 +25,12 @@ SOFTWARE.
 package de.biomedical_imaging.traJ.DiffusionCoefficientEstimator;
 
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.knowm.xchart.Chart;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.SwingWrapper;
 
-import de.biomedical_imaging.traJ.MSDCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 /**
  * 
  * @author Thorste Wagner
@@ -42,6 +45,9 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		this.lagMax = lagMax;
 	}
 	
+	/**
+	 * @return [0] = diffusion coefficent, [2] = slope, [3] = Intercept
+	 */
 	@Override
 	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
 		if(t.size()==1){
@@ -52,15 +58,38 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		if(lagMin==lagMax){
 			reg.addData(0, 0);
 		}
-
+	
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, lagMin);
 		for(int i = lagMin; i < lagMax+1; i++){
-			
-			msdhelp = MSDCalculator.getMeanSquaredDisplacment(t, i)[0];
+			msdCalc.setTimalag(i);
+			msdhelp= msdCalc.evaluate()[0];
 			reg.addData(i*1.0/fps, msdhelp);
 		}
-		double[] D = {reg.getSlope()/(2.0*t.getDimension())}; 
+		double[] D = {reg.getSlope()/(2.0*t.getDimension()),reg.getSlope(),reg.getIntercept()}; 
 		return D;
-
 	}
+	
+	public static  void plotMSDLine(Trajectory t, int lagMin, int lagMax){
+		
+		 	double[] xData = new double[lagMax-lagMin+1];
+		    double[] yData = new double[lagMax-lagMin+1];
+		    
+		    MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, lagMin);
+			for(int i = lagMin; i < lagMax+1; i++){
+				msdCalc.setTimalag(i);
+				double msdhelp= msdCalc.evaluate()[0];
+				xData[i-lagMin] = i;
+		    	yData[i-lagMin] = msdhelp;
+			}
+		 
+		    // Create Chart
+		    Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD", xData, yData);
+	
+		    
+		    //Show it
+		    new SwingWrapper(chart).displayChart();
+		
+	}
+
 
 }

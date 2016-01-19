@@ -1,4 +1,4 @@
-package de.biomedical_imaging.traJ.test;
+package de.biomedical_imaging.traj.simulation.test;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import de.biomedical_imaging.traJ.simulation.AnomalousDiffusionScene;
 public class AnomalousDiffusionSceneTest {
 
 	@Test
-	public void periodicPositionTest1() {
+	public void checkCollisionTest1() {
 		double[] size = {512,512,512};
 		AnomalousDiffusionScene s = new AnomalousDiffusionScene(size,3);
 		
@@ -21,7 +21,7 @@ public class AnomalousDiffusionSceneTest {
 	}
 	
 	@Test
-	public void periodicPositionTest2() {
+	public void checkCollisionTest2() {
 		double[] size = {512,512,512};
 		AnomalousDiffusionScene s = new AnomalousDiffusionScene(size,3);
 		
@@ -33,7 +33,7 @@ public class AnomalousDiffusionSceneTest {
 	}
 	
 	@Test
-	public void periodicPositionTest3() {
+	public void checkCollisionTest3() {
 		double[] size = {512,512,512};
 		AnomalousDiffusionScene s = new AnomalousDiffusionScene(size,3);
 		

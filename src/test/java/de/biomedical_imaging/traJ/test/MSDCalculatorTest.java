@@ -5,8 +5,8 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.biomedical_imaging.traJ.MSDCalculator;
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 
 public class MSDCalculatorTest {
 	
@@ -33,8 +33,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 1;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(2.0, result[0], DOUBLE_PRECISION);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(2.0, result, DOUBLE_PRECISION);
 	}
 	
 	@Test
@@ -52,8 +53,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(8, result[0], DOUBLE_PRECISION);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(8, result, DOUBLE_PRECISION);
 	}
 	
 	@Test
@@ -72,8 +74,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(8.0, result[0], DOUBLE_PRECISION);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(8.0, result, DOUBLE_PRECISION);
 	}
 	
 	@Test
@@ -95,8 +98,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 1;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(2.0, result[0], DOUBLE_PRECISION);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(2.0, result, DOUBLE_PRECISION);
 	}
 	
 	@Test
@@ -119,8 +123,9 @@ public class MSDCalculatorTest {
 		}
 
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(8.0, result[0], DOUBLE_PRECISION);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(8.0, result, DOUBLE_PRECISION);
 	}
 	
 
@@ -145,8 +150,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 1;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(2.0, result[0], 0);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(2.0, result, 0);
 	}
 	
 	@Test
@@ -163,8 +169,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(8, result[0], 0);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(8, result, 0);
 	}
 	
 	
@@ -186,8 +193,9 @@ public class MSDCalculatorTest {
 		}
 
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(8, result[0], 0);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(8, result, 0);
 	}
 	
 	/*
@@ -209,8 +217,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 1;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(3.0, result[0], 0);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(3.0, result, 0);
 	}
 	
 	@Test
@@ -226,8 +235,9 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(4*3, result[0], 0);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(4*3, result, 0);
 	}
 	
 	
@@ -248,7 +258,8 @@ public class MSDCalculatorTest {
 		}
 		
 		int timelag = 2;
-		double[] result = MSDCalculator.getMeanSquaredDisplacment(t, timelag);
-		Assert.assertEquals(4*3, result[0], 0);
+		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, timelag);
+		double result = msdCalc.evaluate()[0];
+		Assert.assertEquals(4*3, result, 0);
 	}
 }
