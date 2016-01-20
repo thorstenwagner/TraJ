@@ -1,9 +1,8 @@
 [![DOI](https://zenodo.org/badge/18649/thorstenwagner/TraJ.svg)](https://zenodo.org/badge/latestdoi/18649/thorstenwagner/TraJ)
 # TraJ
-Java library for diffusion trajectory analysis
+Java library for diffusion trajectory (2D) analysis
 
 Implemented features so far:
-- Compatible with 1D, 2D and 3D trajectories.
 - Covariance estimator for diffusion coefficient
 - Regression estimator for diffusion coefficient
 - Stokes-Einstein converter to get hydrodynamic diameter
