@@ -4,7 +4,6 @@ Java library for diffusion trajectory analysis
 
 Implemented features so far:
 - Compatible with 1D, 2D and 3D trajectories.
-- Mean squared displacement calculation
 - Covariance estimator for diffusion coefficient
 - Regression estimator for diffusion coefficient
 - Stokes-Einstein converter to get hydrodynamic diameter
@@ -15,6 +14,15 @@ Implemented features so far:
 - Simulation: Confined diffusion
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
+
+Trajectory characterization:
+- Aspect ratio
+- Elongation
+- Fractal dimension
+- Mean squared displacment curve curvature
+- Mean squared displacment
+- Exponent in power law fit to MSD curve
+- Standard deviation in direction
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012.
