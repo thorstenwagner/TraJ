@@ -22,6 +22,8 @@ Trajectory characterization:
 - Mean squared displacment
 - Exponent in power law fit to MSD curve
 - Standard deviation in direction
+![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
+
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012.
