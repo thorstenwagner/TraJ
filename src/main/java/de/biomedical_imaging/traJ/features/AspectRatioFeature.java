@@ -35,7 +35,8 @@ public class AspectRatioFeature extends AbstractTrajectoryFeature {
 
 		double longSide = rect[0].distance(rect[1])>rect[1].distance(rect[2])?rect[0].distance(rect[1]):rect[1].distance(rect[2]);
 		double shortSide = rect[0].distance(rect[1])>rect[1].distance(rect[2])?rect[1].distance(rect[2]):rect[0].distance(rect[1]);
-		return new double[] {longSide/shortSide};
+		result = new double[] {longSide/shortSide};
+		return result;
 	}
 
 	@Override
@@ -47,6 +48,7 @@ public class AspectRatioFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

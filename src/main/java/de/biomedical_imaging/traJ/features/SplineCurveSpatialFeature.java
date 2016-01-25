@@ -19,7 +19,7 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	private Trajectory t;
 	private int nSegments;
 	private TrajectorySplineFit splinefit;
-	
+
 	public SplineCurveSpatialFeature(Trajectory t, int nSegments) {
 		this.t =t;
 		this.nSegments = nSegments;
@@ -40,7 +40,8 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 		}
 		Mean m = new Mean();
 		StandardDeviation sd = new StandardDeviation();
-		return new double[] {m.evaluate(data),sd.evaluate(data)};
+		result = new double[] {m.evaluate(data),sd.evaluate(data)};
+		return result;
 	
 		 
 	}
@@ -58,7 +59,9 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result=null;
 		
 	}
+
 
 }

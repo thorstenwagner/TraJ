@@ -63,8 +63,8 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 		//System.out.println("N: " +spline.getN());
 		double msdParallel = sumParallel/N;
 		double msdPerpendicular = sumPerpendicular/N;
-		
-		return new double[]{msdParallel,msdPerpendicular};
+		result = new double[]{msdParallel,msdPerpendicular};
+		return result;
 	}
 	
 	public TrajectorySplineFit getTrajectorySplineFitInstance(){
@@ -80,6 +80,7 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

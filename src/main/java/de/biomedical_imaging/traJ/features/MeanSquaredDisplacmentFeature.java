@@ -53,6 +53,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature {
 	
 	public void setTrajectory(Trajectory t){
 		this.t = t;
+		result =null;
 	}
 	
 	/**

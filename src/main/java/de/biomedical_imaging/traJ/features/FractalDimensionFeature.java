@@ -34,8 +34,8 @@ public class FractalDimensionFeature extends AbstractTrajectoryFeature{
 		}
 		double n = t.size()-1;
 		double fractalDImension = Math.log(n)/(Math.log(n)+Math.log(largestDistance/totalLength));
-		
-		return new double[] {fractalDImension};
+		result = new double[] {fractalDImension};
+		return result;
 	}
 
 	@Override
@@ -47,6 +47,7 @@ public class FractalDimensionFeature extends AbstractTrajectoryFeature{
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		if(t.getDimension() != 2){
 			throw new IllegalArgumentException("The fractal dimension feature only supoorts planer (2D) trajetorys"); 
 		}

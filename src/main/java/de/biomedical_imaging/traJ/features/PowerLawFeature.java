@@ -34,7 +34,8 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		
 		double exponent = params[1];
 		//System.out.println("0: " + params[0] + " 1: " + params[1]);
-		return new double[] {exponent};
+		result = new double[] {exponent};
+		return result;
 	}
 
 	@Override
@@ -46,6 +47,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

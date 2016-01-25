@@ -45,7 +45,8 @@ public class ElongationFeature extends AbstractTrajectoryFeature {
 
 		double longSide = rect[0].distance(rect[1])>rect[1].distance(rect[2])?rect[0].distance(rect[1]):rect[1].distance(rect[2]);
 		double shortSide = rect[0].distance(rect[1])>rect[1].distance(rect[2])?rect[1].distance(rect[2]):rect[0].distance(rect[1]);
-		return new double[] {1-shortSide/longSide};
+		result = new double[] {1-shortSide/longSide};
+		return result;
 	}
 
 	@Override
@@ -57,6 +58,7 @@ public class ElongationFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

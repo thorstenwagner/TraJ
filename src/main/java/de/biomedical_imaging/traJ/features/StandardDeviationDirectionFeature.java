@@ -17,6 +17,7 @@ import de.biomedical_imaging.traJ.Trajectory;
 public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature {
 	private Trajectory t;
 	private int timelag;
+
 	public StandardDeviationDirectionFeature(Trajectory t, int timelag) {
 		this.t = t;
 		this.timelag = timelag;
@@ -51,7 +52,8 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 			//System.out.println("da " + v1.angle(v2));
 		}
 		sd.setData(values);
-		return new double[]{sd.evaluate()};
+		result = new double[]{sd.evaluate()};
+		return result;
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
-		
+		result = null;
 	}
 
 }

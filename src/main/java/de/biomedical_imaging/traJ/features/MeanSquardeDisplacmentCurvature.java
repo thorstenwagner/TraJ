@@ -16,6 +16,7 @@ public class MeanSquardeDisplacmentCurvature extends AbstractTrajectoryFeature {
 	
 	public MeanSquardeDisplacmentCurvature(Trajectory t){
 		this.t = t;
+		result = null;
 	}
 	
 	@Override
@@ -42,7 +43,8 @@ public class MeanSquardeDisplacmentCurvature extends AbstractTrajectoryFeature {
 			sum+= (msd.evaluate()[0] - evaluateMSDLine(i, slope, intercept))/evaluateMSDLine(i, slope, intercept);
 		}
 		double dev = sum/Ndef;
-		return new double[] {dev};
+		result = new double[] {dev};
+		return result;
 	}
 	
 	private double evaluateMSDLine(double v, double slope, double intercept){
