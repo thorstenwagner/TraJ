@@ -3,7 +3,7 @@
 	
 	<groupId>de.biomedical-imaging.TraJ</groupId>
 	<artifactId>traj</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<packaging>jar</packaging>
  
 	<name>Library for diffusion trajectory analysis</name>
@@ -141,7 +141,7 @@
 		<url>https://github.com/thorstenwagner/TraJ.git</url>
 		<connection>scm:git:git://github.com/thorstenwagner/TraJ.git</connection>
 		<developerConnection>scm:git:git@github.com:thorstenwagner/TraJ.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>traj-0.1</tag>
   </scm>
 
 
