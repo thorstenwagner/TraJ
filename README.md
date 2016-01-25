@@ -22,7 +22,7 @@ Trajectory characterization:
 - Mean squared displacment
 - Exponent in power law fit to MSD curve [4]
 - Standard deviation in direction
-- Spatial features according to [5]
+- Spline curve analysis features according to [5]
 ![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
 
 References:
