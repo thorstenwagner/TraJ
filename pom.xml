@@ -103,6 +103,11 @@
    	 		<artifactId>ij</artifactId>
   	 		<version>1.49r</version>
 		</dependency>
+		<dependency>
+   	 		<groupId>edu.wlu.cs.levy.CG</groupId>
+   	 		<artifactId>KDtree</artifactId>
+  	 		<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 	<developers>
 		<developer>
