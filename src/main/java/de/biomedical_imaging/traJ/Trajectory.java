@@ -24,23 +24,20 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 
-import javax.swing.JFrame;
+import java.util.ArrayList;
 import javax.vecmath.Point3d;
-import javax.vecmath.Point4d;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XChartPanel;
 
 public  class Trajectory extends ArrayList<Point3d> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int dimension;
 	private int relativeStartTimepoint;
 	private long id;

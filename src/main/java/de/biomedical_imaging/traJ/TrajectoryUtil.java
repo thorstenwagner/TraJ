@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
-import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;

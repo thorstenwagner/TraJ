@@ -1,32 +1,12 @@
 package de.biomedical_imaging.traJ.features;
 
-import ij.IJ;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
-import javax.vecmath.Vector3d;
-
 import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
-import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-
-import cg.RotatingCalipers;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectorySplineFit;
-import edu.wlu.cs.levy.CG.KDTree;
-import edu.wlu.cs.levy.CG.KeyDuplicateException;
-import edu.wlu.cs.levy.CG.KeySizeException;
+
 /**
  * Implements the spline curve dynamics method to estimate D and D according to:
  * [1] B. R. Long and T. Q. Vu, 
@@ -82,12 +62,6 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 		double msdPerpendicular = sumPerpendicular/N;
 		
 		return new double[]{msdParallel,msdPerpendicular};
-	}
-	
-	private double signedDistanceToLine(Point2D.Double p1, Point2D.Double p2, Point2D.Double p){
-		double sign =splinefit.isLeft(p1, p2, p) ? 1:-1;
-		
-		return sign*splinefit.distancePointLine(p1, p2, p);
 	}
 	
 	public TrajectorySplineFit getTrajectorySplineFitInstance(){

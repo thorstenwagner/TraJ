@@ -1,7 +1,5 @@
 package de.biomedical_imaging.traJ.features;
 
-import java.util.Vector;
-
 import javax.vecmath.Vector3d;
 
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;

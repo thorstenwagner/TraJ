@@ -1,13 +1,6 @@
 package de.biomedical_imaging.traJ.features;
 
 import ij.measure.CurveFitter;
-
-import java.util.ArrayList;
-
-import nl.peterbloem.powerlaws.Continuous;
-
-import org.apache.commons.math3.fitting.WeightedObservedPoints;
-
 import de.biomedical_imaging.traJ.Trajectory;
 
 public class PowerLawFeature extends AbstractTrajectoryFeature {

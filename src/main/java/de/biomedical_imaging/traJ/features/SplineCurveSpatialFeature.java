@@ -2,9 +2,6 @@ package de.biomedical_imaging.traJ.features;
 
 
 import java.awt.geom.Point2D;
-
-import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
@@ -31,8 +28,7 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	@Override
 	public double[] evaluate() {
 		splinefit = new TrajectorySplineFit(t,nSegments);
-		PolynomialSplineFunction spline = splinefit.calculateSpline();
-		UnivariateFunction derivative = spline.derivative();
+		splinefit.calculateSpline();
 		
 		double[] data = new double[t.size()];
 		for(int i = 0; i < t.size(); i++){
