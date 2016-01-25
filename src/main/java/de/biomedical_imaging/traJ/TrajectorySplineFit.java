@@ -152,7 +152,6 @@ public class TrajectorySplineFit {
 			means[i] = sd.evaluate();
 		}
 		double s = m.evaluate(means);
-		System.out.println("Mean standard deviation: " + s);
 		/*
 		 * 4. Build a kd-tree
 		 */
@@ -214,7 +213,7 @@ public class TrajectorySplineFit {
 		int nCircleSegments = 100;
 		double deltaRad = 2*Math.PI/nCircleSegments;
 		boolean stop = false;
-		int minN = 2;
+		int minN = 7;
 		double tempr1 = r1;
 		double allowedDeltaDirection = 0.3*Math.PI;
 				
@@ -283,7 +282,6 @@ public class TrajectorySplineFit {
 							candCx+=nearest2xr1.get(i).x;
 							candCy+=nearest2xr1.get(i).y;
 							candN++;
-							//System.out.println("o!");
 						}	
 					}
 					else{
@@ -291,7 +289,6 @@ public class TrajectorySplineFit {
 							candCx+=nearest2xr1.get(i).x;
 							candCy+=nearest2xr1.get(i).y;
 							candN++;
-							//System.out.println("o!");
 						}
 					}
 					
@@ -361,18 +358,18 @@ public class TrajectorySplineFit {
 					}
 				});
 				
-		//Sortierung sorgt für problem!
+	
 		
 		//Add endpoints
 		Vector2d start = new Vector2d(splineSupportPoints.get(0).x-splineSupportPoints.get(1).x, splineSupportPoints.get(0).y-splineSupportPoints.get(1).y);
 		start.normalize();
-		start.scale(r1*2);
+		start.scale(r1*3);
 		splineSupportPoints.add(0, new Point2D.Double(splineSupportPoints.get(0).x+start.x, splineSupportPoints.get(0).y+start.y));
 		
 		Vector2d end = new Vector2d(splineSupportPoints.get(splineSupportPoints.size()-1).x-splineSupportPoints.get(splineSupportPoints.size()-2).x, 
 				splineSupportPoints.get(splineSupportPoints.size()-1).y-splineSupportPoints.get(splineSupportPoints.size()-2).y);
 		end.normalize();
-		end.scale(r1*2);
+		end.scale(r1*3);
 		splineSupportPoints.add(new Point2D.Double(splineSupportPoints.get(splineSupportPoints.size()-1).x+end.x, splineSupportPoints.get(splineSupportPoints.size()-1).y+end.y));
 		
 		

@@ -26,6 +26,9 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	}
 	
 	@Override
+	/**
+	 * @return [0] Mean  distance [1] SD  distance 
+	 */
 	public double[] evaluate() {
 		splinefit = new TrajectorySplineFit(t,nSegments);
 		splinefit.calculateSpline();

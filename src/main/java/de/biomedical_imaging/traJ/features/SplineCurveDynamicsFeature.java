@@ -2,8 +2,12 @@ package de.biomedical_imaging.traJ.features;
 
 
 import java.awt.geom.Point2D;
+
+import javax.vecmath.Vector2d;
+
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectorySplineFit;
 
@@ -37,24 +41,23 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 
 		splinefit = new TrajectorySplineFit(t,nSegments);
 		PolynomialSplineFunction spline = splinefit.calculateSpline();
-		
+		Trajectory tr = splinefit.getRotatedTrajectory();
 		UnivariateFunction derivative = spline.derivative();
 		int N =0;
 		double sumParallel = 0;
 		double sumPerpendicular = 0;
 		//Split each step into replacment rependicular and parallel to spline tangent
 		for(int i = timelag; i < t.size(); i+=timelag){
-			Point2D.Double pRef = splinefit.minDistancePointSpline(new Point2D.Double(t.get(i).x, t.get(i).y), 50);
+			Point2D.Double pRef = splinefit.minDistancePointSpline(new Point2D.Double(tr.get(i).x, tr.get(i).y), 50);
+
+			Point2D.Double pTangend = new Point2D.Double(pRef.x+1, derivative.value(pRef.x)*(pRef.x+1-pRef.x)+spline.value(pRef.x) );
+			Point2D.Double pNormal = new Point2D.Double(-1*pTangend.y, pTangend.x);
+
 			
-			Point2D.Double pNormal = new Point2D.Double(pRef.x+1, -1*derivative.value(pRef.x)+pRef.y);
-			Point2D.Double pTangend = new Point2D.Double(pRef.x+1, derivative.value(pRef.x)+pRef.y);
-		//	pRef.setLocation(pRef.x+dp.x, pRef.y+dp.y);
-			pNormal.setLocation(pNormal.x-pRef.x, pNormal.y-pRef.y);
-			pTangend.setLocation(pTangend.x-pRef.x, pTangend.y-pRef.y);
-			pRef.setLocation(0, 0);
-			Point2D.Double dp = new Point2D.Double(t.get(i).x-t.get(i-timelag).x, t.get(i).y-t.get(i-timelag).y);
+			Point2D.Double dp = new Point2D.Double(pRef.x + tr.get(i).x-tr.get(i-timelag).x, pRef.y+ tr.get(i).y-tr.get(i-timelag).y);
 			sumParallel+=Math.pow(splinefit.distancePointLine(pRef, pNormal, dp), 2);
 			sumPerpendicular+=Math.pow(splinefit.distancePointLine(pRef, pTangend, dp),2);
+	
 			N++;
 		}
 		//System.out.println("N: " +spline.getN());
