@@ -11,6 +11,7 @@ Implemented features so far:
 - Simulation: Brownian motion (free diffusion)
 - Simulation: Active Transport
 - Simulation: Confined diffusion
+- Simulation: Anomalous diffusion with fixed obstacles (spheres)
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
 
@@ -39,3 +40,4 @@ References:
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012. (Already implemented in NanoTrackJ - I just have to port it)
+- Simulation: Add anomalous diffusion with brownian motion obstacles and Ornstein-Uhlenbeck obstacles
