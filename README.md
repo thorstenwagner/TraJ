@@ -14,16 +14,15 @@ Implemented features so far:
 - Simulation: Anomalous diffusion with fixed obstacles (spheres)
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
-
-Trajectory characterization:
-- Aspect ratio
-- Elongation
-- Fractal path dimension [2]
-- Mean squared displacment curve curvature [3]
-- Mean squared displacment
-- Exponent in power law fit to MSD curve [4]
-- Standard deviation in direction
-- Spline curve analysis features according to [5]
+- Trajectory characterization:
+  - Aspect ratio
+  - Elongation
+  - Fractal path dimension [2]
+  - Mean squared displacment curve curvature [3]
+  - Mean squared displacment
+  - Exponent in power law fit to MSD curve [4]
+  - Standard deviation in direction
+  - Spline curve analysis features according to [5]
 ![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
 
 References:
