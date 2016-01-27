@@ -51,4 +51,10 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		
 	}
 
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "POWER";
+	}
+
 }

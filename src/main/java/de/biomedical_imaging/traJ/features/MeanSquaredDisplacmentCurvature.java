@@ -11,10 +11,10 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffus
  * @author Thorsten Wagner
  *
  */
-public class MeanSquardeDisplacmentCurvature extends AbstractTrajectoryFeature {
+public class MeanSquaredDisplacmentCurvature extends AbstractTrajectoryFeature {
 	private Trajectory t;
 	
-	public MeanSquardeDisplacmentCurvature(Trajectory t){
+	public MeanSquaredDisplacmentCurvature(Trajectory t){
 		this.t = t;
 		result = null;
 	}
@@ -60,6 +60,12 @@ public class MeanSquardeDisplacmentCurvature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+	}
+
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "MSD-CURV";
 	}
 
 	

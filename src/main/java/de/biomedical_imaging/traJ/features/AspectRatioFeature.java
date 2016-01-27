@@ -51,5 +51,10 @@ public class AspectRatioFeature extends AbstractTrajectoryFeature {
 		result = null;
 		
 	}
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "AR";
+	}
 
 }

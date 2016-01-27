@@ -124,5 +124,11 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature {
 		// TODO Auto-generated method stub
 		return "Mean squared displacement-dt-"+timelag;
 	}
+
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "MSD";
+	}
 	
 }

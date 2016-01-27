@@ -68,4 +68,10 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 		result = null;
 	}
 
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "DIR-SD";
+	}
+
 }

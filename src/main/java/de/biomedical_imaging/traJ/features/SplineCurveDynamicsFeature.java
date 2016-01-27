@@ -2,9 +2,6 @@ package de.biomedical_imaging.traJ.features;
 
 
 import java.awt.geom.Point2D;
-
-import javax.vecmath.Vector2d;
-
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
@@ -82,6 +79,12 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 		this.t = t;
 		result = null;
 		
+	}
+
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "SCDA";
 	}
 
 }

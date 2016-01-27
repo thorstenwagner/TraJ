@@ -26,11 +26,14 @@ package de.biomedical_imaging.traJ;
 
 
 import java.util.ArrayList;
+
 import javax.vecmath.Point3d;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
+
+import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 
 public  class Trajectory extends ArrayList<Point3d> {
 	
@@ -43,23 +46,35 @@ public  class Trajectory extends ArrayList<Point3d> {
 	private long id;
 	private static long idCounter=1; 
 	private String type = "";
-	
+	private ArrayList<AbstractTrajectoryFeature> features;
 	
 	
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
 		relativeStartTimepoint = 0;
 		id = idCounter++;
+		features = new ArrayList<AbstractTrajectoryFeature>();
 	}
 	
 	public Trajectory(int dimension, int relativeStartTimepoint) {
 		this.dimension = dimension;
 		this.relativeStartTimepoint = relativeStartTimepoint;
 		id = idCounter++;
+		features = new ArrayList<AbstractTrajectoryFeature>();
 	}
 	
 	public Trajectory() {
 		relativeStartTimepoint = 0;
+		features = new ArrayList<AbstractTrajectoryFeature>();
+	}
+	
+	public ArrayList<AbstractTrajectoryFeature> getFeatures(){
+		return features;
+	}
+	
+	public void addFeature(AbstractTrajectoryFeature feature){
+		
+		features.add(feature);
 	}
 	
 	public double[][] getPositionsAsArray(){

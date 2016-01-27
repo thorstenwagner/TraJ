@@ -62,4 +62,10 @@ public class ElongationFeature extends AbstractTrajectoryFeature {
 		
 	}
 
+	@Override
+	public String getShortName() {
+		
+		return "ELONG";
+	}
+
 }

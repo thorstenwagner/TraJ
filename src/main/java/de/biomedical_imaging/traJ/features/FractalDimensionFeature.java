@@ -54,4 +54,10 @@ public class FractalDimensionFeature extends AbstractTrajectoryFeature{
 		
 	}
 
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "FD";
+	}
+
 }

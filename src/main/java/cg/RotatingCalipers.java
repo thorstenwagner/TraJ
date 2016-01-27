@@ -24,9 +24,7 @@
  */
 package cg;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.util.*;
 
 public final class RotatingCalipers {
@@ -50,6 +48,7 @@ public final class RotatingCalipers {
     public static List<Point2D.Double[]> getAllBoundingRectangles(int[] xs, int[] ys) throws IllegalArgumentException {
 
         if(xs.length != ys.length) {
+   
             throw new IllegalArgumentException("xs and ys don't have the same size");
         }
 
@@ -373,7 +372,7 @@ public final class RotatingCalipers {
             TreeSet<Point2D.Double> set = new TreeSet<Point2D.Double>(new Comparator<Point2D.Double>() {
                public int compare(Point2D.Double a, Point2D.Double b) {
 
-                   if(a.distance(b)<0.0000001) {
+                   if(a.distance(b)<Math.pow(10, -18)) {
                        return 0;
                    }
 
@@ -412,7 +411,7 @@ public final class RotatingCalipers {
             double crossProduct = ((b.x - a.x) * (c.y - a.y)) -
                     ((b.y - a.y) * (c.x - a.x));
 
-            if(Math.abs(crossProduct)<0.00001) {
+            if(Math.abs(crossProduct)<Math.pow(10, -18)) {
                 return Turn.COLLINEAR;
             }
             

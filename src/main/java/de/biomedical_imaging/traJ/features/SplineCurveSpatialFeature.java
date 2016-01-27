@@ -2,6 +2,7 @@ package de.biomedical_imaging.traJ.features;
 
 
 import java.awt.geom.Point2D;
+
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
@@ -30,11 +31,13 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	 * @return [0] Mean  distance [1] SD  distance 
 	 */
 	public double[] evaluate() {
+		System.out.println("Calculate spline!");
 		splinefit = new TrajectorySplineFit(t,nSegments);
 		splinefit.calculateSpline();
-		
+		System.out.println("Calculated !");
 		double[] data = new double[t.size()];
 		for(int i = 0; i < t.size(); i++){
+			
 			Point2D.Double help = new Point2D.Double(splinefit.getRotatedTrajectory().get(i).x, splinefit.getRotatedTrajectory().get(i).y);
 			data[i] = help.distance(splinefit.minDistancePointSpline(new Point2D.Double(splinefit.getRotatedTrajectory().get(i).x, splinefit.getRotatedTrajectory().get(i).y), 50));
 		}
@@ -61,6 +64,12 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 		this.t = t;
 		result=null;
 		
+	}
+
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "SCSA";
 	}
 
 

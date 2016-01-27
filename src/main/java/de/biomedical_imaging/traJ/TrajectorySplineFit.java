@@ -70,6 +70,8 @@ public class TrajectorySplineFit {
 		}
 		catch(IllegalArgumentException e)
 		{
+			t.showTrajectory();
+			e.printStackTrace();
 			throw new IllegalArgumentException("Spline curve estimation does not work with colinear points ");
 		}
 		
@@ -116,7 +118,7 @@ public class TrajectorySplineFit {
 		 */
 		
 		double segmentWidth = p1.distance(p2)/nSegments;
-		
+		System.out.println();
 		List<List<Point2D.Double>> pointsInSegments = new ArrayList<List<Point2D.Double>>(nSegments);
 		for(int i = 0; i < nSegments; i++){
 			pointsInSegments.add(new ArrayList<Point2D.Double>());
@@ -124,9 +126,10 @@ public class TrajectorySplineFit {
 		for(int i = 0; i < points.size(); i++){
 			Point2D.Double projPoint  = projectPointToLine(p1, p2, points.get(i));
 			int index = (int)(p1.distance(projPoint)/segmentWidth);
-		
-			if(index>nSegments-1){
-				index = index-1;
+			
+			if(index>(nSegments-1)){
+				//System.out.println("index: " + index + " d: " + p1.distance(projPoint) + " Gesamtlänge: " + p1.distance(p2));
+				index = (nSegments-1);
 			}
 			pointsInSegments.get(index).add(points.get(i));
 		}
@@ -134,10 +137,10 @@ public class TrajectorySplineFit {
 		/*
 		 * 3. Calculate the mean standard deviation over each segment: <s>
 		 */
-		Mean m = new Mean();
 		Point2D.Double eMajorP1 = new Point2D.Double(p1.x - (p3.x-p1.x)/2.0,p1.y - (p3.y-p1.y)/2.0); 
 		Point2D.Double eMajorP2 = new Point2D.Double(p2.x - (p3.x-p1.x)/2.0,p2.y - (p3.y-p1.y)/2.0); 
-		double means[] = new double[nSegments];
+		double sumMean=0;
+		int Nsum = 0;
 		for(int i = 0; i < nSegments; i++){
 			StandardDeviation sd = new StandardDeviation();
 			double[] distances = new double[pointsInSegments.get(i).size()];
@@ -148,10 +151,14 @@ public class TrajectorySplineFit {
 				}
 				distances[j] = factor*distancePointLine(eMajorP1, eMajorP2, pointsInSegments.get(i).get(j));
 			}
-			sd.setData(distances);
-			means[i] = sd.evaluate();
+			if(distances.length >0){
+				sd.setData(distances);
+				sumMean += sd.evaluate();
+				Nsum++;
+			}
 		}
-		double s = m.evaluate(means);
+		double s = sumMean/Nsum;
+
 		/*
 		 * 4. Build a kd-tree
 		 */
@@ -311,7 +318,9 @@ public class TrajectorySplineFit {
 					hThreshRad = hThreshRad - 2*Math.PI;
 				}
 				newDist=Math.min(Math.abs(lThreshRad-stopThresh), 2*Math.PI-Math.abs(lThreshRad-stopThresh));
+			
 			}while((newDist-lastDist)>0);
+			
 			
 			//Check if the new center is valid
 			if(splineSupportPoints.size()>1){
@@ -324,26 +333,31 @@ public class TrajectorySplineFit {
 					dDir = 2*Math.PI-dDir;
 				}
 				if(dDir>allowedDeltaDirection){
-					//Directory change is too large
+
 					stop = true;
 				}
 			}
+			boolean enoughPoints = (newCN<minN);
+			boolean isNormalRadius = Math.abs(tempr1-r1)<Math.pow(10, -18);
+			boolean isExtendedRadius = Math.abs(tempr1-3*r1)<Math.pow(10, -18);
+			//System.out.println(" x " + newCx + " y " + newCy + " newCn " + newCN + "normal " + isNormalRadius + " extended " + isExtendedRadius);
 			
-			if(newCN<minN && Math.abs(tempr1-r1)<0.00001){
+			if(enoughPoints&& isNormalRadius){
 				//Not enough points, extend search radius
 				tempr1 = 3*r1;
 			}
-			else if(newCN<minN && Math.abs(tempr1-3*r1)<0.00001){
+			else if(enoughPoints && isExtendedRadius){
 				//Despite radius extension: Not enough points!
 				stop = true;
 			}
 			else if(stop==false){
-			
+			//	System.out.println("add " + (newCN<minN) + " x " + newCx + " y " + newCy + " newCn " + newCN);
 				splineSupportPoints.add(new Point2D.Double(newCx,newCy));
 				tempr1 = r1;
 			}
 			
 		}
+
 		//Sort
 				Collections.sort(splineSupportPoints, new Comparator<Point2D.Double>() {
 
@@ -361,16 +375,28 @@ public class TrajectorySplineFit {
 	
 		
 		//Add endpoints
-		Vector2d start = new Vector2d(splineSupportPoints.get(0).x-splineSupportPoints.get(1).x, splineSupportPoints.get(0).y-splineSupportPoints.get(1).y);
-		start.normalize();
-		start.scale(r1*3);
-		splineSupportPoints.add(0, new Point2D.Double(splineSupportPoints.get(0).x+start.x, splineSupportPoints.get(0).y+start.y));
+		if(splineSupportPoints.size()>1){
+			Vector2d start = new Vector2d(splineSupportPoints.get(0).x-splineSupportPoints.get(1).x, splineSupportPoints.get(0).y-splineSupportPoints.get(1).y);
+			start.normalize();
+			start.scale(r1*3);
+			splineSupportPoints.add(0, new Point2D.Double(splineSupportPoints.get(0).x+start.x, splineSupportPoints.get(0).y+start.y));
+			
+			Vector2d end = new Vector2d(splineSupportPoints.get(splineSupportPoints.size()-1).x-splineSupportPoints.get(splineSupportPoints.size()-2).x, 
+					splineSupportPoints.get(splineSupportPoints.size()-1).y-splineSupportPoints.get(splineSupportPoints.size()-2).y);
+			end.normalize();
+			end.scale(r1*3);
+			splineSupportPoints.add(new Point2D.Double(splineSupportPoints.get(splineSupportPoints.size()-1).x+end.x, splineSupportPoints.get(splineSupportPoints.size()-1).y+end.y));
+		}
+		else{
+			Vector2d majordir = new Vector2d(-1, 0);
+			majordir.normalize();
+			majordir.scale(r1*3);
+			splineSupportPoints.add(0, new Point2D.Double(splineSupportPoints.get(0).x+majordir.x, splineSupportPoints.get(0).y+majordir.y));
+			majordir.scale(-1);
+			splineSupportPoints.add(new Point2D.Double(splineSupportPoints.get(splineSupportPoints.size()-1).x+majordir.x, splineSupportPoints.get(splineSupportPoints.size()-1).y+majordir.y));
 		
-		Vector2d end = new Vector2d(splineSupportPoints.get(splineSupportPoints.size()-1).x-splineSupportPoints.get(splineSupportPoints.size()-2).x, 
-				splineSupportPoints.get(splineSupportPoints.size()-1).y-splineSupportPoints.get(splineSupportPoints.size()-2).y);
-		end.normalize();
-		end.scale(r1*3);
-		splineSupportPoints.add(new Point2D.Double(splineSupportPoints.get(splineSupportPoints.size()-1).x+end.x, splineSupportPoints.get(splineSupportPoints.size()-1).y+end.y));
+
+		}
 		
 		
 		
@@ -464,7 +490,10 @@ public class TrajectorySplineFit {
 	
 		double x = (m * p.y + p.x - m * b) / (m * m + 1);
 		double y = (m * m * p.y + m * p.x + b) / (m * m + 1);
-		
+	//	double dirX = 1;
+	//	double dirY = m*dirX;
+	//	double x = (p.x*dirX+p.y*dirY)/(dirX*dirX + dirY*dirY) * dirX;
+		//double y =(p.x*dirX+p.y*dirY)/(dirX*dirX + dirY*dirY) * dirY + b;
 		return new Point2D.Double(x, y);
 	}
 	

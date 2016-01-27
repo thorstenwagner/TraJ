@@ -4,6 +4,7 @@ import de.biomedical_imaging.traJ.Trajectory;
 
 public abstract class AbstractTrajectoryFeature {
 	protected double[] result = null;
+	
 	/**
 	 * @return return the result;
 	 */
@@ -19,6 +20,9 @@ public abstract class AbstractTrajectoryFeature {
 		return result;
 	}
 	public abstract String getName();
+	public abstract String getShortName();
 	public abstract void setTrajectory(Trajectory t);
+	
+	
 
 }
