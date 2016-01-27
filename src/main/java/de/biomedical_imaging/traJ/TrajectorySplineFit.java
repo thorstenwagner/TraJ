@@ -1,3 +1,27 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2015-2016 Thorsten Wagner (wagner@biomedical-imaging.de)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 package de.biomedical_imaging.traJ;
 
 import java.awt.geom.Point2D;
@@ -10,7 +34,6 @@ import javax.vecmath.Vector2d;
 
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import cg.RotatingCalipers;
@@ -25,6 +48,18 @@ import edu.wlu.cs.levy.CG.KeySizeException;
  * from single-particle trajectories using spline analysis,” 
  * Biophys. J., vol. 98, no. 8, pp. 1712–1721, 2010.
  * 
+ * 1. Calculate the minimum bounding rectangle for main direction estimation
+ * 1.1 Rotate the trajectory that the main direction is parallel to the x-axis
+ * 2. Divide the rectangle in n equal segments
+ * 3. Calculate the mean standard deviation over each segment: <s>
+ * 4. Build a kd-tree
+ * 5. Using the first point f in trajectory and calculate the center of mass
+ * of all points around f (radius: 3*<s>))
+ * 6. The second point is determined by finding the center-of-mass of particles in the p/2 radian 
+ * section of an annulus, r1 < r < 2r1, that is directed toward the angle with the highest number 
+ * of particles within p/2 radians.
+ * 7. This second point is then used as the center of the annulus for choosing the third point, and the process is repeated (6. & 7.).
+ * 
  * @author Thorsten Wagner
  *
  */
@@ -34,26 +69,26 @@ public class TrajectorySplineFit {
 	private Trajectory t;
 	private int nSegments;
 	private Trajectory rotatedTrajectory;
+	private double angleRotated;
 	
+	/**
+	 * @param t The trajectory 
+	 * @param nSegments The number of segments which are used to estimated the width of the trajectory
+	 */
 	public TrajectorySplineFit(Trajectory t, int nSegments) {
 		this.t = t;
 		this.nSegments = nSegments;
 		rotatedTrajectory = new Trajectory(2);
 	}
 	
+	public TrajectorySplineFit(Trajectory t) {
+		this.t = t;
+		this.nSegments = 7;
+		rotatedTrajectory = new Trajectory(2);
+	}
+	
 	public PolynomialSplineFunction calculateSpline(){
-		/*
-		 * 1. Calculate the minimum bounding rectangle
-		 * 2. Divide the rectangle in n equal segments
-		 * 3. Calculate the mean standard deviation over each segment: <s>
-		 * 4. Build a kd-tree
-		 * 5. Using the first point f in trajectory and calculate the center of mass
-		 * of all points around f (radius: 3*<s>))
-		 * 6. The second point is determined by finding the center-of-mass of particles in the p/2 radian 
-		 * section of an annulus, r1 < r < 2r1, that is directed toward the angle with the highest number 
-		 * of particles within p/2 radians.
-		 * 7. This second point is then used as the center of the annulus for choosing the third point, and the process is repeated (6. & 7.).
-		 */
+		
 		
 		/*
 		 * 1.Calculate the minimum bounding rectangle
@@ -76,7 +111,7 @@ public class TrajectorySplineFit {
 		}
 		
 		/*
-		 * Rotate that the major axis is parallel with the xaxis
+		 * 1.1 Rotate that the major axis is parallel with the xaxis
 		 */
 		
 		
@@ -89,6 +124,7 @@ public class TrajectorySplineFit {
 
 		if(doTransform)
 		{
+			angleRotated = inRad;
 			for(int i = 0; i < t.size(); i++){
 				double x = t.get(i).x;
 				double y = t.get(i).y;
@@ -106,6 +142,7 @@ public class TrajectorySplineFit {
 			p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
 		}
 		else{
+			angleRotated = 0;
 			rotatedTrajectory = t;
 		}
 		
@@ -441,7 +478,14 @@ public class TrajectorySplineFit {
 		return d;
 	}
 	
-	public Point2D.Double minDistancePointToLine(Point2D.Double p1,Point2D.Double p2,List<Point2D.Double> points){
+	/**
+	 * 
+	 * @param p1 First point on line
+	 * @param p2 Second point on line
+	 * @param points Points in some distance to the line
+	 * @return The point in points with the minimum distance to the line defined by p1 and p2
+	 */
+	private Point2D.Double minDistancePointToLine(Point2D.Double p1,Point2D.Double p2,List<Point2D.Double> points){
 		double minDist = Double.MAX_VALUE;
 		Point2D.Double minDistancePoint = null;
 		for(int i = 0; i < points.size(); i++){
@@ -479,8 +523,14 @@ public class TrajectorySplineFit {
 		    }
 		    return minDistancePoint;
 	}
-	
-	public  boolean isLeft(Point2D.Double p1,Point2D.Double p2,Point2D.Double p){
+	/**
+	 * 
+	 * @param p1 First point on line
+	 * @param p2 Second point on line
+	 * @param p Point which on one side of the line
+	 * @return true when it is on the left side of the line
+	 */
+	private  boolean isLeft(Point2D.Double p1,Point2D.Double p2,Point2D.Double p){
 		return ((p2.x - p1.x)*(p.y - p1.y) - (p2.y - p1.y)*(p.x - p1.x)) > 0;
 	}
 	
@@ -490,10 +540,7 @@ public class TrajectorySplineFit {
 	
 		double x = (m * p.y + p.x - m * b) / (m * m + 1);
 		double y = (m * m * p.y + m * p.x + b) / (m * m + 1);
-	//	double dirX = 1;
-	//	double dirY = m*dirX;
-	//	double x = (p.x*dirX+p.y*dirY)/(dirX*dirX + dirY*dirY) * dirX;
-		//double y =(p.x*dirX+p.y*dirY)/(dirX*dirX + dirY*dirY) * dirY + b;
+
 		return new Point2D.Double(x, y);
 	}
 	
@@ -504,8 +551,18 @@ public class TrajectorySplineFit {
 		return spline;
 	}
 	
+	/**
+	 * @return The rotated trajectory
+	 */
 	public Trajectory getRotatedTrajectory(){
 		return rotatedTrajectory;
+	}
+	
+	/**
+	 * @return The rotation angle for the trajectory in rad.
+	 */
+	public double getRotationAngle(){
+		return angleRotated;
 	}
 	
 	public List<Point2D.Double> getSplineSupportPoints(){

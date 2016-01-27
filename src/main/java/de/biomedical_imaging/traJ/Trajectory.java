@@ -48,7 +48,9 @@ public  class Trajectory extends ArrayList<Point3d> {
 	private String type = "";
 	private ArrayList<AbstractTrajectoryFeature> features;
 	
-	
+	/**
+	 * @param dimension Dimension of the trajectory
+	 */
 	public Trajectory(int dimension) {
 		this.dimension = dimension;
 		relativeStartTimepoint = 0;
@@ -56,6 +58,11 @@ public  class Trajectory extends ArrayList<Point3d> {
 		features = new ArrayList<AbstractTrajectoryFeature>();
 	}
 	
+	/**
+	 * 
+	 * @param dimension Dimension of the trajectory
+	 * @param relativeStartTimepoint When (index) does the track starts in a image sequence
+	 */
 	public Trajectory(int dimension, int relativeStartTimepoint) {
 		this.dimension = dimension;
 		this.relativeStartTimepoint = relativeStartTimepoint;
@@ -68,15 +75,26 @@ public  class Trajectory extends ArrayList<Point3d> {
 		features = new ArrayList<AbstractTrajectoryFeature>();
 	}
 	
+	/**
+	 * @return Returns a list of features.
+	 */
 	public ArrayList<AbstractTrajectoryFeature> getFeatures(){
 		return features;
 	}
 	
+	/**
+	 * Adds a features to the feature list which belongs to the trajectory
+	 * @param feature Some trajectory feature
+	 */
 	public void addFeature(AbstractTrajectoryFeature feature){
 		
 		features.add(feature);
 	}
 	
+	/**
+	 * Converts the positions to a 2D double array
+	 * @return 2d double array [i][j], i=Time index, j=coordinate index
+	 */
 	public double[][] getPositionsAsArray(){
 		double[][] posAsArr = new double[size()][3];
 		for(int i = 0; i < size(); i++){
@@ -101,6 +119,10 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return result;
 	}
 	
+	/**
+	 * Plots the trajectory
+	 * @param title Title of the plot
+	 */
 	public void showTrajectory(String title){
 		if(dimension==2){
 		 	double[] xData = new double[this.size()];
@@ -117,9 +139,11 @@ public  class Trajectory extends ArrayList<Point3d> {
 		    new SwingWrapper(chart).displayChart();
 		} 
 	}
-	
+	/**
+	 * Plots the trajectory
+	 */
 	public void showTrajectory(){
-		showTrajectory("NoTitle");
+		showTrajectory("No Title");
 	}
 	
 	@Override

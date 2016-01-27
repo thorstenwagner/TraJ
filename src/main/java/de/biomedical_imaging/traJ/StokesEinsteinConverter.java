@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2015 Thorsten Wagner (wagner@biomedical-imaging.de)
+Copyright (c) 2015-2016 Thorsten Wagner (wagner@biomedical-imaging.de)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -98,10 +98,20 @@ public class StokesEinsteinConverter {
 		return res;
 	}
 	
+	/**
+	 * Converts celsius in kelvin
+	 * @param tempInCelsius Temperture in celsius
+	 * @return Temperatur in kelvin
+	 */
 	public static double convertCelsiusToKelvin(double tempInCelsius){
 		return tempInCelsius + 273;
 	}
 
+	/**
+	 * Converts kelvin to celsius
+	 * @param tempInCelsius Temperture in kelvin
+	 * @return Temperatur in celsius
+	 */
 	public static double convertKelvinToCelsius(double tempInKelvin){
 		return tempInKelvin - 273;
 	}
