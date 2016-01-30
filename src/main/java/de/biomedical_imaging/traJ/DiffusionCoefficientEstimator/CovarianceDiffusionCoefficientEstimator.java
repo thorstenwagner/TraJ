@@ -35,7 +35,7 @@ import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
  * @author Thorsten Wagner (wagner@biomedical-imaging.de)
  *
  */
-public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCoefficientEstimator {
+public class CovarianceDiffusionCoefficientEstimator implements AbstractDiffusionCoefficientEstimator {
 	
 	private double getDistanceProductX(Trajectory t, int n,int m){
 		double xn = t.get(n+1).getX() - t.get(n).getX();
@@ -57,7 +57,7 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractDiffusionCo
 	}
 	
 	
-	@Override
+
 	/**
 	 * @return [0] diffusion coefficient [1] localization noise in x-direction [2] loc. noise in y-diretction [3] loc. noise in z-direction
 	 */

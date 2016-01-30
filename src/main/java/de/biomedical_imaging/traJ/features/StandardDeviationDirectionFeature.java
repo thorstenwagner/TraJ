@@ -54,6 +54,7 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 		double subx = 0;
 		double suby = 0;
 		double subz = 0;
+		boolean isNaN=false;
 		for(int i = timelag+1; i < t.size(); i++){
 			
 				subx = t.get(i-timelag-1).x;
@@ -71,9 +72,13 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 			if(Double.isNaN(v)){
 				System.out.println("v1 x" + v1.x + " y" + v1.y + " z: " + v1.z);
 				System.out.println("v2 x" + v2.x + " y" + v2.y + " z: " + v2.z);
+				isNaN=true;
 			}
 			values[i-timelag] = v;
 			//System.out.println("da " + v1.angle(v2));
+		}
+		if(isNaN){
+			t.showTrajectory("Active!");
 		}
 		sd.setData(values);
 		result = new double[]{sd.evaluate()};

@@ -55,10 +55,8 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	 * @return [0] Mean  distance [1] SD  distance 
 	 */
 	public double[] evaluate() {
-		System.out.println("Calculate spline!");
 		splinefit = new TrajectorySplineFit(t,nSegments);
 		splinefit.calculateSpline();
-		System.out.println("Calculated !");
 		double[] data = new double[t.size()];
 		for(int i = 0; i < t.size(); i++){
 			

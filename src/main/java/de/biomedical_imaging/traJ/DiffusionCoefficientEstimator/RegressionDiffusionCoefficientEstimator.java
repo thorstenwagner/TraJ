@@ -36,7 +36,7 @@ import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
  * @author Thorste Wagner
  *
  */
-public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCoefficientEstimator{
+public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusionCoefficientEstimator{
 	private int lagMin;
 	private int lagMax;
 	
@@ -48,7 +48,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 	/**
 	 * @return [0] = diffusion coefficent, [2] = slope, [3] = Intercept
 	 */
-	@Override
+
 	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
 		if(t.size()==1){
 			return null;
@@ -67,6 +67,11 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractDiffusionCo
 		}
 		double[] D = {reg.getSlope()/(2.0*t.getDimension()),reg.getSlope(),reg.getIntercept()}; 
 		return D;
+	}
+	
+	public void setTimelags(int lagMin, int lagMax){
+		this.lagMin = lagMin;
+		this.lagMax = lagMax;
 	}
 	
 	public static  void plotMSDLine(Trajectory t, int lagMin, int lagMax){

@@ -37,17 +37,27 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 	private CentralRandomNumberGenerator r;
 	private final double numberOfSubsteps = 100;
 	private Trajectory drift;
-	
+	private Point3d start;
+
 	public AnomalousDiffusionSimulator(double diffusioncoefficient, double timelag, int dimension,
 			int numberOfSteps, AnomalousDiffusionScene scene, double driftVelocity, double driftAngleVelocity) {
 		this.timelag = timelag;
 		this.dimension = dimension;
 		this.numberOfSteps = numberOfSteps;
 		this.diffusioncoefficient = diffusioncoefficient;
+		this.start = new Point3d(0, 0, 0);
 		r = CentralRandomNumberGenerator.getInstance();
 		this.scene = scene;
 		ActiveTransportSimulator actSim = new ActiveTransportSimulator(driftVelocity, driftAngleVelocity, timelag, dimension, numberOfSteps);
 		drift = actSim.generateTrajectory();
+	}
+	
+	public void setStartPoint(double x,double y, double z){
+		start = new Point3d(x, y, z);
+	}
+	
+	public void setStartPoint(Point3d start){
+		this.start = start;
 	}
 	
 	public AnomalousDiffusionSimulator(double diffusioncoefficient, double timelag, int dimension,
@@ -62,9 +72,8 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 	
 	@Override
 	public Trajectory generateTrajectory() {
+
 		Trajectory t = new Trajectory(dimension);
-		//Point3d(0,0,0)
-		Point3d start = new Point3d(0, 0, 0);
 		t.add(start);
 		
 		if(dimension==2 && scene.checkCollision(new double[]{start.x,start.y})) {
