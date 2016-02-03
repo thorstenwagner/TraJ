@@ -13,7 +13,7 @@ public class ImmobileSphereObstacleTest {
 	public void insideSzeneBoundariesTest_OutOfSceneBounds() {
 		double[] size = {512,512,512};
 		AnomalousDiffusionScene s = new AnomalousDiffusionScene(size,3);
-		double[] obstaclePosition = {127,127,502};
+		double[] obstaclePosition = {127,127,513};
 		ImmobileSphereObstacle obs = new ImmobileSphereObstacle(obstaclePosition,11.0,3);
 		boolean result = obs.insideSzeneBoundaries(s);
 		assertFalse(result);
