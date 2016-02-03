@@ -61,6 +61,32 @@ public class TrajectoryUtil {
 		return c;
 	}
 	
+	public static Trajectory combineTrajectory2(Trajectory a, Trajectory b){
+		if(a.getDimension()!=b.getDimension()){
+			throw new IllegalArgumentException("Combination not possible: The trajectorys does not have the same dimension");
+		}
+		if(a.size()!=b.size()){
+			throw new IllegalArgumentException("Combination not possible: The trajectorys does not "
+					+ "have the same number of steps a="+a.size() + " b="+b.size());
+		}
+		Trajectory c = new Trajectory(a.getDimension());
+		c.add(new Point3d(a.get(0).x,a.get(0).y,a.get(0).z));
+		double dx = 0;
+		double dy = 0;
+		double dz = 0;
+		for(int i = 1 ; i < a.size(); i++){
+			dx +=(b.get(i).x-b.get(i-1).x);
+			dy +=(b.get(i).y-b.get(i-1).y);
+			dz +=(b.get(i).z-b.get(i-1).z);
+			Point3d pos = new Point3d(a.get(i).x+dx, 
+					a.get(i).y+dy, 
+					a.get(i).z+dz);
+			c.add(pos);
+		}
+		
+		return c;
+	}
+	
 	public static void showTrajectoryAndSpline(Trajectory t, PolynomialSplineFunction spline, List<Point2D.Double> supportPoints){
 		if(t.getDimension()==2){
 		 	double[] xData = new double[t.size()];

@@ -155,7 +155,7 @@ public class TrajectorySplineFit {
 		 */
 		
 		double segmentWidth = p1.distance(p2)/nSegments;
-		System.out.println();
+		
 		List<List<Point2D.Double>> pointsInSegments = new ArrayList<List<Point2D.Double>>(nSegments);
 		for(int i = 0; i < nSegments; i++){
 			pointsInSegments.add(new ArrayList<Point2D.Double>());
@@ -165,7 +165,6 @@ public class TrajectorySplineFit {
 			int index = (int)(p1.distance(projPoint)/segmentWidth);
 			
 			if(index>(nSegments-1)){
-				//System.out.println("index: " + index + " d: " + p1.distance(projPoint) + " Gesamtlänge: " + p1.distance(p2));
 				index = (nSegments-1);
 			}
 			pointsInSegments.get(index).add(points.get(i));
@@ -377,7 +376,6 @@ public class TrajectorySplineFit {
 			boolean enoughPoints = (newCN<minN);
 			boolean isNormalRadius = Math.abs(tempr1-r1)<Math.pow(10, -18);
 			boolean isExtendedRadius = Math.abs(tempr1-3*r1)<Math.pow(10, -18);
-			//System.out.println(" x " + newCx + " y " + newCy + " newCn " + newCN + "normal " + isNormalRadius + " extended " + isExtendedRadius);
 			
 			if(enoughPoints&& isNormalRadius){
 				//Not enough points, extend search radius
@@ -388,7 +386,6 @@ public class TrajectorySplineFit {
 				stop = true;
 			}
 			else if(stop==false){
-			//	System.out.println("add " + (newCN<minN) + " x " + newCx + " y " + newCy + " newCn " + newCN);
 				splineSupportPoints.add(new Point2D.Double(newCx,newCy));
 				tempr1 = r1;
 			}

@@ -30,19 +30,23 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
+import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 /**
  * 
- * @author Thorste Wagner
+ * @author Thorsten Wagner
  *
  */
-public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusionCoefficientEstimator{
+public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusionCoefficientEstimator {
 	private int lagMin;
 	private int lagMax;
+	private AbstractMeanSquaredDisplacmentEvaluator msdevaluator;
 	
 	public RegressionDiffusionCoefficientEstimator(int lagMin, int lagMax) {
 		this.lagMin = lagMin;
 		this.lagMax = lagMax;
+		msdevaluator = new MeanSquaredDisplacmentFeature(null, lagMin);
 	}
 	
 	/**
@@ -58,11 +62,11 @@ public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusio
 		if(lagMin==lagMax){
 			reg.addData(0, 0);
 		}
-	
-		MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, lagMin);
+		msdevaluator.setTrajectory(t);
+		msdevaluator.setTimelag(lagMin);
 		for(int i = lagMin; i < lagMax+1; i++){
-			msdCalc.setTimalag(i);
-			msdhelp= msdCalc.evaluate()[0];
+			msdevaluator.setTimelag(i);
+			msdhelp= msdevaluator.evaluate()[0];
 			reg.addData(i*1.0/fps, msdhelp);
 		}
 		double[] D = {reg.getSlope()/(2.0*t.getDimension()),reg.getSlope(),reg.getIntercept()}; 
@@ -74,26 +78,32 @@ public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusio
 		this.lagMax = lagMax;
 	}
 	
-	public static  void plotMSDLine(Trajectory t, int lagMin, int lagMax){
+	public static  void plotMSDLine(Trajectory t, int lagMin, int lagMax, AbstractMeanSquaredDisplacmentEvaluator msdeval){
 		
-		 	double[] xData = new double[lagMax-lagMin+1];
-		    double[] yData = new double[lagMax-lagMin+1];
-		    
-		    MeanSquaredDisplacmentFeature msdCalc = new MeanSquaredDisplacmentFeature(t, lagMin);
-			for(int i = lagMin; i < lagMax+1; i++){
-				msdCalc.setTimalag(i);
-				double msdhelp= msdCalc.evaluate()[0];
-				xData[i-lagMin] = i;
-		    	yData[i-lagMin] = msdhelp;
-			}
-		 
-		    // Create Chart
-		    Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD", xData, yData);
+	 	double[] xData = new double[lagMax-lagMin+1];
+	    double[] yData = new double[lagMax-lagMin+1];
+	    msdeval.setTrajectory(t);
+	    msdeval.setTimelag(lagMin);
+		for(int i = lagMin; i < lagMax+1; i++){
+			msdeval.setTimelag(i);
+			double msdhelp= msdeval.evaluate()[1];
+			xData[i-lagMin] = i;
+	    	yData[i-lagMin] = msdhelp;
+		}
+	 
+	    // Create Chart
+	    Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD", xData, yData);
+	    
+	    //Show it
+	    new SwingWrapper(chart).displayChart();
+}
 	
-		    
-		    //Show it
-		    new SwingWrapper(chart).displayChart();
-		
+	public static  void plotMSDLine(Trajectory t, int lagMin, int lagMax){
+			plotMSDLine(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t, lagMin));
+	}
+	
+	public void setMeanSquaredDisplacementEvaluator(AbstractMeanSquaredDisplacmentEvaluator msdeval){
+		this.msdevaluator = msdeval;
 	}
 
 

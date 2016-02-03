@@ -72,8 +72,8 @@ public abstract class AbstractSphereObstacle {
 
 	public boolean insideSzeneBoundaries(AnomalousDiffusionScene s) {
 		for(int i = 0; i < s.getSize().length; i++){
-			if(position[i]+radius >= s.getSize()[i] ||
-					position[i]-radius < 0){
+			if(position[i] >= s.getSize()[i] ||
+					position[i] < 0){
 				return false;
 			}
 		}

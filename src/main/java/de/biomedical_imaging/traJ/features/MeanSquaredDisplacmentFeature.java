@@ -32,7 +32,7 @@ import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
  * @author Thorsten Wagner (wagner at biomedical - imaging.de
  *
  */
-public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature {
+public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature implements AbstractMeanSquaredDisplacmentEvaluator {
 	
 	private Trajectory t;
 	private int timelag;
@@ -47,7 +47,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature {
 		this.timelag = timelag;
 	}
 	
-	public void setTimalag(int timelag){
+	public void setTimelag(int timelag){
 		this.timelag = timelag;
 	}
 	

@@ -32,10 +32,14 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	private Trajectory t;
 	private int minlag;
 	private int maxlag;
+	private AbstractMeanSquaredDisplacmentEvaluator msdeval;
+	private int evaluateIndex = 0;
 	public PowerLawFeature(Trajectory t, int minlag, int maxlag) {
 		this.t = t;
 		this.minlag = minlag;
 		this.maxlag = maxlag;
+		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
+		evaluateIndex = 0;
 	}
 	
 	@Override
@@ -43,10 +47,12 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		int N = maxlag - minlag + 1;
 		double[] xData = new double[N];
 		double[] yData = new double[N];
+		msdeval.setTrajectory(t);
 		for(int i = minlag; i <= maxlag; i++){
-			MeanSquaredDisplacmentFeature msdFeature = new MeanSquaredDisplacmentFeature(t, i);
+			msdeval.setTimelag(i);
+			
 			xData[i-minlag] = i;
-			yData[i-minlag] = msdFeature.evaluate()[0];
+			yData[i-minlag] = msdeval.evaluate()[evaluateIndex];
 			//System.out.print(minlag/30.0+",");
 		}
 		CurveFitter fitter = new CurveFitter(xData, yData);
@@ -60,6 +66,14 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		//System.out.println("0: " + params[0] + " 1: " + params[1]);
 		result = new double[] {exponent};
 		return result;
+	}
+	
+	public void setEvaluateIndex(int evaluateIndex){
+		this.evaluateIndex = evaluateIndex;
+	}
+	
+	public void setMeanSquaredDisplacmentEvaluator(AbstractMeanSquaredDisplacmentEvaluator msdeval){
+		this.msdeval = msdeval;
 	}
 
 	@Override

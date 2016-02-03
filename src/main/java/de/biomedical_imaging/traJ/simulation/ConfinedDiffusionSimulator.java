@@ -36,7 +36,8 @@ public class ConfinedDiffusionSimulator extends AbstractSimulator {
 	double radius; //Radius of confinement
 	int dimension;
 	int numberOfSteps;
-	
+	int numberOfSubsteps = 100;
+	private double proportionReflectedSteps = 0;
 	
 	public ConfinedDiffusionSimulator(double diffusioncoefficient, double timelag, double radius, int dimension,int numberOfSteps) {
 		this.diffusioncoefficient = diffusioncoefficient;
@@ -52,13 +53,13 @@ public class ConfinedDiffusionSimulator extends AbstractSimulator {
 		Trajectory t = new Trajectory(dimension);
 		t.add(new Point3d(0, 0, 0));
 		for(int i = 1; i <= numberOfSteps; i++) {
-			Point3d pos = nextConfinedPosition(100,t.get(t.size()-1));
+			Point3d pos = nextConfinedPosition(t.get(t.size()-1));
 			pos.setX(pos.x);
 			pos.setY(pos.y);
 			pos.setZ(pos.z);
 			t.add(pos);
 		}
-		
+		proportionReflectedSteps = proportionReflectedSteps/(numberOfSteps*numberOfSubsteps);
 		return t;
 	}
 	
@@ -69,13 +70,13 @@ public class ConfinedDiffusionSimulator extends AbstractSimulator {
 	 * @param Nsub number of substeps 
 	 * @return
 	 */
-	private Point3d nextConfinedPosition(int Nsub, Point3d lastPosition){
+	private Point3d nextConfinedPosition(Point3d lastPosition){
 		
-		double timelagSub = timelag / Nsub;
+		double timelagSub = timelag / numberOfSubsteps;
 		Point3d center = new Point3d(0, 0, 0);
 		Point3d lastValidPosition = lastPosition;
 		int validSteps = 0;
-		while(validSteps<Nsub){
+		while(validSteps<numberOfSubsteps){
 			double u = r.nextDouble();
 			double steplength = Math.sqrt(-2*dimension*diffusioncoefficient*timelagSub*Math.log(1-u));
 			
@@ -85,10 +86,16 @@ public class ConfinedDiffusionSimulator extends AbstractSimulator {
 				lastValidPosition = candiate;
 				validSteps++;
 				
+			}else{
+				proportionReflectedSteps++;
 			}
 		}
 		
 		return lastValidPosition;
+	}
+	
+	public double getProportionOfReflectedSteps(){
+		return proportionReflectedSteps;
 	}
 
 }

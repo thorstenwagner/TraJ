@@ -39,14 +39,14 @@ import de.biomedical_imaging.traJ.TrajectorySplineFit;
  * @author Thorsten Wagner
  *
  */
-public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
+public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature implements AbstractMeanSquaredDisplacmentEvaluator {
 	
 	private Trajectory t;
 	private int nSegments;
 	private TrajectorySplineFit splinefit;
 	private int timelag;
+	private boolean recalculate = true;
 	/**
-	 * 
 	 * @param t Trajectory for calculate spline
 	 * @param nSegments
 	 */
@@ -56,11 +56,17 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 		this.timelag = timelag;
 	}
 	
+	
 	@Override
 	public double[] evaluate() {
-
-		splinefit = new TrajectorySplineFit(t,nSegments);
-		PolynomialSplineFunction spline = splinefit.calculateSpline();
+		PolynomialSplineFunction spline = null;
+		if(recalculate){
+			splinefit = new TrajectorySplineFit(t,nSegments);
+			spline = splinefit.calculateSpline();
+		}
+		else{
+			spline = splinefit.getSpline();
+		}
 		Trajectory tr = splinefit.getRotatedTrajectory();
 		UnivariateFunction derivative = spline.derivative();
 		int N =0;
@@ -71,6 +77,7 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 			Point2D.Double pRef = splinefit.minDistancePointSpline(new Point2D.Double(tr.get(i).x, tr.get(i).y), 50);
 
 			Point2D.Double pTangend = new Point2D.Double(pRef.x+1, derivative.value(pRef.x)*(pRef.x+1-pRef.x)+spline.value(pRef.x) );
+			
 			Point2D.Double pNormal = new Point2D.Double(-1*pTangend.y, pTangend.x);
 
 			
@@ -84,6 +91,7 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 		double msdParallel = sumParallel/N;
 		double msdPerpendicular = sumPerpendicular/N;
 		result = new double[]{msdParallel,msdPerpendicular};
+		recalculate = false;
 		return result;
 	}
 	
@@ -101,13 +109,18 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature {
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
 		result = null;
+		recalculate = true;
 		
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "SCDA";
+	}
+
+	public void setTimelag(int timelag) {
+		this.timelag = timelag;
+		
 	}
 
 }

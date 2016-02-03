@@ -38,6 +38,7 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 	private final double numberOfSubsteps = 100;
 	private Trajectory drift;
 	private Point3d start;
+	private double proportionReflectedSteps = 0;
 
 	public AnomalousDiffusionSimulator(double diffusioncoefficient, double timelag, int dimension,
 			int numberOfSteps, AnomalousDiffusionScene scene, double driftVelocity, double driftAngleVelocity) {
@@ -101,7 +102,7 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 			t.add(pos);
 			
 		}
-		
+		proportionReflectedSteps = (proportionReflectedSteps*1.0)/(numberOfSteps*numberOfSubsteps);
 		return t;
 	}
 	
@@ -121,12 +122,18 @@ public class AnomalousDiffusionSimulator extends AbstractSimulator {
 					nextPos[i] = candPos[i];
 				}
 				
+			}else{
+				proportionReflectedSteps++;
 			}
 			takenSubsteps++;
 		}
 		
 		return new Point3d(nextPos);
 		
+	}
+	
+	public double getProportionOfReflectedSteps(){
+		return proportionReflectedSteps;
 	}
 
 }

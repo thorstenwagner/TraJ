@@ -33,7 +33,10 @@ public class AnomalousDiffusionScene {
 	private int dimension; 
 	private int nRandPoints;
 	private double[] randomNumbers = null;
-	
+	boolean recalculateVolumeFraction = true;
+	boolean recalculateProbNonInteraction = true;
+	private double fraction;
+	private double probNonInteraction;
 	public AnomalousDiffusionScene(double[] size, int dimension) {
 		obstacles = new ArrayList<AbstractSphereObstacle>();
 		this.size = size;
@@ -44,6 +47,8 @@ public class AnomalousDiffusionScene {
 	public void addObstacle(AbstractSphereObstacle o){
 		if(o.insideSzeneBoundaries(this)){
 			obstacles.add(o);
+			recalculateVolumeFraction = true;
+			recalculateProbNonInteraction = true;
 		}
 		else{
 			throw new IllegalStateException("The position of the obstacle is not inside the scene boundaries.");
@@ -53,6 +58,8 @@ public class AnomalousDiffusionScene {
 	public void updateObstaclePositions(){
 		for (AbstractSphereObstacle o : obstacles) {
 			o.updatePosition(this);
+			recalculateVolumeFraction = true;
+			recalculateProbNonInteraction = true;
 		}
 	}
 	
@@ -63,28 +70,64 @@ public class AnomalousDiffusionScene {
 	 */
 	public double estimateExcludedVolumeFraction(){
 		//Calculate volume/area of the of the scene without obstacles
-		CentralRandomNumberGenerator r = CentralRandomNumberGenerator.getInstance();
-		boolean firstRandomDraw = false;
-		if(randomNumbers==null){
-			randomNumbers = new double[nRandPoints*dimension];
-			firstRandomDraw = true;
-		}
-		int countCollision = 0;
-		for(int i = 0; i< nRandPoints; i++){
-			double[] pos = new double[dimension];
-			for(int j = 0; j < dimension; j++){
-				if(firstRandomDraw){
-					randomNumbers[i*dimension + j] = r.nextDouble();
+		if(recalculateVolumeFraction){
+			CentralRandomNumberGenerator r = CentralRandomNumberGenerator.getInstance();
+			boolean firstRandomDraw = false;
+			if(randomNumbers==null){
+				randomNumbers = new double[nRandPoints*dimension];
+				firstRandomDraw = true;
+			}
+			int countCollision = 0;
+			for(int i = 0; i< nRandPoints; i++){
+				double[] pos = new double[dimension];
+				for(int j = 0; j < dimension; j++){
+					if(firstRandomDraw){
+						randomNumbers[i*dimension + j] = r.nextDouble();
+					}
+					pos[j] = randomNumbers[i*dimension + j]*size[j];
 				}
-				pos[j] = randomNumbers[i*dimension + j]*size[j];
+				if(checkCollision(pos)){
+					countCollision++;
+				}
 			}
-			if(checkCollision(pos)){
-				countCollision++;
+			fraction = countCollision*1.0/nRandPoints;
+			recalculateVolumeFraction = false;
+		}
+		return fraction;
+	}
+	
+	public double estimateProbNonInteraction(double radius){
+		
+		if(recalculateProbNonInteraction){
+			CentralRandomNumberGenerator r = CentralRandomNumberGenerator.getInstance();
+			boolean firstRandomDraw = false;
+			if(randomNumbers==null){
+				randomNumbers = new double[nRandPoints*dimension];
+				firstRandomDraw = true;
 			}
+			int countCollision = 0;
+			for(int i = 0; i< nRandPoints; i++){
+				double[] rpos = new double[dimension];
+				for(int j = 0; j < dimension; j++){
+					if(firstRandomDraw){
+						randomNumbers[i*dimension + j] = r.nextDouble();
+					}
+					rpos[j] = randomNumbers[i*dimension + j]*size[j];
+				}
+				for( int k = 0; k < obstacles.size(); k++){
+					double maxrad = Math.max(radius, obstacles.get(k).getRadius());
+					double[] pos = obstacles.get(k).getPosition();
+					if( (Math.pow(rpos[0]-pos[0],2)+Math.pow(rpos[1]-pos[1],2))<Math.pow(maxrad, 2)){
+						countCollision++;
+						k = obstacles.size();
+					}
+				}
+			}
+			probNonInteraction = 1- countCollision*1.0/nRandPoints;
+			recalculateProbNonInteraction = false;
 		}
 		
-		
-		return countCollision*1.0/nRandPoints;
+		return probNonInteraction;
 	}
 	
 	public boolean checkCollision(double[] pos){
