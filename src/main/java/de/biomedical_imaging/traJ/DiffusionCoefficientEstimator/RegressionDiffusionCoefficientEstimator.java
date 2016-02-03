@@ -31,7 +31,6 @@ import org.knowm.xchart.SwingWrapper;
 
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
-import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 /**
  * 

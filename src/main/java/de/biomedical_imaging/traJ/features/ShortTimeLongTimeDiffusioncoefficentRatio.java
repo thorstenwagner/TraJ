@@ -1,6 +1,5 @@
 package de.biomedical_imaging.traJ.features;
 
-import ij.ImagePlus;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
 
