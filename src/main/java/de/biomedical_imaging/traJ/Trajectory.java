@@ -41,8 +41,8 @@ public  class Trajectory extends ArrayList<Point3d> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int dimension;
-	private int relativeStartTimepoint;
+	private int dimension;					// Dimension of the trajectory
+	private int relativeStartTimepoint;		// Relative start point (Frame number)
 	private long id;
 	private static long idCounter=1; 
 	private String type = "";
@@ -160,13 +160,6 @@ public  class Trajectory extends ArrayList<Point3d> {
 	public boolean add(double x, double y, double z){
 		return super.add(new Point3d(x, y, z));
 	}
-	
-	public void scale(double s){
-		for( int i = 0; i < size(); i++){
-			get(i).scale(s);
-		}
-	}
-	
 	
 	public int getDimension(){
 		return dimension;

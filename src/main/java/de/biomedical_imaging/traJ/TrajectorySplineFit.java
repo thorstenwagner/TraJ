@@ -35,6 +35,13 @@ import javax.vecmath.Vector2d;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+import org.knowm.xchart.Chart;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.Series;
+import org.knowm.xchart.SeriesLineStyle;
+import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.Series.SeriesType;
 
 import cg.RotatingCalipers;
 import edu.wlu.cs.levy.CG.KDTree;
@@ -87,6 +94,12 @@ public class TrajectorySplineFit {
 		rotatedTrajectory = new Trajectory(2);
 	}
 	
+	/**
+	 * Calculates a spline to a trajectory. Attention: The spline is fitted through a rotated version of the trajectory.
+	 * To fit the spline the trajectory is rotated into its main direction. You can access this rotated trajectory by 
+	 * {@link #getRotatedTrajectory() getRotatedTrajectory}.
+	 * @return The fitted spline
+	 */
 	public PolynomialSplineFunction calculateSpline(){
 		
 		
@@ -500,7 +513,12 @@ public class TrajectorySplineFit {
 		}
 		return minDistancePoint;
 	}
-	
+	/**
+	 * Finds to a given point p the point on the spline with minimum distance.
+	 * @param p Point where the nearest distance is searched for
+	 * @param nPointsPerSegment Number of interpolation points between two support points
+	 * @return Point spline which has the minimum distance to p
+	 */
 	public Point2D.Double minDistancePointSpline(Point2D.Double p, int nPointsPerSegment){
 			double minDistance = Double.MAX_VALUE;
 			Point2D.Double minDistancePoint = null;
@@ -553,6 +571,7 @@ public class TrajectorySplineFit {
 	}
 	
 	/**
+	 * To estimate the spline the trajectory have to be rotated that it is parallel with its major direction.
 	 * @return The rotated trajectory
 	 */
 	public Trajectory getRotatedTrajectory(){
@@ -566,8 +585,70 @@ public class TrajectorySplineFit {
 		return angleRotated;
 	}
 	
+	/**
+	 * @return The estimated support points for the spline.
+	 */
 	public List<Point2D.Double> getSplineSupportPoints(){
 		return splineSupportPoints;
+	}
+	
+	/**
+	 * Plots the rotated trajectory, spline and support points.
+	 */
+	public void showTrajectoryAndSpline(){
+		
+		if(t.getDimension()==2){
+		 	double[] xData = new double[rotatedTrajectory.size()];
+		    double[] yData = new double[rotatedTrajectory.size()];
+		    for(int i = 0; i < rotatedTrajectory.size(); i++){
+		    	xData[i] = rotatedTrajectory.get(i).x;
+		    	yData[i] = rotatedTrajectory.get(i).y;
+		    }
+		    // Create Chart
+		    Chart chart = QuickChart.getChart("Spline+Track", "X", "Y", "y(x)", xData, yData);
+		    
+		    //Add spline support points
+		    double[] subxData  = new double[splineSupportPoints.size()];
+		    double[] subyData  = new double[splineSupportPoints.size()];
+		    
+		    for(int i = 0; i < splineSupportPoints.size(); i++){
+		    	subxData[i] = splineSupportPoints.get(i).x;
+		    	subyData[i] = splineSupportPoints.get(i).y;
+		    }
+		    Series s = chart.addSeries("Spline Support Points", subxData, subyData);
+		    s.setLineStyle(SeriesLineStyle.NONE);
+		    s.setSeriesType(SeriesType.Line);
+		    
+		    //ADd spline points
+		    int numberInterpolatedPointsPerSegment = 20;
+		    int numberOfSplines = spline.getN();
+		    double[] sxData = new double[numberInterpolatedPointsPerSegment*numberOfSplines];
+		    
+		    double[] syData = new double[numberInterpolatedPointsPerSegment*numberOfSplines];
+		    double[] knots = spline.getKnots();
+		    for(int i = 0; i < numberOfSplines; i++){
+		    	double x = knots[i];
+		   
+		    	double stopx = knots[i+1];
+		    	double dx = (stopx-x)/numberInterpolatedPointsPerSegment;
+		    	
+		    	for(int j = 0; j < numberInterpolatedPointsPerSegment; j++){
+
+		    		sxData[i*numberInterpolatedPointsPerSegment+j] = x;
+		    		syData[i*numberInterpolatedPointsPerSegment+j] = spline.value(x);
+		    		x += dx;
+		    	}
+		    	
+		    }
+		    s = chart.addSeries("Spline", sxData, syData);
+		    s.setLineStyle(SeriesLineStyle.DASH_DASH);
+		    s.setMarker(SeriesMarker.NONE);
+		    s.setSeriesType(SeriesType.Line);
+		 
+		    
+		    //Show it
+		    new SwingWrapper(chart).displayChart();
+		} 
 	}
 	
 
