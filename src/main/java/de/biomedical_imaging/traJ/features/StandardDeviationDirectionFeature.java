@@ -29,6 +29,7 @@ import javax.vecmath.Vector3d;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.TrajectoryUtil;
 
 /**
  * Implements the standard deviation of the trajectory direction according to 
@@ -69,6 +70,11 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 			Vector3d v2 = new Vector3d(t.get(i).x-subx,t.get(i).y-suby,t.get(i).z-subz);
 		
 			double v = v1.angle(v2);
+			boolean v1IsZero = TrajectoryUtil.isZero(v1.x) && TrajectoryUtil.isZero(v1.y) && TrajectoryUtil.isZero(v1.z);  
+			boolean v2IsZero = TrajectoryUtil.isZero(v2.x) && TrajectoryUtil.isZero(v2.y) && TrajectoryUtil.isZero(v2.z);  
+			if(v1IsZero || v2IsZero){
+				v = 0;
+			}
 			if(Double.isNaN(v)){
 				System.out.println("v1 x" + v1.x + " y" + v1.y + " z: " + v1.z);
 				System.out.println("v2 x" + v2.x + " y" + v2.y + " z: " + v2.z);

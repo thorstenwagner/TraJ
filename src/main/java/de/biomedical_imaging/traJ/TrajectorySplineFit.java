@@ -202,12 +202,15 @@ public class TrajectorySplineFit {
 		
 		for(int i = 0; i< points.size(); i++){
 			try {
+				//To ensure that all points have a different key, add small random number
+
 				kdtree.insert(new double[]{points.get(i).x,points.get(i).y}, points.get(i));
 			} catch (KeySizeException e) {
 				e.printStackTrace();
 			} catch (KeyDuplicateException e) {
-				e.printStackTrace();
+				//Do nothing! It is not important
 			}
+			
 		}
 		
 		/*
@@ -215,11 +218,12 @@ public class TrajectorySplineFit {
 		 * of all points around f (radius: 3*<s>))
 		 */
 		List<Point2D.Double> near = null;
-
+		
 		Point2D.Double first = minDistancePointToLine(p1, p3, points);
 		double r1 = 3*s;
 		try {
-			near = kdtree.nearestEuclidean(new double[]{first.x,first.y}, r1);
+			
+			near = kdtree.nearestEuclidean(new double[]{first.x ,first.y}, r1);
 			
 		} catch (KeySizeException e) {
 			e.printStackTrace();

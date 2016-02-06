@@ -31,21 +31,32 @@ import org.knowm.xchart.SwingWrapper;
 
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
+import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 /**
  * 
  * @author Thorsten Wagner
  *
  */
-public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusionCoefficientEstimator {
+public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryFeature implements AbstractDiffusionCoefficientEstimator {
 	private int lagMin;
 	private int lagMax;
 	private AbstractMeanSquaredDisplacmentEvaluator msdevaluator;
+	private Trajectory t;
+	private double fps;
 	
 	public RegressionDiffusionCoefficientEstimator(int lagMin, int lagMax) {
 		this.lagMin = lagMin;
 		this.lagMax = lagMax;
 		msdevaluator = new MeanSquaredDisplacmentFeature(null, lagMin);
+	}
+	
+	public RegressionDiffusionCoefficientEstimator(Trajectory t, double fps, int lagMin, int lagMax) {
+		this.lagMin = lagMin;
+		this.lagMax = lagMax;
+		msdevaluator = new MeanSquaredDisplacmentFeature(null, lagMin);
+		this.t = t;
+		this.fps = fps;
 	}
 	
 	/**
@@ -103,6 +114,30 @@ public class RegressionDiffusionCoefficientEstimator implements AbstractDiffusio
 	
 	public void setMeanSquaredDisplacementEvaluator(AbstractMeanSquaredDisplacmentEvaluator msdeval){
 		this.msdevaluator = msdeval;
+	}
+
+	@Override
+	public double[] evaluate() {
+		
+		return getDiffusionCoefficient(t, fps);
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Diffusion coefficient (Regression)";
+	}
+
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "DC-REG";
+	}
+
+	@Override
+	public void setTrajectory(Trajectory t) {
+		this.t = t;
+		
 	}
 
 

@@ -26,6 +26,7 @@ package de.biomedical_imaging.traJ.DiffusionCoefficientEstimator;
 
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
+import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 
 /**
  * This class implements the covariance estimator as described in:
@@ -35,7 +36,20 @@ import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
  * @author Thorsten Wagner (wagner@biomedical-imaging.de)
  *
  */
-public class CovarianceDiffusionCoefficientEstimator implements AbstractDiffusionCoefficientEstimator {
+public class CovarianceDiffusionCoefficientEstimator extends AbstractTrajectoryFeature implements AbstractDiffusionCoefficientEstimator {
+	
+	private Trajectory t;
+	private double fps;
+	
+	 public CovarianceDiffusionCoefficientEstimator() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public CovarianceDiffusionCoefficientEstimator(Trajectory t, double fps) {
+		this.t = t;
+		this.fps = fps;
+	}
+	
 	
 	private double getDistanceProductX(Trajectory t, int n,int m){
 		double xn = t.get(n+1).getX() - t.get(n).getX();
@@ -123,6 +137,29 @@ public class CovarianceDiffusionCoefficientEstimator implements AbstractDiffusio
 		data[3] = R*msdZ + (2*R-1)+covZ;
 		
 		return data;
+	}
+
+	@Override
+	public double[] evaluate() {
+		return getDiffusionCoefficient(t, fps);
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Diffusion coefficient (Covariance)";
+	}
+
+	@Override
+	public String getShortName() {
+		// TODO Auto-generated method stub
+		return "DC-COV";
+	}
+
+	@Override
+	public void setTrajectory(Trajectory t) {
+		this.t = t;
+		
 	}
 		
 }

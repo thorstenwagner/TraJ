@@ -27,6 +27,8 @@ package cg;
 import java.awt.geom.Point2D;
 import java.util.*;
 
+import de.biomedical_imaging.traJ.TrajectoryUtil;
+
 public final class RotatingCalipers {
 
     protected enum Corner { UPPER_RIGHT, UPPER_LEFT, LOWER_LEFT, LOWER_RIGHT }
@@ -371,8 +373,8 @@ public final class RotatingCalipers {
 
             TreeSet<Point2D.Double> set = new TreeSet<Point2D.Double>(new Comparator<Point2D.Double>() {
                public int compare(Point2D.Double a, Point2D.Double b) {
-
-                   if(a.distance(b)<Math.pow(10, -18)) {
+            	   
+                   if(TrajectoryUtil.isZero(a.distance(b))) {
                        return 0;
                    }
 
@@ -411,7 +413,8 @@ public final class RotatingCalipers {
             double crossProduct = ((b.x - a.x) * (c.y - a.y)) -
                     ((b.y - a.y) * (c.x - a.x));
 
-            if(Math.abs(crossProduct)<Math.pow(10, -18)) {
+            
+            if(TrajectoryUtil.isZero(crossProduct)) {
                 return Turn.COLLINEAR;
             }
             

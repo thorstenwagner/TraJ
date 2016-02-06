@@ -26,6 +26,7 @@ SOFTWARE.
 package de.biomedical_imaging.traJ;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.vecmath.Point3d;
@@ -61,30 +62,35 @@ public class TrajectoryUtil {
 		return c;
 	}
 	
-	public static Trajectory combineTrajectory2(Trajectory a, Trajectory b){
-		if(a.getDimension()!=b.getDimension()){
-			throw new IllegalArgumentException("Combination not possible: The trajectorys does not have the same dimension");
+	public static boolean isZero(double v){
+		return Math.abs(v)<Math.pow(10, -18);
+	}
+	
+	public static ArrayList<Trajectory> splitTrackInSubTracks(Trajectory t, int windowWidth, boolean overlapping){
+		int increment = 1;
+		if(overlapping==false){
+			increment=windowWidth;
 		}
-		if(a.size()!=b.size()){
-			throw new IllegalArgumentException("Combination not possible: The trajectorys does not "
-					+ "have the same number of steps a="+a.size() + " b="+b.size());
+		ArrayList<Trajectory> subTrajectories = new ArrayList<Trajectory>();
+		boolean trackEndReached = false;
+		for(int i = 0; i < t.size(); i=i+increment)
+		{
+			int upperBound = i+windowWidth;
+			if(upperBound>t.size()){
+				upperBound=t.size();
+				trackEndReached=true;
+			}
+			Trajectory help = new Trajectory(2, i);
+			for(int j = i; j < upperBound; j++){
+				help.add(t.get(j));
+			}
+			subTrajectories.add(help);
+			if(trackEndReached){
+				i=t.size();
+			}
 		}
-		Trajectory c = new Trajectory(a.getDimension());
-		c.add(new Point3d(a.get(0).x,a.get(0).y,a.get(0).z));
-		double dx = 0;
-		double dy = 0;
-		double dz = 0;
-		for(int i = 1 ; i < a.size(); i++){
-			dx +=(b.get(i).x-b.get(i-1).x);
-			dy +=(b.get(i).y-b.get(i-1).y);
-			dz +=(b.get(i).z-b.get(i-1).z);
-			Point3d pos = new Point3d(a.get(i).x+dx, 
-					a.get(i).y+dy, 
-					a.get(i).z+dz);
-			c.add(pos);
-		}
-		
-		return c;
+		System.out.println(subTrajectories.size() + " Subtrajectories returned");
+		return subTrajectories;
 	}
 	
 	public static void showTrajectoryAndSpline(Trajectory t, PolynomialSplineFunction spline, List<Point2D.Double> supportPoints){
@@ -96,7 +102,7 @@ public class TrajectoryUtil {
 		    	yData[i] = t.get(i).y;
 		    }
 		    // Create Chart
-		    Chart chart = QuickChart.getChart("Spline+Traj", "X", "Y", "y(x)", xData, yData);
+		    Chart chart = QuickChart.getChart("Spline+Track", "X", "Y", "y(x)", xData, yData);
 		    
 		    //Add spline support points
 		    double[] subxData  = new double[supportPoints.size()];
@@ -106,7 +112,7 @@ public class TrajectoryUtil {
 		    	subxData[i] = supportPoints.get(i).x;
 		    	subyData[i] = supportPoints.get(i).y;
 		    }
-		    Series s = chart.addSeries("Spline Support POints", subxData, subyData);
+		    Series s = chart.addSeries("Spline Support Points", subxData, subyData);
 		    s.setLineStyle(SeriesLineStyle.NONE);
 		    s.setSeriesType(SeriesType.Line);
 		    
