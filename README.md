@@ -20,6 +20,7 @@ Implemented features so far:
   - Fractal path dimension [2]
   - Mean squared displacment curve curvature [3]
   - Mean squared displacment
+  - Short-time long-time diffusion coefficent ratio 
   - Exponent in power law fit to MSD curve [4]
   - Standard deviation in direction
   - Spline curve analysis features according to [5]
