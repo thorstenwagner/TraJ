@@ -70,17 +70,18 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 	 */
 	private double[] getMeanSquaredDisplacment(Trajectory t, int timelag){
 		double msd = 0;
-		double[] result = new double[2];
+		double[] result = new double[3];
 		if(t.size()==1){
 			result[0] =0;
 			result[1] =0;
+			result[2] =1;
 			return result;
 		}
 		
 		if(timelag<1){
 			throw new IllegalArgumentException("Timelag can not be smaller than 1");
 		}
-		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t, timelag);
+		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t, timelag,false);
 		int N = 0;
 		while(it.hasNext()){
 			int i = it.next();
@@ -95,7 +96,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 		
 		result[0] = msd;
 		result[1] = (timelag*(2*timelag*timelag+1.0))/(N-timelag+1.0); //Variance
-		
+		result[2] = N; //Number of data points
 		return result;
 	}
 

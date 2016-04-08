@@ -89,6 +89,11 @@
 		    <version>3.5</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.4</version>
+		</dependency>
+		<dependency>
     		<groupId>org.knowm.xchart</groupId>
     		<artifactId>xchart</artifactId>
     		<version>2.6.1</version>
@@ -149,7 +154,4 @@
 		<system>GitHub Issues</system>
 		<url>https://github.com/thorstenwagner/TraJ/issues</url>
 	</issueManagement>
-	<ciManagement>
-		<system>Jenkins</system>
-	</ciManagement>
 </project>

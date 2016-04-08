@@ -24,9 +24,18 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ.features;
 
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import ij.measure.CurveFitter;
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * Fits a power law curve to the msd data and returns the exponent
+ * @author Thorsten Wagner
+ *
+ */
 public class PowerLawFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
@@ -45,20 +54,27 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	@Override
 	public double[] evaluate() {
 		int N = maxlag - minlag + 1;
-		double[] xData = new double[N];
-		double[] yData = new double[N];
+		ArrayList<Double> xDataList = new ArrayList<Double>();
+		ArrayList<Double> yDataList = new ArrayList<Double>();
 		msdeval.setTrajectory(t);
+
 		for(int i = minlag; i <= maxlag; i++){
 			msdeval.setTimelag(i);
-			
-			xData[i-minlag] = i;
-			yData[i-minlag] = msdeval.evaluate()[evaluateIndex];
-			//System.out.print(minlag/30.0+",");
+			int x = i ;
+			double y = msdeval.evaluate()[evaluateIndex];
+			int np = (int)msdeval.evaluate()[2];
+			for(int j = 0; j < np; j++){
+				xDataList.add((double)x);
+				yDataList.add(y);
+			}
 		}
+		double[] xData = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
+		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		CurveFitter fitter = new CurveFitter(xData, yData);
 		double[] start = {1,1};
 		fitter.setInitialParameters(start);
 		fitter.doFit(CurveFitter.POWER);
+
 
 		double params[] = fitter.getParams();
 		
