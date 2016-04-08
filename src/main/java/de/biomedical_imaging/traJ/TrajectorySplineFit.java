@@ -128,7 +128,7 @@ public class TrajectorySplineFit {
 		 */
 		
 		
-		Point2D.Double p1 = rect[2]; //oben links
+		Point2D.Double p1 = rect[2]; //top left
 		Point2D.Double p2 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[1] : rect[3]; //Point to long side
 		Point2D.Double p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
 		Point2D.Double majorDirection = new Point2D.Double(p2.x-p1.x, p2.y-p1.y);
@@ -150,7 +150,7 @@ public class TrajectorySplineFit {
 				rect[i].setLocation(rect[i].x*Math.cos(inRad)-rect[i].y*Math.sin(inRad), rect[i].x*Math.sin(inRad)+rect[i].y*Math.cos(inRad));
 			}
 
-			p1 = rect[2]; //oben links
+			p1 = rect[2]; //top left
 			p2 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[1] : rect[3]; //Point to long side
 			p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
 		}
@@ -166,22 +166,37 @@ public class TrajectorySplineFit {
 		 * 2.3 Calculate the distance between the start of the line and the projected point
 		 * 2.4 Assign point to segment according to distance of (2.3)
 		 */
-		
-		double segmentWidth = p1.distance(p2)/nSegments;
-		
-		List<List<Point2D.Double>> pointsInSegments = new ArrayList<List<Point2D.Double>>(nSegments);
-		for(int i = 0; i < nSegments; i++){
-			pointsInSegments.add(new ArrayList<Point2D.Double>());
-		}
-		for(int i = 0; i < points.size(); i++){
-			Point2D.Double projPoint  = projectPointToLine(p1, p2, points.get(i));
-			int index = (int)(p1.distance(projPoint)/segmentWidth);
-			
-			if(index>(nSegments-1)){
-				index = (nSegments-1);
+		List<List<Point2D.Double>> pointsInSegments =null;
+		boolean allSegmentsContainingAtLeastTwoPoints = true;
+		do{
+			allSegmentsContainingAtLeastTwoPoints = true;
+			double segmentWidth = p1.distance(p2)/nSegments;
+			pointsInSegments = new ArrayList<List<Point2D.Double>>(nSegments);
+			for(int i = 0; i < nSegments; i++){
+				pointsInSegments.add(new ArrayList<Point2D.Double>());
 			}
-			pointsInSegments.get(index).add(points.get(i));
-		}
+			for(int i = 0; i < points.size(); i++){
+				Point2D.Double projPoint  = projectPointToLine(p1, p2, points.get(i));
+				int index = (int)(p1.distance(projPoint)/segmentWidth);
+				
+				if(index>(nSegments-1)){
+					index = (nSegments-1);
+				}
+				pointsInSegments.get(index).add(points.get(i));
+			}
+			
+			for(int i = 0; i < pointsInSegments.size(); i++){
+				if(pointsInSegments.get(i).size()<2){
+					if(nSegments>2){
+						nSegments--;
+						i = pointsInSegments.size();
+						allSegmentsContainingAtLeastTwoPoints = false;
+				
+					}
+				}
+			}
+		}while(allSegmentsContainingAtLeastTwoPoints==false);
+		
 		
 		/*
 		 * 3. Calculate the mean standard deviation over each segment: <s>
@@ -202,12 +217,13 @@ public class TrajectorySplineFit {
 			}
 			if(distances.length >0){
 				sd.setData(distances);
+	
 				sumMean += sd.evaluate();
 				Nsum++;
 			}
 		}
 		double s = sumMean/Nsum;
-
+		
 		/*
 		 * 4. Build a kd-tree
 		 */
@@ -241,7 +257,7 @@ public class TrajectorySplineFit {
 		} catch (KeySizeException e) {
 			e.printStackTrace();
 		} 
-		
+
 		double cx = 0;
 		double cy = 0;
 		for(int i = 0; i < near.size(); i++){
@@ -429,19 +445,19 @@ public class TrajectorySplineFit {
 		if(splineSupportPoints.size()>1){
 			Vector2d start = new Vector2d(splineSupportPoints.get(0).x-splineSupportPoints.get(1).x, splineSupportPoints.get(0).y-splineSupportPoints.get(1).y);
 			start.normalize();
-			start.scale(r1*3);
+			start.scale(r1*8);
 			splineSupportPoints.add(0, new Point2D.Double(splineSupportPoints.get(0).x+start.x, splineSupportPoints.get(0).y+start.y));
 			
 			Vector2d end = new Vector2d(splineSupportPoints.get(splineSupportPoints.size()-1).x-splineSupportPoints.get(splineSupportPoints.size()-2).x, 
 					splineSupportPoints.get(splineSupportPoints.size()-1).y-splineSupportPoints.get(splineSupportPoints.size()-2).y);
 			end.normalize();
-			end.scale(r1*3);
+			end.scale(r1*6);
 			splineSupportPoints.add(new Point2D.Double(splineSupportPoints.get(splineSupportPoints.size()-1).x+end.x, splineSupportPoints.get(splineSupportPoints.size()-1).y+end.y));
 		}
 		else{
 			Vector2d majordir = new Vector2d(-1, 0);
 			majordir.normalize();
-			majordir.scale(r1*3);
+			majordir.scale(r1*8);
 			splineSupportPoints.add(0, new Point2D.Double(splineSupportPoints.get(0).x+majordir.x, splineSupportPoints.get(0).y+majordir.y));
 			majordir.scale(-1);
 			splineSupportPoints.add(new Point2D.Double(splineSupportPoints.get(splineSupportPoints.size()-1).x+majordir.x, splineSupportPoints.get(splineSupportPoints.size()-1).y+majordir.y));
@@ -482,7 +498,6 @@ public class TrajectorySplineFit {
 		
 		if(Double.isInfinite(m))
 		{
-			
 			d = Math.abs(p2.x-p.x);
 		}
 		else{
