@@ -61,6 +61,34 @@ public class TrajectoryUtil {
 		return c;
 	}
 	
+	public static Trajectory concactTrajectorie(Trajectory a, Trajectory b){
+		if(a.getDimension()!=b.getDimension()){
+			throw new IllegalArgumentException("Combination not possible: The trajectorys does not have the same dimension");
+		}
+		Trajectory c = new Trajectory(a.getDimension());
+		
+		for(int i = 0 ; i < a.size(); i++){
+			Point3d pos = new Point3d(a.get(i).x, 
+					a.get(i).y, 
+					a.get(i).z);
+			c.add(pos);
+		}
+		
+		double dx = a.get(a.size()-1).x - b.get(0).x;
+		double dy = a.get(a.size()-1).y - b.get(0).y;
+		double dz = a.get(a.size()-1).z - b.get(0).z;
+		
+		for(int i = 1 ; i < b.size(); i++){
+			Point3d pos = new Point3d(b.get(i).x+dx, 
+					b.get(i).y+dy, 
+					b.get(i).z+dz);
+			c.add(pos);
+		}
+		
+		return c;
+		
+	}
+	
 	public static boolean isZero(double v){
 		return Math.abs(v)<Math.pow(10, -18);
 	}
