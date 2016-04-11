@@ -37,6 +37,7 @@ import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
  * 
  * @author Thorsten Wagner
  *
+ * @TODO: Should use a weighted fit!
  */
 public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryFeature implements AbstractDiffusionCoefficientEstimator {
 	private int lagMin;
@@ -76,8 +77,12 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 		msdevaluator.setTimelag(lagMin);
 		for(int i = lagMin; i < lagMax+1; i++){
 			msdevaluator.setTimelag(i);
-			msdhelp= msdevaluator.evaluate()[0];
-			reg.addData(i*1.0/fps, msdhelp);
+			double[] res = msdevaluator.evaluate();
+			msdhelp= res[0];
+			int N = (int)res[2];
+			for(int j = 0; j < N; j++){
+				reg.addData(i*1.0/fps, msdhelp);
+			}
 		}
 		double[] D = {reg.getSlope()/(2.0*t.getDimension()),reg.getSlope(),reg.getIntercept()}; 
 		return D;

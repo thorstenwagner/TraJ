@@ -136,7 +136,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		Trajectory t = gen.generateTrajectory();
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(1,2);
 		double[] result = dcEst.getDiffusionCoefficient(t, 1.0/timelag);
-		Assert.assertEquals(diffusioncoefficient, result[0],0.1);
+		Assert.assertEquals(diffusioncoefficient, result[0],0.2);
 	}
 	
 	@Test
