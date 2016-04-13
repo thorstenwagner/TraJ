@@ -25,10 +25,10 @@ Implemented features so far:
   - Standard deviation in direction
   - Spline curve analysis features according to [5]
 ![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
+  - Efficency [6]
   - Skeweness [6]
   - Kurtosis [6]
-
-
+  
 References:
 
 [1] C. L. Vestergaard, P. C. Blainey, and H. Flyvbjerg, “Optimal estimation of diffusion coefficients from single-particle trajectories,” Phys. Rev. E - Stat. Nonlinear, Soft Matter Phys., vol. 89, no. 2, p. 022726, Feb. 2014.
