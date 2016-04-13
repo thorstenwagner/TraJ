@@ -1,4 +1,4 @@
-package de.biomedical_imaging.traJ.features;
+package de.biomedical_imaging.traj.math;
 
 import ij.IJ;
 
