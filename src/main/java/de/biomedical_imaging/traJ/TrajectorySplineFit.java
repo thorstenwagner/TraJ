@@ -35,6 +35,8 @@ import javax.vecmath.Vector2d;
 
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
@@ -45,6 +47,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.Series.SeriesType;
 
 import cg.RotatingCalipers;
+import de.biomedical_imaging.traj.math.RadiusGyrationTensor2D;
 import edu.wlu.cs.levy.CG.KDTree;
 import edu.wlu.cs.levy.CG.KeyDuplicateException;
 import edu.wlu.cs.levy.CG.KeySizeException;
@@ -140,6 +143,7 @@ public class TrajectorySplineFit {
 		Point2D.Double p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
 		majorDirection = new Point2D.Double(p2.x-p1.x, p2.y-p1.y);
 		double inRad = -1*Math.atan2(majorDirection.y, majorDirection.x);
+
 		boolean doTransform = (Math.abs(Math.abs(inRad)-Math.PI)>0.001);
 
 		if(doTransform)
@@ -298,7 +302,7 @@ public class TrajectorySplineFit {
 		boolean stop = false;
 		int minN = 7;
 		double tempr1 = r1;
-		double allowedDeltaDirection = 0.3*Math.PI;
+		double allowedDeltaDirection = 0.5*Math.PI;
 				
 		while(stop==false){
 			List<Point2D.Double> nearestr1 = null;
