@@ -6,7 +6,10 @@ import java.awt.geom.Point2D;
 
 import org.junit.Test;
 
+import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectorySplineFit;
+import de.biomedical_imaging.traJ.simulation.ActiveTransportSimulator;
+import de.biomedical_imaging.traJ.simulation.FreeDiffusionSimulator;
 
 public class TrajectorySplineFitTest {
 
@@ -35,5 +38,7 @@ public class TrajectorySplineFitTest {
 		double dx = sfit.distancePointLine(pref, y, p);
 		assertEquals(Math.sqrt(p.x*p.x+p.y*p.y), dx,0.0001);
 	}
+	
+	
 
 }

@@ -1,6 +1,7 @@
 package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traj.math.MomentsCalculator;
 
 /**
  * Evaluates the skewness of the trajectory. Therefore the radius of gyration tensor is estimated.

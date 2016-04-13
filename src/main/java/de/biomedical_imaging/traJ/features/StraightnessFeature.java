@@ -25,7 +25,9 @@ public class StraightnessFeature extends AbstractTrajectoryFeature {
 		for(int i = 1; i < t.size(); i++){
 			sum += t.get(i).distance(t.get(i-1));
 		}
-
+		if(sum<Math.pow(10, -10)){
+			return 0;
+		}
 		double straightness = (t.get(0).distance(t.get(t.size()-1)))/sum;
 		return straightness;
 	}

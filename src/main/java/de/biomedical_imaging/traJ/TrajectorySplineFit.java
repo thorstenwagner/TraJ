@@ -28,6 +28,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.vecmath.Vector2d;
@@ -113,25 +114,31 @@ public class TrajectorySplineFit {
 			points.add(p);
 		}
 		Point2D.Double[] rect = null;
+		boolean colinear = false;
 		try{
 			rect = RotatingCalipers.getMinimumBoundingRectangle(points);
 		}
 		catch(IllegalArgumentException e)
 		{
-			t.showTrajectory();
-			e.printStackTrace();
-			throw new IllegalArgumentException("Spline curve estimation does not work with colinear points ");
+			//t.showTrajectory();
+			//e.printStackTrace();
+			//throw new IllegalArgumentException("Spline curve estimation does not work with colinear points ");
+			colinear = true;
+		}
+		catch(EmptyStackException e){
+			colinear = true;
 		}
 		
 		/*
 		 * 1.1 Rotate that the major axis is parallel with the xaxis
 		 */
 		
+		Point2D.Double majorDirection = null;
 		
 		Point2D.Double p1 = rect[2]; //top left
 		Point2D.Double p2 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[1] : rect[3]; //Point to long side
 		Point2D.Double p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
-		Point2D.Double majorDirection = new Point2D.Double(p2.x-p1.x, p2.y-p1.y);
+		majorDirection = new Point2D.Double(p2.x-p1.x, p2.y-p1.y);
 		double inRad = -1*Math.atan2(majorDirection.y, majorDirection.x);
 		boolean doTransform = (Math.abs(Math.abs(inRad)-Math.PI)>0.001);
 
@@ -617,7 +624,9 @@ public class TrajectorySplineFit {
 		    double[] yData = new double[rotatedTrajectory.size()];
 		    for(int i = 0; i < rotatedTrajectory.size(); i++){
 		    	xData[i] = rotatedTrajectory.get(i).x;
+		    	
 		    	yData[i] = rotatedTrajectory.get(i).y;
+		    	
 		    }
 		    // Create Chart
 		    Chart chart = QuickChart.getChart("Spline+Track", "X", "Y", "y(x)", xData, yData);

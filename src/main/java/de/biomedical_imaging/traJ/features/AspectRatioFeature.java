@@ -26,6 +26,7 @@ package de.biomedical_imaging.traJ.features;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 
 import cg.RotatingCalipers;
 import de.biomedical_imaging.traJ.Trajectory;
@@ -54,6 +55,9 @@ public class AspectRatioFeature extends AbstractTrajectoryFeature {
 		}
 		catch(IllegalArgumentException e){
 			//If the trajectory consits of colinear points, return an aspect ratio of infinity
+			return new double[] {Double.POSITIVE_INFINITY};
+		}
+		catch(EmptyStackException e){
 			return new double[] {Double.POSITIVE_INFINITY};
 		}
 

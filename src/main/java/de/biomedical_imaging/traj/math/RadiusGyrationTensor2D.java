@@ -12,10 +12,24 @@ public class RadiusGyrationTensor2D {
 		this.t = t;
 	}
 	
+	/**
+	 * Calculates the radius of gyration tensor according to formula (6.3) in
+	 * 
+	 * ELEMENTS OF THE RANDOM WALK by Rudnick and Gaspari
+	 * 
+	 * @return Radius of gyration tensor
+	 */
 	public Array2DRowRealMatrix getRadiusOfGyrationTensor(){
 		return getRadiusOfGyrationTensor(t);
 	}
 	
+	/**
+	 * Calculates the radius of gyration tensor according to formula (6.3) in
+	 * 
+	 * ELEMENTS OF THE RANDOM WALK by Rudnick and Gaspari
+	 * 
+	 * @return Radius of gyration tensor
+	 */
 	public static Array2DRowRealMatrix getRadiusOfGyrationTensor(Trajectory t){
 		double meanx =0;
 		double meany =0;

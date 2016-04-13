@@ -26,6 +26,7 @@ package de.biomedical_imaging.traJ.features;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 
 import cg.RotatingCalipers;
 import de.biomedical_imaging.traJ.Trajectory;
@@ -64,7 +65,10 @@ public class ElongationFeature extends AbstractTrajectoryFeature {
 			rect = RotatingCalipers.getMinimumBoundingRectangle(points);
 		}
 		catch(IllegalArgumentException e){
-			return new double[] {1};
+			return new double[] {1}; //For colinear points it is defined as 1
+		}
+		catch(EmptyStackException e){
+			return new double[] {1}; 
 		}
 
 		double longSide = rect[0].distance(rect[1])>rect[1].distance(rect[2])?rect[0].distance(rect[1]):rect[1].distance(rect[2]);

@@ -157,6 +157,12 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return super.add(e);
 	}
 	
+	public void scale(double v){
+		for(int i = 0; i < this.size(); i++){
+			this.get(i).scale(v);;
+		}
+	}
+	
 	public boolean add(double x, double y, double z){
 		return super.add(new Point3d(x, y, z));
 	}

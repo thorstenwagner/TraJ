@@ -90,7 +90,7 @@ public class TrajectoryUtil {
 	}
 	
 	public static boolean isZero(double v){
-		return Math.abs(v)<Math.pow(10, -18);
+		return Math.abs(v)<Math.pow(10, -14);
 	}
 	
 	/**

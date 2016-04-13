@@ -53,7 +53,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	
 	@Override
 	public double[] evaluate() {
-		int N = maxlag - minlag + 1;
+
 		ArrayList<Double> xDataList = new ArrayList<Double>();
 		ArrayList<Double> yDataList = new ArrayList<Double>();
 		msdeval.setTrajectory(t);
