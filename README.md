@@ -15,6 +15,7 @@ Implemented features so far:
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
 - Trajectory characterization:
+  - Center of gravity
   - Aspect ratio
   - Elongation
   - Fractal path dimension [2]
