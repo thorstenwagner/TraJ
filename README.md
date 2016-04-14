@@ -29,6 +29,9 @@ Implemented features so far:
   - Efficency [6]
   - Skeweness [6]
   - Kurtosis [6]
+  - Asymmetry [7]
+  - Trapped probability [7]
+
   
 References:
 
@@ -43,6 +46,8 @@ References:
 [5] Spatial structur analysis of diffusive dynamics according to: B. R. Long and T. Q. Vu, “Spatial structure and diffusive dynamics from single-particle trajectories using spline analysis,” Biophys. J., vol. 98, no. 8, pp. 1712–1721, 2010.
 
 [6] Helmuth, J.A. et al., 2007. A novel supervised trajectory segmentation algorithm identifies distinct types of human adenovirus motion in host cells. Journal of structural biology, 159(3), pp.347–58.
+
+[7]
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012. (Already implemented in NanoTrackJ - I just have to port it)
