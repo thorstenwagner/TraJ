@@ -24,6 +24,8 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ.DiffusionCoefficientEstimator;
 
+import java.util.ArrayList;
+
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
@@ -101,10 +103,33 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 	    msdeval.setTimelag(lagMin);
 		for(int i = lagMin; i < lagMax+1; i++){
 			msdeval.setTimelag(i);
-			double msdhelp= msdeval.evaluate()[1];
+			double msdhelp= msdeval.evaluate()[0];
 			xData[i-lagMin] = i;
 	    	yData[i-lagMin] = msdhelp;
 		}
+	 
+	    // Create Chart
+	    Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD", xData, yData);
+	    
+	    //Show it
+	    new SwingWrapper(chart).displayChart();
+}
+	public static  void plotMSDLine(ArrayList<Trajectory> t, int lagMin, int lagMax, AbstractMeanSquaredDisplacmentEvaluator msdeval){
+		
+	 	double[] xData = new double[lagMax-lagMin+1];
+	    double[] yData = new double[lagMax-lagMin+1];
+	    for(int j = lagMin; j < lagMax+1; j++){
+	    	double msd = 0;
+	    	for(int i = 0; i < t.size(); i++){
+		    	 msdeval.setTrajectory(t.get(i));
+		    	 msdeval.setTimelag(j);
+		    	 msd += msdeval.evaluate()[0];
+		    }
+	    	msd = 1.0/t.size() * msd;
+	    	xData[j-lagMin] = j;
+	    	yData[j-lagMin] = msd;
+	    }
+	    
 	 
 	    // Create Chart
 	    Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD", xData, yData);
@@ -116,6 +141,10 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 	public static  void plotMSDLine(Trajectory t, int lagMin, int lagMax){
 			plotMSDLine(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t, lagMin));
 	}
+	
+	public static  void plotMSDLine(ArrayList<Trajectory> t, int lagMin, int lagMax){
+		plotMSDLine(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t.get(0), lagMin));
+}
 	
 	public void setMeanSquaredDisplacementEvaluator(AbstractMeanSquaredDisplacmentEvaluator msdeval){
 		this.msdevaluator = msdeval;

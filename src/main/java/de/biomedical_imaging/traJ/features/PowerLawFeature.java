@@ -48,6 +48,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		this.minlag = minlag;
 		this.maxlag = maxlag;
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
+	
 		evaluateIndex = 0;
 	}
 	
@@ -57,22 +58,34 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		ArrayList<Double> xDataList = new ArrayList<Double>();
 		ArrayList<Double> yDataList = new ArrayList<Double>();
 		msdeval.setTrajectory(t);
+		double[][] data = new double[maxlag-minlag+1][3];
 
 		for(int i = minlag; i <= maxlag; i++){
 			msdeval.setTimelag(i);
-			int x = i ;
-			double y = msdeval.evaluate()[evaluateIndex];
-			int np = (int)msdeval.evaluate()[2];
+			data[i-minlag][0] = i;
+			double[] res = msdeval.evaluate();
+			data[i-minlag][1] = res[evaluateIndex];
+			data[i-minlag][2] = (int)res[2];
+	
+
+		}
+
+		//Weightening
+		for(int i = 0; i < (maxlag-minlag+1); i++){
+			int x = (int)data[i][0];
+			double y = data[i][1];
+			int np = (int)data[i][2];
 			for(int j = 0; j < np; j++){
 				xDataList.add((double)x);
 				yDataList.add(y);
 			}
 		}
+		
 		double[] xData = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
 		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		CurveFitter fitter = new CurveFitter(xData, yData);
-		double[] start = {1,1};
-		fitter.setInitialParameters(start);
+		//double[] start = {1,1};
+	//	fitter.setInitialParameters(start);
 		fitter.doFit(CurveFitter.POWER);
 
 

@@ -33,7 +33,7 @@ public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 		
 		double D = dcEst.evaluate()[0];
 		double time = t.size()*fps;
-		System.out.println("r: " + r + " D: " + D + " time: " + time);
+
 		double p = 1- Math.exp(0.2048-2.5117*(D*time/(r*r)));
 		return new double[]{p};
 	}

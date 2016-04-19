@@ -130,6 +130,7 @@ public  class Trajectory extends ArrayList<Point3d> {
 		    for(int i = 0; i < this.size(); i++){
 		    	xData[i] = this.get(i).x;
 		    	yData[i] = this.get(i).y;
+		    	
 		    }
 		    // Create Chart
 		    Chart chart = QuickChart.getChart(title, "X", "Y", "y(x)", xData, yData);

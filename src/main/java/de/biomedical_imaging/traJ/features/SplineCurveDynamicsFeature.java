@@ -90,7 +90,7 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature implem
 		//System.out.println("N: " +spline.getN());
 		double msdParallel = sumParallel/N;
 		double msdPerpendicular = sumPerpendicular/N;
-		result = new double[]{msdParallel,msdPerpendicular};
+		result = new double[]{msdParallel,msdPerpendicular,N};
 		recalculate = false;
 		return result;
 	}

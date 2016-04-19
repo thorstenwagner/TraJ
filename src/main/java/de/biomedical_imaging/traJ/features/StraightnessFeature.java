@@ -3,8 +3,7 @@ package de.biomedical_imaging.traJ.features;
 import de.biomedical_imaging.traJ.Trajectory;
 
 /**
- * Distanz start-end punk / Summe Länge Einzelschritte 
- *
+ * Relates the net dispalcement to the sum of step lengths
  */
 public class StraightnessFeature extends AbstractTrajectoryFeature {
 	
