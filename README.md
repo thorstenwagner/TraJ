@@ -31,6 +31,8 @@ Implemented features so far:
   - Kurtosis [6]
   - Asymmetry [7]
   - Trapped probability [7]
+  - Maximum distance between two positions
+  - Maximum distance for given timelag
 
   
 References:
