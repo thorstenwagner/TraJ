@@ -12,6 +12,7 @@ Implemented features so far:
 - Simulation: Active Transport
 - Simulation: Confined diffusion
 - Simulation: Anomalous diffusion with fixed obstacles (spheres)
+- Simulation: Anomalous diffusion by weierstrass-mandelbrot approach [8]
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
 - Trajectory characterization:
@@ -50,6 +51,8 @@ References:
 [6] Helmuth, J.A. et al., 2007. A novel supervised trajectory segmentation algorithm identifies distinct types of human adenovirus motion in host cells. Journal of structural biology, 159(3), pp.347–58.
 
 [7] Saxton, M.J., 1993. Lateral diffusion in an archipelago. Single-particle diffusion. Biophysical Journal, 64(6), pp.1766–1780.
+
+[8] Guigas, G. & Weiss, M., 2008. Sampling the Cell with Anomalous Diffusion—The Discovery of Slowness. Biophysical Journal, 94(1), pp.90–94.
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012. (Already implemented in NanoTrackJ - I just have to port it)
