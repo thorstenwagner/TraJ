@@ -34,6 +34,7 @@ Implemented features so far:
   - Trapped probability [7]
   - Maximum distance between two positions
   - Maximum distance for given timelag
+  - Gaussianity [9]
 
   
 References:
@@ -53,6 +54,8 @@ References:
 [7] Saxton, M.J., 1993. Lateral diffusion in an archipelago. Single-particle diffusion. Biophysical Journal, 64(6), pp.1766–1780.
 
 [8] Guigas, G. & Weiss, M., 2008. Sampling the Cell with Anomalous Diffusion—The Discovery of Slowness. Biophysical Journal, 94(1), pp.90–94.
+
+[9] Ernst, D., Köhler, J. & Weiss, M., 2014. Probing the type of anomalous diffusion with single-particle tracking. Physical chemistry chemical physics : PCCP, 16(17), pp.7686–91.
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012. (Already implemented in NanoTrackJ - I just have to port it)
