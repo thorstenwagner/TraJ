@@ -23,13 +23,15 @@ public class EfficiencyFeature extends AbstractTrajectoryFeature {
 	public double getEfficiency(){
 		double sum = 0;
 		for(int i = 1; i < t.size(); i++){
-			sum += t.get(i).distance(t.get(i-1))*t.get(i).distance(t.get(i-1));
+			double d = t.get(i).distance(t.get(i-1));
+			sum += d*d;
 		}
 		if(sum<Math.pow(10, -10)){
 			return 0;
 		}
-		double straightness = (t.get(0).distance(t.get(t.size()-1)) * t.get(0).distance(t.get(t.size()-1)))/(t.size()*sum);
-		return straightness;
+		double d = t.get(0).distance(t.get(t.size()-1));
+		double eff = (d*d)/(t.size()*sum);
+		return eff;
 	}
 
 	@Override

@@ -57,6 +57,9 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 	public double[] evaluate() {
 		splinefit = new TrajectorySplineFit(t,nSegments);
 		splinefit.calculateSpline();
+		if(!splinefit.wasSuccessfull()){
+			return new double[] {Double.NaN,Double.NaN};
+		}
 		double[] data = new double[t.size()];
 		for(int i = 0; i < t.size(); i++){
 			

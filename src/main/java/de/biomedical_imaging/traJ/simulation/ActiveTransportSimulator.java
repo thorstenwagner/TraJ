@@ -147,6 +147,10 @@ public class ActiveTransportSimulator extends AbstractSimulator {
 		}
 		return t;
 	}
+
+	public void setNumberOfSteps(int steps) {
+		this.numberOfSteps = steps;
+	}
 	
 
 }

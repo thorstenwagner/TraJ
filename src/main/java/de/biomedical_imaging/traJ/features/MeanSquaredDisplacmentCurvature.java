@@ -63,6 +63,7 @@ public class MeanSquaredDisplacmentCurvature extends AbstractTrajectoryFeature {
 		MeanSquaredDisplacmentFeature msd = new MeanSquaredDisplacmentFeature(t, 1);
 		double sum = 0;
 		for(int i = 1; i <= Ndef; i++){
+			
 			msd.setTimelag(i);
 			sum+= (msd.evaluate()[0] - evaluateMSDLine(i, slope, intercept))/evaluateMSDLine(i, slope, intercept);
 		}

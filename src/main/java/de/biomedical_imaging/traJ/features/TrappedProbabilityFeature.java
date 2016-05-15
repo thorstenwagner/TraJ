@@ -17,11 +17,14 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffus
  */
 public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 	private Trajectory t;
-	private double fps;
 	
-	public TrappedProbabilityFeature(Trajectory t, double fps) {
+	/**
+	 * 
+	 * @param t Trajectory
+	 * @param timelag Timelag between two steps
+	 */
+	public TrappedProbabilityFeature(Trajectory t) {
 		this.t = t;
-		this.fps = fps;
 	}
 	
 	@Override
@@ -29,10 +32,10 @@ public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 		MaxDistanceBetweenTwoPositionsFeature dtwop = new MaxDistanceBetweenTwoPositionsFeature(t);
 		double r = dtwop.evaluate()[0]/2;
 		
-		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator(t, 1/fps);
+		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator(t, 1);
 		
 		double D = dcEst.evaluate()[0];
-		double time = t.size()*fps;
+		double time = t.size();
 
 		double p = 1- Math.exp(0.2048-2.5117*(D*time/(r*r)));
 		return new double[]{p};

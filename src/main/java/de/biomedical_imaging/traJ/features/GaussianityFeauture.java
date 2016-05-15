@@ -18,6 +18,10 @@ public class GaussianityFeauture extends AbstractTrajectoryFeature {
 	private String name = "Gaussianity";
 	private String sname = "GAUSS";
 	
+	/**
+	 * @param t The trajectory
+	 * @param timelag Timelag as dimensionless interger (1,2,3...)
+	 */
 	public GaussianityFeauture(Trajectory t, int timelag) {
 		this.t = t;
 		this.timelag = timelag;

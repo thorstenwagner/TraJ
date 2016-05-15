@@ -107,9 +107,10 @@ public class TrajectoryUtil {
 		}
 		ArrayList<Trajectory> subTrajectories = new ArrayList<Trajectory>();
 		boolean trackEndReached = false;
+		
 		for(int i = 0; i < t.size(); i=i+increment)
 		{
-			int upperBound = i+windowWidth;
+			int upperBound = i+(windowWidth);
 			if(upperBound>t.size()){
 				upperBound=t.size();
 				trackEndReached=true;
@@ -123,7 +124,6 @@ public class TrajectoryUtil {
 				i=t.size();
 			}
 		}
-		System.out.println(subTrajectories.size() + " Subtrajectories returned");
 		return subTrajectories;
 	}
 

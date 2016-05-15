@@ -36,6 +36,39 @@ public class SimulationUtil {
 			
 	}
 	
+	/**
+	 * Adds position noise to the trajectories
+	 * @param t
+	 * @param sd
+	 * @return trajectory with position noise
+	 */
+	public static Trajectory addPositionNoise(Trajectory t, double sd){
+		CentralRandomNumberGenerator r = CentralRandomNumberGenerator.getInstance();
+		Trajectory newt = new Trajectory(t.getDimension());
+		
+		for(int i = 0; i < t.size(); i++){
+			newt.add(t.get(i));
+			for(int j = 1; j <= t.getDimension(); j++){
+				switch (j) {
+				case 1:
+					newt.get(i).setX(newt.get(i).x + r.nextGaussian()*sd);
+					break;
+				case 2:
+					newt.get(i).setY(newt.get(i).y + r.nextGaussian()*sd);
+					break;
+				case 3:
+					newt.get(i).setZ(newt.get(i).z + r.nextGaussian()*sd);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		
+		return newt;
+		
+	}
+	
 	public static Point3d randomPosition(int dimension, double length){
 			
 			Point3d p = null;

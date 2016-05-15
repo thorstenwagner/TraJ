@@ -67,6 +67,9 @@ public class SplineCurveDynamicsFeature extends AbstractTrajectoryFeature implem
 		else{
 			spline = splinefit.getSpline();
 		}
+		if(!splinefit.wasSuccessfull()){
+			return new double[]{Double.NaN,Double.NaN,Double.NaN};
+		}
 		Trajectory tr = splinefit.getRotatedTrajectory();
 		UnivariateFunction derivative = spline.derivative();
 		int N =0;
