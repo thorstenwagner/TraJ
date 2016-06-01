@@ -5,6 +5,11 @@ import de.biomedical_imaging.traJ.Trajectory;
 /**
  * 
  * Relates the squared net dispalcement to the sum of squared step lengths
+ * 
+ * Based on:
+ * Helmuth, J.A. et al., 2007. 
+ * A novel supervised trajectory segmentation algorithm identifies distinct types of human adenovirus motion in host cells. 
+ * Journal of structural biology, 159(3), pp.347–58.
  */
 public class EfficiencyFeature extends AbstractTrajectoryFeature {
 	

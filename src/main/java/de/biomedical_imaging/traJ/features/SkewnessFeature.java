@@ -9,6 +9,7 @@ import de.biomedical_imaging.traj.math.MomentsCalculator;
  * tensor.:
  * Kurtosis = 1/N sum( (x_i - mean)^4 / sd^4)
  * where N is the number of positions, mean the mean position and sd the standard deviation
+ * 
  * @author Thorsten Wagner
  *
  */
