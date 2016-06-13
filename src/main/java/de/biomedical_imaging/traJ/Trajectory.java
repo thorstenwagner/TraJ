@@ -210,4 +210,8 @@ public  class Trajectory extends ArrayList<Point3d> {
 	public String getType(){
 		return type;
 	}
+	
+	public static void restIDCounter(){
+		idCounter=1;
+	}
 }
