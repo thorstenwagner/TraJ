@@ -36,6 +36,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 	
 	private Trajectory t;
 	private int timelag;
+	private boolean overlap =false;
 	
 	/**
 	 * 
@@ -81,7 +82,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 		if(timelag<1){
 			throw new IllegalArgumentException("Timelag can not be smaller than 1");
 		}
-		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t, timelag,false);
+		TrajectoryValidIndexTimelagIterator it = new TrajectoryValidIndexTimelagIterator(t, timelag,overlap);
 		int N = 0;
 		while(it.hasNext()){
 			int i = it.next();
@@ -132,4 +133,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 		return "MSD";
 	}
 	
+	public void setOverlap(boolean overlap){
+		this.overlap = overlap;
+	}
 }
