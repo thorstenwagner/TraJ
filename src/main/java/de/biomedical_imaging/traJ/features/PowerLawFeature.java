@@ -86,14 +86,14 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		CurveFitter fitter = new CurveFitter(xData, yData);
 		//double[] start = {1,1};
 	//	fitter.setInitialParameters(start);
-		fitter.doFit(CurveFitter.POWER);
+		fitter.doFit(CurveFitter.POWER_REGRESSION);
 
 
 		double params[] = fitter.getParams();
 		
 		double exponent = params[1];
 		//System.out.println("0: " + params[0] + " 1: " + params[1]);
-		result = new double[] {exponent};
+		result = new double[] {exponent,fitter.getFitGoodness()};
 		return result;
 	}
 	
