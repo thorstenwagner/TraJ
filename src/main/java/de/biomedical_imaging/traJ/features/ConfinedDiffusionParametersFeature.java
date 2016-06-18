@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.ArrayUtils;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.AbstractDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
 
 /**
@@ -23,15 +24,40 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 
 	private Trajectory t;
 	private double timelag;
+	private boolean onlyradius;
+	private AbstractDiffusionCoefficientEstimator dcEst;
 
+	/**
+	 * Constructs a newly allocated ConfinedDiffusionParametersFeature object. By default it uses
+	 * the {@link de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator} 
+	 * with min timelag 1 and maxtimelag 2  
+	 * @param t Trajectory for which the features should be estimated.
+	 * @param timelag Timelag between two steps
+	 */
 	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag) {
 		this.t = t;
 		this.timelag = timelag;
+		onlyradius = false;
+		dcEst = new RegressionDiffusionCoefficientEstimator(null, 1/timelag, 1, 2);
+	}
+	
+	/**
+	 * Constructs a newly allocated ConfinedDiffusionParametersFeature object.
+	 * @param t Trajectory for which the features should be estimated.
+	 * @param timelag Timelag between two steps
+	 * @param dcEst Estimateor for the diffusion coefficient.
+	 */
+	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag, AbstractDiffusionCoefficientEstimator dcEst) {
+		this.t = t;
+		this.timelag = timelag;
+		onlyradius = false;
+		this.dcEst = dcEst;
 	}
 	
 	@Override
 	/**
-	 * @return [0] = squared radius, [1] = shape parameter 1, [2] shape parameter 2
+	 * @return [0] = squared radius, [1] = shape parameter 1, [2] shape parameter 2, [3] Fit goodness.
+	 * When onlyRadius==true then [0] = squared radius, [1] Fit goodness
 	 */
 	public double[] evaluate() {
 		MeanSquaredDisplacmentFeature msd = new MeanSquaredDisplacmentFeature(t, 1);
@@ -53,13 +79,20 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		CurveFitter fitter = new CurveFitter(xData, yData);
 		MaxDistanceBetweenTwoPositionsFeature maxdist = new MaxDistanceBetweenTwoPositionsFeature(t);
-		RegressionDiffusionCoefficientEstimator regest = new RegressionDiffusionCoefficientEstimator(t, 1/timelag, 1, 2);
 		double estrad = maxdist.evaluate()[0];
-		double estDC = regest.evaluate()[0];
-		double[] initialParams = {estrad*estrad,1,1};//,regest.evaluate()[0]};
-		fitter.doCustomFit("y=a*(1-b*exp(-4*c*"+estDC+"*x/a))", initialParams, false);
-		double[] params = fitter.getParams();
-		double[] res = {params[0],params[1],params[2],fitter.getFitGoodness()};
+		double estDC = dcEst.getDiffusionCoefficient(t, 1/timelag)[0];
+		double[] res = null;
+		if(onlyradius){
+			double[] initialParams = {estrad*estrad};//,regest.evaluate()[0]};
+			fitter.doCustomFit("y=a*(1-exp(-4*"+estDC+"*x/a))", initialParams, false);
+			double[] params = fitter.getParams();
+			res = new double[]{params[0],fitter.getFitGoodness()};
+		}else{
+			double[] initialParams = {estrad*estrad,1,1};//,regest.evaluate()[0]};
+			fitter.doCustomFit("y=a*(1-b*exp(-4*c*"+estDC+"*x/a))", initialParams, false);
+			double[] params = fitter.getParams();
+			res = new double[]{params[0],params[1],params[2],fitter.getFitGoodness()};
+		}
 		return res;
 	}
 
@@ -67,6 +100,14 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "Confinement Parameters";
+	}
+	
+	/**
+	 * 
+	 * @param or True, the only the parameter A is estimated (A could be interpreted as the squared radius of the confinement).
+	 */
+	public void setOnlyRadius(boolean or){
+		onlyradius = or;
 	}
 
 	@Override
