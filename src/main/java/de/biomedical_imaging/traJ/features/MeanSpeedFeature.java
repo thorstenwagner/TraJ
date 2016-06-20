@@ -46,13 +46,13 @@ public class MeanSpeedFeature extends AbstractTrajectoryFeature {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Instantaneous Speed Feature";
+		return "Mean Speed Feature";
 	}
 
 	@Override
 	public String getShortName() {
 		// TODO Auto-generated method stub
-		return "INSTANT.SPEED";
+		return "MEANSPEED";
 	}
 
 	@Override
