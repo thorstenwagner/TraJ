@@ -93,6 +93,8 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 			double[] params = fitter.getParams();
 			res = new double[]{params[0],params[1],params[2],fitter.getFitGoodness()};
 		}
+		CurveFitter fit = new CurveFitter(null, null);
+		fit.doFit(CurveFitter.STRAIGHT_LINE);
 		return res;
 	}
 
