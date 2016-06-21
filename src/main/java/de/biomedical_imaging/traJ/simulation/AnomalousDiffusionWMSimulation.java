@@ -36,11 +36,22 @@ public class AnomalousDiffusionWMSimulation extends AbstractSimulator {
 		t.add(new Point3d(0, 0, 0));
 		double[] incrx = generateIncrements();
 		double[] incry = generateIncrements();
+		
+		/*
+		 * This factor was calculated by regression analysis using R:
+		 * x<-c(100,200,300,400,500,600,700,800)
+		 * y<-c(1.0610,1.030076,1.02126,1.01446,1.012958,1.01055,1.008500,1.007809)
+		 * fit <- lm(log(y)~log(x))
+		 * plot(log(x),log(y))
+		 * abline(fit)
+		 * print(fit)
+		 */
+		double fact = Math.sqrt(diffusioncoefficient/(Math.exp(6.7426-0.9704*Math.log(numberOfSteps)))); 
 	
 		for(int i = 1; i <= numberOfSteps; i++) {
 			Point3d pos = new Point3d();
-			pos.setX(t.get(i-1).x + incrx[i-1]); //Math.sqrt(2*diffusioncoefficient*timelag);
-			pos.setY(t.get(i-1).y + incry[i-1]); //Math.sqrt(2*diffusioncoefficient*timelag));
+			pos.setX(t.get(i-1).x + incrx[i-1]*2*fact);//)*fact2); Math.sqrt(2*diffusioncoefficient*timelag)
+			pos.setY(t.get(i-1).y + incry[i-1]*2*fact);//*fact2);
 			t.add(pos);
 		}
 
