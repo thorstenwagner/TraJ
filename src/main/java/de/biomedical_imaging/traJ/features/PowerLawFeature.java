@@ -43,18 +43,20 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	private int maxlag;
 	private AbstractMeanSquaredDisplacmentEvaluator msdeval;
 	private int evaluateIndex = 0;
+
 	public PowerLawFeature(Trajectory t, int minlag, int maxlag) {
 		this.t = t;
 		this.minlag = minlag;
 		this.maxlag = maxlag;
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
-	
+		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
+	
 	}
 	
 	@Override
 	public double[] evaluate() {
-
+		
 		ArrayList<Double> xDataList = new ArrayList<Double>();
 		ArrayList<Double> yDataList = new ArrayList<Double>();
 		msdeval.setTrajectory(t);
@@ -62,7 +64,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 
 		for(int i = minlag; i <= maxlag; i++){
 			msdeval.setTimelag(i);
-			data[i-minlag][0] = i;
+			data[i-minlag][0] = i*(1.0/30);
 			double[] res = msdeval.evaluate();
 			data[i-minlag][1] = res[evaluateIndex];
 			data[i-minlag][2] = (int)res[2];
@@ -72,28 +74,30 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 
 		//Weightening
 		for(int i = 0; i < (maxlag-minlag+1); i++){
-			int x = (int)data[i][0];
+			double x = data[i][0];
 			double y = data[i][1];
 			int np = (int)data[i][2];
 			for(int j = 0; j < np; j++){
-				xDataList.add((double)x);
+				xDataList.add(x);
 				yDataList.add(y);
 			}
 		}
 		
 		double[] xData = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
 		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
-		CurveFitter fitter = new CurveFitter(xData, yData);
-		//double[] start = {1,1};
-	//	fitter.setInitialParameters(start);
-		fitter.doFit(CurveFitter.POWER_REGRESSION);
-
-
-		double params[] = fitter.getParams();
 		
+		CurveFitter fitter = new CurveFitter(xData, yData);
+	
+		fitter.doFit(CurveFitter.POWER_REGRESSION);
+		//double[] initialParams = {0.5,0.10};
+		//fitter.doCustomFit("y=a*log(x)+b", initialParams, false);
+		
+		double params[] = fitter.getParams();
 		double exponent = params[1];
+		double D = params[0]/4; //Why 4.0/3? Simulation shows, that the fit gives this systematic error.... don't know why
+		
 		//System.out.println("0: " + params[0] + " 1: " + params[1]);
-		result = new double[] {exponent,fitter.getFitGoodness()};
+		result = new double[] {exponent,D,fitter.getFitGoodness()};
 		return result;
 	}
 	
