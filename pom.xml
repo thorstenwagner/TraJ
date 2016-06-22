@@ -118,6 +118,21 @@
 		    <artifactId>Rserve</artifactId>
 		    <version>1.8.1</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.jom</groupId>
+		    <artifactId>jom</artifactId>
+		    <version>0.1.16</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.colt</groupId>
+		    <artifactId>parallelcolt</artifactId>
+		    <version>0.9.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>net.java.dev.jna</groupId>
+		    <artifactId>jna</artifactId>
+		    <version>4.2.2</version>
+		</dependency>
 	</dependencies>
 	<developers>
 		<developer>
