@@ -98,11 +98,7 @@
     		<artifactId>xchart</artifactId>
     		<version>2.6.1</version>
 		</dependency>
-		<dependency>
-    		<groupId>nl.peterbloem</groupId>
-    		<artifactId>powerlaw</artifactId>
-    		<version>0.0.1</version>
-		</dependency>
+
 		<dependency>
    	 		<groupId>net.imagej</groupId>
    	 		<artifactId>ij</artifactId>

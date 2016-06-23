@@ -26,7 +26,8 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffus
  * The class provides different fitting methods:
  *  - SIMPLEX_SINGLE uses the a simplex method where B,C are fixed to 1 and D is estimated. It only fits the corral size A. (FASTED METHOD)
  *  - SIMPLEX_COMPLETE is the same as SIMPLEX_SINGLE but B and C are not fixed. (SLOW METHOD)
- *  - JOM_CONSTRAINED try to find the optimal solution for A,B,C and D using the Java Optimization Modeler (ipopt)
+ *  - JOM_CONSTRAINED try to find the optimal solution for A,B,C and D using the Java Optimization Modeler (ipopt). For this modde, you have
+ *  to ipopt solver installed. Please see here for more information:
  *  
  * @author Thorsten Wagner
  *

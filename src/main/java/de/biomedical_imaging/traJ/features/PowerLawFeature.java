@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import com.jom.OptimizationProblem;
+
 import ij.measure.CurveFitter;
 import de.biomedical_imaging.traJ.Trajectory;
 
@@ -38,12 +40,17 @@ import de.biomedical_imaging.traJ.Trajectory;
  */
 public class PowerLawFeature extends AbstractTrajectoryFeature {
 
+	public enum FitMethod{
+		SIMPLEX_COMPLETE,JOM_CONSTRAINED
+	}
+	
 	private Trajectory t;
 	private int minlag;
 	private int maxlag;
 	private AbstractMeanSquaredDisplacmentEvaluator msdeval;
 	private int evaluateIndex = 0;
-
+	private FitMethod fitmethod;
+	
 	public PowerLawFeature(Trajectory t, int minlag, int maxlag) {
 		this.t = t;
 		this.minlag = minlag;
@@ -51,7 +58,18 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
+		fitmethod = FitMethod.SIMPLEX_COMPLETE;
 	
+	}
+	
+	public PowerLawFeature(Trajectory t, int minlag, int maxlag, FitMethod fitmethod) {
+		this.t = t;
+		this.minlag = minlag;
+		this.maxlag = maxlag;
+		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
+		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
+		evaluateIndex = 0;
+		this.fitmethod = fitmethod;
 	}
 	
 	@Override
@@ -86,18 +104,57 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		double[] xData = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
 		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		
-		CurveFitter fitter = new CurveFitter(xData, yData);
-	
-		fitter.doFit(CurveFitter.POWER_REGRESSION);
-		//double[] initialParams = {0.5,0.10};
-		//fitter.doCustomFit("y=a*log(x)+b", initialParams, false);
+		double[] res = null;
 		
-		double params[] = fitter.getParams();
-		double exponent = params[1];
-		double D = params[0]/4; //Why 4.0/3? Simulation shows, that the fit gives this systematic error.... don't know why
+		switch (fitmethod) {
+		case SIMPLEX_COMPLETE:
+			CurveFitter fitter = new CurveFitter(xData, yData);
+			
+			fitter.doFit(CurveFitter.POWER_REGRESSION);
+			//double[] initialParams = {0.5,0.10};
+			//fitter.doCustomFit("y=a*log(x)+b", initialParams, false);
+			
+			double params[] = fitter.getParams();
+			double exponent = params[1];
+			double D = params[0]/4; 
+			res = new double[] {exponent,D,fitter.getFitGoodness()};
+			break;
+		case JOM_CONSTRAINED:
+			//for(int i = 0; i < xData.length; i++){
+			//	xData[i] = Math.log(xData[i]);
+			//	yData[i] = Math.log(yData[i]);
+				
+			//}
+			OptimizationProblem op = new OptimizationProblem();
+			op.setInputParameter("y", yData, "column");
+			op.setInputParameter("x", xData, "column");
+			op.addDecisionVariable("a", false, new int[]{1,1},0,3);
+			op.addDecisionVariable("D", false, new int[]{1,1},0,1);
+			op.addConstraint("a>=0");
+			op.addConstraint("D>=0");
+			op.setInitialSolution("a", 1);
+			op.setInitialSolution("D", 0.09);
+			op.setObjectiveFunction("minimize", "sum( (ln(y) - (a*ln(x) + ln(D) ) )^2   )");
+			
+			op.solve("ipopt");
+
+			if (!op.solutionIsOptimal()) {
+			        System.out.println("Not optimal");
+			}
+			double a = op.getPrimalSolution("a").toValue();
+			double dc = op.getPrimalSolution("D").toValue();
+			res = new double[]{a,dc,op.getOptimalCost()};
+	
+			break;
+			
+		default:
+			break;
+		}
+		
+		
 		
 		//System.out.println("0: " + params[0] + " 1: " + params[1]);
-		result = new double[] {exponent,D,fitter.getFitGoodness()};
+		result = res;
 		return result;
 	}
 	
