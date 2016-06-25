@@ -35,8 +35,6 @@ import javax.vecmath.Vector2d;
 
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
@@ -117,19 +115,15 @@ public class TrajectorySplineFitLegacy {
 			points.add(p);
 		}
 		Point2D.Double[] rect = null;
-		boolean colinear = false;
 		try{
 			rect = RotatingCalipers.getMinimumBoundingRectangle(points);
 		}
 		catch(IllegalArgumentException e)
 		{
-			//t.showTrajectory();
-			//e.printStackTrace();
-			//throw new IllegalArgumentException("Spline curve estimation does not work with colinear points ");
-			colinear = true;
+		
 		}
 		catch(EmptyStackException e){
-			colinear = true;
+		
 		}
 		
 		/*

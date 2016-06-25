@@ -28,7 +28,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.EmptyStackException;
 import java.util.List;
 
 import javax.vecmath.Vector2d;
@@ -46,7 +45,6 @@ import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.Series.SeriesType;
 
-import cg.RotatingCalipers;
 import de.biomedical_imaging.edu.wlu.cs.levy.CG.KDTree;
 import de.biomedical_imaging.edu.wlu.cs.levy.CG.KeyDuplicateException;
 import de.biomedical_imaging.edu.wlu.cs.levy.CG.KeySizeException;
@@ -160,7 +158,7 @@ public class TrajectorySplineFit {
 		List<List<Point2D.Double>> pointsInSegments =null;
 		boolean allSegmentsContainingAtLeastTwoPoints = true;
 		int indexSmallestX = 0;
-		int indexLargestX = 0;
+		
 		double segmentWidth = 0;
 		do{
 			double smallestX = Double.MAX_VALUE;
@@ -173,7 +171,6 @@ public class TrajectorySplineFit {
 				}
 				if(points.get(i).x>largestX){
 					largestX = points.get(i).x;
-					indexLargestX = i;
 				}
 			}
 			
@@ -533,27 +530,6 @@ public class TrajectorySplineFit {
 	}
 	
 	/**
-	 * 
-	 * @param p1 First point on line
-	 * @param p2 Second point on line
-	 * @param points Points in some distance to the line
-	 * @return The point in points with the minimum distance to the line defined by p1 and p2
-	 */
-	private Point2D.Double minDistancePointToLine(Point2D.Double p1,Point2D.Double p2,List<Point2D.Double> points){
-		double minDist = Double.MAX_VALUE;
-		Point2D.Double minDistancePoint = null;
-		for(int i = 0; i < points.size(); i++){
-			double d = distancePointLine(p1, p2, points.get(i));
-			
-			if(d<minDist){
-				minDist = d;
-				minDistancePoint = points.get(i);
-				
-			}
-		}
-		return minDistancePoint;
-	}
-	/**
 	 * Finds to a given point p the point on the spline with minimum distance.
 	 * @param p Point where the nearest distance is searched for
 	 * @param nPointsPerSegment Number of interpolation points between two support points
@@ -591,16 +567,6 @@ public class TrajectorySplineFit {
 	 */
 	private  boolean isLeft(Point2D.Double p1,Point2D.Double p2,Point2D.Double p){
 		return ((p2.x - p1.x)*(p.y - p1.y) - (p2.y - p1.y)*(p.x - p1.x)) > 0;
-	}
-	
-	private  Point2D.Double projectPointToLine(Point2D.Double p1,Point2D.Double p2,Point2D.Double p){
-		double m = (p2.y-p1.y)/(p2.x-p1.x);
-		double b = -1*m*p1.x+p1.y;
-	
-		double x = (m * p.y + p.x - m * b) / (m * m + 1);
-		double y = (m * m * p.y + m * p.x + b) / (m * m + 1);
-
-		return new Point2D.Double(x, y);
 	}
 	
 	public PolynomialSplineFunction getSpline(){

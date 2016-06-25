@@ -31,7 +31,7 @@ import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 import de.biomedical_imaging.traJ.Trajectory;
-import de.biomedical_imaging.traJ.TrajectorySplineFit;
+import de.biomedical_imaging.traj.math.TrajectorySplineFit;
 /**
  * Implements the spline curve spatial analysis method according to:
  * [1] B. R. Long and T. Q. Vu, 

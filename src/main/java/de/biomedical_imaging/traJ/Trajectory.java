@@ -26,13 +26,10 @@ package de.biomedical_imaging.traJ;
 
 
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.vecmath.Point3d;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
-import org.knowm.xchart.Series;
 import org.knowm.xchart.SwingWrapper;
 
 import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
@@ -146,7 +143,6 @@ public  class Trajectory extends ArrayList<Point3d> {
 		    }
 		    // Create Chart
 		    Chart chart = QuickChart.getChart(title, "X", "Y", "y(x)", xData, yData);
-		    Series s = chart.addSeries(title, xData, yData);
 	
 		    //Show it
 		    new SwingWrapper(chart).displayChart();

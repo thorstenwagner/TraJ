@@ -25,11 +25,12 @@ SOFTWARE.
 package de.biomedical_imaging.traJ.features;
 
 import java.awt.geom.Point2D;
+
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
 import de.biomedical_imaging.traJ.Trajectory;
-import de.biomedical_imaging.traJ.TrajectorySplineFit;
+import de.biomedical_imaging.traj.math.TrajectorySplineFit;
 
 /**
  * Implements the spline curve dynamics method to estimate D and D according to:

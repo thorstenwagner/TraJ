@@ -1,7 +1,5 @@
 package de.biomedical_imaging.traj.math;
 
-import ij.IJ;
-
 import javax.vecmath.Vector2d;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;

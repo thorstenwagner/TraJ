@@ -7,9 +7,9 @@ import java.awt.geom.Point2D;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
-import de.biomedical_imaging.traJ.TrajectorySplineFit;
 import de.biomedical_imaging.traJ.simulation.ActiveTransportSimulator;
 import de.biomedical_imaging.traJ.simulation.FreeDiffusionSimulator;
+import de.biomedical_imaging.traj.math.TrajectorySplineFit;
 
 public class TrajectorySplineFitTest {
 
