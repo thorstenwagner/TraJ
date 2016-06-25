@@ -105,9 +105,9 @@
   	 		<version>1.49r</version>
 		</dependency>
 		<dependency>
-   	 		<groupId>edu.wlu.cs.levy.CG</groupId>
-   	 		<artifactId>KDtree</artifactId>
-  	 		<version>1.0.0</version>
+   	 		<groupId>de.biomedical-imaging.edu.wlu.cs.levy.cg</groupId>
+   	 		<artifactId>kdtree</artifactId>
+  	 		<version>1.0.3</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.rosuda.REngine</groupId>

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package de.biomedical_imaging.traJ;
+package de.biomedical_imaging.traj.math;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -47,11 +47,10 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.Series.SeriesType;
 
 import cg.RotatingCalipers;
-import de.biomedical_imaging.traJ.features.CenterOfGravityFeature;
-import de.biomedical_imaging.traj.math.RadiusGyrationTensor2D;
-import edu.wlu.cs.levy.CG.KDTree;
-import edu.wlu.cs.levy.CG.KeyDuplicateException;
-import edu.wlu.cs.levy.CG.KeySizeException;
+import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.edu.wlu.cs.levy.CG.KDTree;
+import de.biomedical_imaging.edu.wlu.cs.levy.CG.KeyDuplicateException;
+import de.biomedical_imaging.edu.wlu.cs.levy.CG.KeySizeException;
 
 /**
  * Implements the spline fitting procedure according to:
@@ -75,26 +74,25 @@ import edu.wlu.cs.levy.CG.KeySizeException;
  * @author Thorsten Wagner
  *
  */
-public class TrajectorySplineFit {
+public class TrajectorySplineFitLegacy {
 	private List<Point2D.Double> splineSupportPoints;
 	private PolynomialSplineFunction spline = null;
 	private Trajectory t;
 	private int nSegments;
 	private Trajectory rotatedTrajectory;
 	private double angleRotated;
-	private boolean successfull;
 	
 	/**
 	 * @param t The trajectory 
 	 * @param nSegments The number of segments which are used to estimated the width of the trajectory
 	 */
-	public TrajectorySplineFit(Trajectory t, int nSegments) {
+	public TrajectorySplineFitLegacy(Trajectory t, int nSegments) {
 		this.t = t;
 		this.nSegments = nSegments;
 		rotatedTrajectory = new Trajectory(2);
 	}
 	
-	public TrajectorySplineFit(Trajectory t) {
+	public TrajectorySplineFitLegacy(Trajectory t) {
 		this.t = t;
 		this.nSegments = 7;
 		rotatedTrajectory = new Trajectory(2);
@@ -108,7 +106,7 @@ public class TrajectorySplineFit {
 	 */
 	public PolynomialSplineFunction calculateSpline(){
 		
-		successfull= false;
+		
 		/*
 		 * 1.Calculate the minimum bounding rectangle
 		 */
@@ -118,17 +116,37 @@ public class TrajectorySplineFit {
 			p.setLocation(t.get(i).x, t.get(i).y);
 			points.add(p);
 		}
+		Point2D.Double[] rect = null;
+		boolean colinear = false;
+		try{
+			rect = RotatingCalipers.getMinimumBoundingRectangle(points);
+		}
+		catch(IllegalArgumentException e)
+		{
+			//t.showTrajectory();
+			//e.printStackTrace();
+			//throw new IllegalArgumentException("Spline curve estimation does not work with colinear points ");
+			colinear = true;
+		}
+		catch(EmptyStackException e){
+			colinear = true;
+		}
 		
 		/*
 		 * 1.1 Rotate that the major axis is parallel with the xaxis
 		 */
 		
-		Array2DRowRealMatrix gyr = RadiusGyrationTensor2D.getRadiusOfGyrationTensor(t);
-		EigenDecomposition eigdec = new EigenDecomposition(gyr);
+		Point2D.Double majorDirection = null;
 		
-		double inRad = -1*Math.atan2(eigdec.getEigenvector(0).getEntry(1), eigdec.getEigenvector(0).getEntry(0));
+		Point2D.Double p1 = rect[2]; //top left
+		Point2D.Double p2 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[1] : rect[3]; //Point to long side
+		Point2D.Double p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
+		majorDirection = new Point2D.Double(p2.x-p1.x, p2.y-p1.y);
+		double width = p1.distance(p2);
+		double inRad = -1*Math.atan2(majorDirection.y, majorDirection.x);
+
 		boolean doTransform = (Math.abs(Math.abs(inRad)-Math.PI)>0.001);
-		
+
 		if(doTransform)
 		{
 			angleRotated = inRad;
@@ -140,15 +158,18 @@ public class TrajectorySplineFit {
 				rotatedTrajectory.add(newX, newY, 0);
 				points.get(i).setLocation(newX, newY);
 			}
-			//for(int i = 0; i < rect.length; i++){
-			//	rect[i].setLocation(rect[i].x*Math.cos(inRad)-rect[i].y*Math.sin(inRad), rect[i].x*Math.sin(inRad)+rect[i].y*Math.cos(inRad));
-			//}
+			for(int i = 0; i < rect.length; i++){
+				rect[i].setLocation(rect[i].x*Math.cos(inRad)-rect[i].y*Math.sin(inRad), rect[i].x*Math.sin(inRad)+rect[i].y*Math.cos(inRad));
+			}
+
+			p1 = rect[2]; //top left
+			p2 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[1] : rect[3]; //Point to long side
+			p3 = p1.distance(rect[1]) > p1.distance(rect[3]) ? rect[3] : rect[1]; //Point to short side
 		}
 		else{
 			angleRotated = 0;
 			rotatedTrajectory = t;
 		}
-		
 		
 		/*
 		 * 2. Divide the rectangle in n equal segments
@@ -159,33 +180,17 @@ public class TrajectorySplineFit {
 		 */
 		List<List<Point2D.Double>> pointsInSegments =null;
 		boolean allSegmentsContainingAtLeastTwoPoints = true;
-		int indexSmallestX = 0;
-		int indexLargestX = 0;
-		double segmentWidth = 0;
 		do{
-			double smallestX = Double.MAX_VALUE;
-			double largestX = Double.MIN_VALUE;
-			
-			for(int i = 0; i < points.size(); i++){
-				if(points.get(i).x< smallestX){
-					smallestX = points.get(i).x;
-					indexSmallestX = i;
-				}
-				if(points.get(i).x>largestX){
-					largestX = points.get(i).x;
-					indexLargestX = i;
-				}
-			}
 			
 			allSegmentsContainingAtLeastTwoPoints = true;
-			segmentWidth = (largestX-smallestX)/nSegments;
+			double segmentWidth = p1.distance(p2)/nSegments;
 			pointsInSegments = new ArrayList<List<Point2D.Double>>(nSegments);
 			for(int i = 0; i < nSegments; i++){
 				pointsInSegments.add(new ArrayList<Point2D.Double>());
 			}
 			for(int i = 0; i < points.size(); i++){
-	
-				int index = (int)Math.abs((points.get(i).x/segmentWidth));
+				Point2D.Double projPoint  = projectPointToLine(p1, p2, points.get(i));
+				int index = (int)(p1.distance(projPoint)/segmentWidth);
 				
 				if(index>(nSegments-1)){
 					index = (nSegments-1);
@@ -203,21 +208,17 @@ public class TrajectorySplineFit {
 					}
 				}
 			}
-			
 		}while(allSegmentsContainingAtLeastTwoPoints==false);
 		
 		
 		/*
 		 * 3. Calculate the mean standard deviation over each segment: <s>
 		 */
-		//Point2D.Double eMajorP1 = new Point2D.Double(p1.x - (p3.x-p1.x)/2.0,p1.y - (p3.y-p1.y)/2.0); 
-	//	Point2D.Double eMajorP2 = new Point2D.Double(p2.x - (p3.x-p1.x)/2.0,p2.y - (p3.y-p1.y)/2.0); 
-		double sumSDOrthogonal=0;
+		
+		Point2D.Double eMajorP1 = new Point2D.Double(p1.x - (p3.x-p1.x)/2.0,p1.y - (p3.y-p1.y)/2.0); 
+		Point2D.Double eMajorP2 = new Point2D.Double(p2.x - (p3.x-p1.x)/2.0,p2.y - (p3.y-p1.y)/2.0); 
+		double sumMean=0;
 		int Nsum = 0;
-		CenterOfGravityFeature cogf = new CenterOfGravityFeature(rotatedTrajectory);
-		Point2D.Double cog = new  Point2D.Double(cogf.evaluate()[0], cogf.evaluate()[1]) ;
-		Point2D.Double eMajorP1 = cog;
-		Point2D.Double eMajorP2 = new Point2D.Double(cog.getX()+1, cog.getY());
 		for(int i = 0; i < nSegments; i++){
 			StandardDeviation sd = new StandardDeviation();
 			double[] distances = new double[pointsInSegments.get(i).size()];
@@ -231,20 +232,16 @@ public class TrajectorySplineFit {
 			if(distances.length >0){
 				sd.setData(distances);
 	
-				sumSDOrthogonal += sd.evaluate();
+				sumMean += sd.evaluate();
+			
 				Nsum++;
 			}
 		}
-		double s = sumSDOrthogonal/Nsum;
-		if(segmentWidth<Math.pow(10, -15)){
-			return null;
+		double s = sumMean/Nsum;
+		if(s<0.000000000001){
+			s = width/nSegments;
 		}
-		if(s<Math.pow(10, -15)){
-			//If standard deviation is zero, replace it with the half of the segment width
-		
-			s=segmentWidth/2;
-		}
-		//rotatedTrajectory.showTrajectory("rot");
+	
 		/*
 		 * 4. Build a kd-tree
 		 */
@@ -269,7 +266,7 @@ public class TrajectorySplineFit {
 		 */
 		List<Point2D.Double> near = null;
 		
-		Point2D.Double first = points.get(indexSmallestX);//minDistancePointToLine(p1, p3, points);
+		Point2D.Double first = minDistancePointToLine(p1, p3, points);
 		double r1 = 3*s;
 		try {
 			
@@ -499,12 +496,8 @@ public class TrajectorySplineFit {
 		
 		SplineInterpolator sIinter = new SplineInterpolator();
 		spline = sIinter.interpolate(supX, supY);
-		successfull = true;
+		
 		return spline;
-	}
-	
-	public boolean wasSuccessfull(){
-		return successfull;
 	}
 	
 	/**
@@ -642,7 +635,9 @@ public class TrajectorySplineFit {
 		    double[] yData = new double[rotatedTrajectory.size()];
 		    for(int i = 0; i < rotatedTrajectory.size(); i++){
 		    	xData[i] = rotatedTrajectory.get(i).x;
-		    	yData[i] = rotatedTrajectory.get(i).y;		    	
+		    	
+		    	yData[i] = rotatedTrajectory.get(i).y;
+		    	
 		    }
 		    // Create Chart
 		    Chart chart = QuickChart.getChart("Spline+Track", "X", "Y", "y(x)", xData, yData);
