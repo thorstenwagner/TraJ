@@ -28,10 +28,9 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.jom.OptimizationProblem;
-
-import ij.measure.CurveFitter;
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traj.math.PowerLawCurveFit;
+import de.biomedical_imaging.traj.math.PowerLawCurveFit.FitMethod;
 
 /**
  * Fits a power law curve to the msd data and returns the exponent
@@ -40,16 +39,16 @@ import de.biomedical_imaging.traJ.Trajectory;
  */
 public class PowerLawFeature extends AbstractTrajectoryFeature {
 
-	public enum FitMethod{
-		SIMPLEX_COMPLETE,JOM_CONSTRAINED
-	}
-	
+
 	private Trajectory t;
 	private int minlag;
 	private int maxlag;
 	private AbstractMeanSquaredDisplacmentEvaluator msdeval;
 	private int evaluateIndex = 0;
 	private FitMethod fitmethod;
+	private boolean useInitialGuess;
+	private double initalDiffusionCoefficient;
+	private double initalAlpha;
 	
 	public PowerLawFeature(Trajectory t, int minlag, int maxlag) {
 		this.t = t;
@@ -58,7 +57,8 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
-		fitmethod = FitMethod.SIMPLEX_COMPLETE;
+		fitmethod = FitMethod.SIMPLEX;
+		useInitialGuess = false;
 	
 	}
 	
@@ -70,6 +70,20 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
 		this.fitmethod = fitmethod;
+		useInitialGuess = false;
+	}
+	
+	public PowerLawFeature(Trajectory t, int minlag, int maxlag, FitMethod fitmethod, double initalAlpha, double initialDiffusionCoefficient) {
+		this.t = t;
+		this.minlag = minlag;
+		this.maxlag = maxlag;
+		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
+		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
+		evaluateIndex = 0;
+		this.fitmethod = fitmethod;
+		useInitialGuess = true;
+		this.initalAlpha = initalAlpha;
+		this.initalDiffusionCoefficient = initialDiffusionCoefficient;
 	}
 	
 	@Override
@@ -104,57 +118,20 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		double[] xData = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
 		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		
-		double[] res = null;
 		
-		switch (fitmethod) {
-		case SIMPLEX_COMPLETE:
-			CurveFitter fitter = new CurveFitter(xData, yData);
-			
-			fitter.doFit(CurveFitter.POWER_REGRESSION);
-			//double[] initialParams = {0.5,0.10};
-			//fitter.doCustomFit("y=a*log(x)+b", initialParams, false);
-			
-			double params[] = fitter.getParams();
-			double exponent = params[1];
-			double D = params[0]/4; 
-			res = new double[] {exponent,D,fitter.getFitGoodness()};
-			break;
-		case JOM_CONSTRAINED:
-			//for(int i = 0; i < xData.length; i++){
-			//	xData[i] = Math.log(xData[i]);
-			//	yData[i] = Math.log(yData[i]);
-				
-			//}
-			OptimizationProblem op = new OptimizationProblem();
-			op.setInputParameter("y", yData, "column");
-			op.setInputParameter("x", xData, "column");
-			op.addDecisionVariable("a", false, new int[]{1,1},0,3);
-			op.addDecisionVariable("D", false, new int[]{1,1},0,1);
-			op.addConstraint("a>=0");
-			op.addConstraint("D>=0");
-			op.setInitialSolution("a", 1);
-			op.setInitialSolution("D", 0.09);
-			op.setObjectiveFunction("minimize", "sum( (ln(y) - (a*ln(x) + ln(D) ) )^2   )");
-			
-			op.solve("ipopt");
-
-			if (!op.solutionIsOptimal()) {
-			        System.out.println("Not optimal");
-			}
-			double a = op.getPrimalSolution("a").toValue();
-			double dc = op.getPrimalSolution("D").toValue();
-			res = new double[]{a,dc,op.getOptimalCost()};
-	
-			break;
-			
-		default:
-			break;
+		/*
+		 * HIER POWER LAW FIT EINBAUEN
+		 */
+		
+		PowerLawCurveFit pwFit = new PowerLawCurveFit();
+		
+		if(useInitialGuess){
+			pwFit.doFit(xData,yData,fitmethod,initalAlpha,initalDiffusionCoefficient);
+		}else{
+			pwFit.doFit(xData,yData,fitmethod);
 		}
+		result = new double[]{pwFit.getAlpha(),pwFit.getDiffusionCoefficient(),pwFit.getGoodness()};
 		
-		
-		
-		//System.out.println("0: " + params[0] + " 1: " + params[1]);
-		result = res;
 		return result;
 	}
 	
