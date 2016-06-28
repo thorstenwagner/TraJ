@@ -70,7 +70,7 @@
         <name>Temporary Staging Repository</name>
         <url>file://${project.build.directory}/mvn-repo</url>
     </repository>
-</distributionManagement>
+	</distributionManagement>
 	
  	<dependencies>
  		<dependency>
@@ -115,14 +115,9 @@
 		    <version>1.8.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.jom</groupId>
-		    <artifactId>jom</artifactId>
-		    <version>0.1.16</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.colt</groupId>
-		    <artifactId>parallelcolt</artifactId>
-		    <version>0.9.4</version>
+		  <groupId>de.biomedical-imaging.jom</groupId>
+		  <artifactId>jom</artifactId>
+		  <version>0.1.17-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 		    <groupId>net.java.dev.jna</groupId>
