@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/18649/thorstenwagner/TraJ.svg)](https://zenodo.org/badge/latestdoi/18649/thorstenwagner/TraJ)
+[![DOI](https://zenodo.org/badge/18649/thorstenwagner/TraJ.svg)](https://zenodo.org/badge/latestdoi/18649/thorstenwagner/TraJ) [![Build Status](https://travis-ci.org/thorstenwagner/TraJ.svg?branch=master)](https://travis-ci.org/thorstenwagner/TraJ)
 # TraJ
 Java library for diffusion trajectory (2D) analysis
 
