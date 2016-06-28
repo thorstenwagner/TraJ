@@ -1,14 +1,22 @@
 package de.biomedical_imaging.traj.math;
 
-import org.apache.commons.math3.stat.descriptive.rank.Percentile.EstimationType;
 
 import ij.IJ;
 import ij.measure.CurveFitter;
 
 import com.jom.OptimizationProblem;
 
-import de.biomedical_imaging.traj.math.PowerLawCurveFit.FitMethod;
 
+/**
+ * Fits the following model: y = a*(1-b*exp((-4*D)*(x/a)*c)) whereas 
+ * a is the corral size
+ * b&c are depending on the shape of the confinement and 
+ * D is the diffusion coefficient
+ * 
+ * a,b,c and D are constrained to positive values!
+ * @author Thorsten Wagner
+ *
+ */
 public class ConfinedDiffusionMSDCurveFit {
 	
 	private double a;
