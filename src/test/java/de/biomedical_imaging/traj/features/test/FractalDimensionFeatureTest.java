@@ -20,7 +20,6 @@ public class FractalDimensionFeatureTest {
 		FreeDiffusionSimulator sim = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = sim.generateTrajectory();
 		FractalDimensionFeature feature= new FractalDimensionFeature(t);
-		t.showTrajectory();
 		double f = feature.evaluate()[0];
 		/**
 		 * According Table 1 of 
@@ -40,7 +39,6 @@ public class FractalDimensionFeatureTest {
 		FreeDiffusionSimulator sim = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = sim.generateTrajectory();
 		FractalDimensionFeature feature= new FractalDimensionFeature(t);
-		t.showTrajectory();
 		double f = feature.evaluate()[0];
 		assertEquals(0.592, Math.log(f),3*0.141);
 	}
@@ -55,7 +53,6 @@ public class FractalDimensionFeatureTest {
 		ActiveTransportSimulator sim = new ActiveTransportSimulator(velocity, angularVelocity, timelag, dimension, numberOfSteps);
 		Trajectory t = sim.generateTrajectory();
 		FractalDimensionFeature feature= new FractalDimensionFeature(t);
-		t.showTrajectory();
 		double f = feature.evaluate()[0];
 		assertEquals(1, f, 0.001);
 	}

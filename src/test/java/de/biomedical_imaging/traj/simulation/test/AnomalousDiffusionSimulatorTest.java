@@ -76,8 +76,6 @@ public class AnomalousDiffusionSimulatorTest {
 				minDistance = d;
 			}
 		}
-		t.showTrajectory();
-		System.out.println("d " + minDistance);
 		assertTrue("The distance should not be smaller than the sphere radius", minDistance>obstacleRadius);
 	}
 	
@@ -109,7 +107,6 @@ public class AnomalousDiffusionSimulatorTest {
 		int numberOfSteps = 1000;
 		AnomalousDiffusionSimulator sim = new AnomalousDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps, scene,0.25,Math.PI/4);
 		Trajectory t = sim.generateTrajectory();
-		t.showTrajectory("mytrack");
 		double minDistance = Double.MAX_VALUE;
 		ArrayList<AbstractSphereObstacle> obst = scene.getObstacles();
 		for(int j = 0; j < obst.size(); j++){
