@@ -67,12 +67,13 @@ public class ConfinedDiffusionMSDCurveFit {
 			double id = Double.isNaN(initD)?0:initD;
 			double[] initialParams = new double[]{ia,ib,ic,id};//,regest.evaluate()[0]};
 			fitter.setInitialParameters(initialParams);
-			fitter.doCustomFit("y=a*(1-b*exp(-4*c*d*x/a))", initialParams, false);
+			//fitter.doCustomFit("y=a*(1-b*exp(-4*c*d*x/a))", initialParams, false);
+			fitter.doCustomFit("y=sqrt(a*a)*(1-sqrt(b*b)*exp(-4*sqrt(c*c)*sqrt(d*d)*x/sqrt(a*a)))", initialParams, false);
 			double[] params = fitter.getParams();
-			a = params[0];
-			b = params[1];
-			c = params[2];
-			D = params[3];
+			a = Math.abs(params[0]);
+			b = Math.abs(params[1]);
+			c = Math.abs(params[2]);
+			D = Math.abs(params[3]);
 			break;
 		case JOM_CONSTRAINED:
 			OptimizationProblem op = new OptimizationProblem();
