@@ -64,8 +64,8 @@ public class PowerLawCurveFit {
 		doFit(xdata, ydata, method, false, 0, 0);
 	}
 	
-	public void doFit(double[] xdata, double[] ydata, FitMethod method,double initalAlpha, double  initalDiffCoeff){
-		doFit(xdata, ydata, method, initalAlpha, initalDiffCoeff);
+	public void doFit(double[] xdata, double[] ydata, FitMethod method, double initalAlpha, double  initalDiffCoeff){
+		doFit(xdata, ydata, method, false, initalAlpha, initalDiffCoeff);
 	}
 	
 	private void doFit(double[] xdata, double[] ydata, FitMethod method, boolean useInitialGuess, double initalAlpha, double  initalDiffCoeff){
