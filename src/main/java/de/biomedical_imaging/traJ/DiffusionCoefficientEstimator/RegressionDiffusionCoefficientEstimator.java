@@ -114,6 +114,31 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 	    //Show it
 	    new SwingWrapper(chart).displayChart();
 }
+	
+public static  void plotMSDLineWithModel(Trajectory t, int lagMin, int lagMax, double timelag,double a, double b, double c, double d){
+		
+	 	double[] xData = new double[lagMax-lagMin+1];
+	    double[] yData = new double[lagMax-lagMin+1];
+	    double[] modelData = new double[lagMax-lagMin+1];
+	    MeanSquaredDisplacmentFeature msdeval = new MeanSquaredDisplacmentFeature(t, lagMin);
+	    msdeval.setTrajectory(t);
+	    msdeval.setTimelag(lagMin);
+		for(int i = lagMin; i < lagMax+1; i++){
+			msdeval.setTimelag(i);
+			double msdhelp= msdeval.evaluate()[0];
+			xData[i-lagMin] = i;
+	    	yData[i-lagMin] = msdhelp;
+	    	modelData[i-lagMin] = a*(1-b*Math.exp((-4*d)*((i*timelag)/a)*c));
+		}
+		
+	 
+	    // Create Chart
+	    Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD", xData, yData);
+	    chart.addSeries("Model", xData, modelData);
+	    
+	    //Show it
+	    new SwingWrapper(chart).displayChart();
+}
 	public static  void plotMSDLine(ArrayList<Trajectory> t, int lagMin, int lagMax, AbstractMeanSquaredDisplacmentEvaluator msdeval){
 		
 	 	double[] xData = new double[lagMax-lagMin+1];
