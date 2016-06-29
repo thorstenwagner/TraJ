@@ -27,6 +27,8 @@ package de.biomedical_imaging.traJ;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.vecmath.Point3d;
 
 /**
@@ -125,6 +127,23 @@ public class TrajectoryUtil {
 			}
 		}
 		return subTrajectories;
+	}
+	
+	/**
+	 * 
+	 * @param t List of Trajectories
+	 * @param id ID of the trajectorie
+	 * @return
+	 */
+	public static Trajectory getTrajectoryByID(List<? extends Trajectory> t, int id){
+		Trajectory track = null;
+		for(int i = 0; i < t.size() ; i++){
+			if(t.get(i).getID()==id){
+				track = t.get(i);
+				break;
+			}
+		}
+		return track;
 	}
 
 }
