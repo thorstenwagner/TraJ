@@ -36,16 +36,14 @@ import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 
 public  class Trajectory extends ArrayList<Point3d> {
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int dimension;					// Dimension of the trajectory
 	private int relativeStartTimepoint;		// Relative start point (Frame number)
-	private long id;
-	private static long idCounter=1; 
-	private String type = "";
-	private ArrayList<AbstractTrajectoryFeature> features;
+	private long id;						// Unique ID
+	private static long idCounter=1; 		
+	private String type = "";				// Could be used to save information, like classified class...
+	private ArrayList<AbstractTrajectoryFeature> features; // Feature
 	
 	/**
 	 * @param dimension Dimension of the trajectory
@@ -74,6 +72,9 @@ public  class Trajectory extends ArrayList<Point3d> {
 		features = new ArrayList<AbstractTrajectoryFeature>();
 	}
 	
+	/**
+	 * Generates a sub-trajectory
+	 */
 	@Override
 	public Trajectory subList(int fromIndex, int toIndex) {
 		Trajectory t = new Trajectory(dimension);
@@ -119,7 +120,11 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return posAsArr;
 	}
 	
+	
 	@Override
+	/**
+	 * Returns a formatted string with all positions
+	 */
 	public String toString() {
 		String result="";
 		for(int i = 0; i < size(); i++){
@@ -139,47 +144,93 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return super.add(e);
 	}
 	
+	/**
+	 * Multiplies all positions with a factor v
+	 * @param v Multiplication factor
+	 */
 	public void scale(double v){
 		for(int i = 0; i < this.size(); i++){
 			this.get(i).scale(v);;
 		}
 	}
 	
+	/**
+	 * Adds a new position to the trajecotry
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 * @param z z-coordinate
+	 * @return true when it was successfull
+	 */
 	public boolean add(double x, double y, double z){
 		return super.add(new Point3d(x, y, z));
 	}
 	
+	/**
+	 * Return the dimension
+	 * @return dimension of the trajectory
+	 */
 	public int getDimension(){
 		return dimension;
 	}
 	
+	/**
+	 * Sets the dimension
+	 * @param dimension Dimension of the trajectory
+	 */
 	public void setDimension(int dimension){
 		this.dimension = dimension;
 	}
 	
+	/**
+	 * 
+	 * @return Unique ID
+	 */
 	public long getID(){
 		return id;
 	}
 	
+	/**
+	 * Sets the id
+	 * @param id new id
+	 */
 	public void setID(int id) {
 		this.id = id;
 	}
+	
+	/**
+	 * @return relative startpoint inside a video (frame number)
+	 */
 	public int getRelativeStartTimepoint(){
 		return relativeStartTimepoint;
 	}
 	
+	/**
+	 * 
+	 * @param timepoint Relative startpoint inside a video (frame number)
+	 */
 	public void setRelativStartTimepoint(int timepoint){
 		relativeStartTimepoint = timepoint;
 	}
 	
+	/**
+	 * 
+	 * @param type Type (e.g. class) of the trajectory
+	 */
 	public void setType(String type){
 		this.type = type;
 	}
 	
+	/**
+	 * 
+	 * @return Type of the trajectory (e.g class)
+	 */
 	public String getType(){
 		return type;
 	}
 	
+	/**
+	 * Sets the ID counter to 1
+	 */
 	public static void restIDCounter(){
 		idCounter=1;
 	}
