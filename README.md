@@ -17,25 +17,25 @@ Implemented features so far:
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
 - Trajectory characterization:
-  - Center of gravity
   - Aspect ratio
+  - Asymmetry features [7][10]
+  - Center of gravity
+  - Efficency [6]
   - Elongation
+  - Exponent in power law fit to MSD curve [4]
   - Fractal path dimension [2]
+  - Gaussianity [9]
+  - Kurtosis [6]
+  - Maximum distance between two positions
+  - Maximum distance for given timelag
   - Mean squared displacment curve curvature [3]
   - Mean squared displacment
   - Short-time long-time diffusion coefficent ratio 
-  - Exponent in power law fit to MSD curve [4]
-  - Standard deviation in direction
+  - Skeweness [6]
   - Spline curve analysis features according to [5]
 ![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
-  - Efficency [6]
-  - Skeweness [6]
-  - Kurtosis [6]
-  - Asymmetry [7]
+  - Standard deviation in direction
   - Trapped probability [7]
-  - Maximum distance between two positions
-  - Maximum distance for given timelag
-  - Gaussianity [9]
 
   
 References:
@@ -57,6 +57,8 @@ References:
 [8] Guigas, G. & Weiss, M., 2008. Sampling the Cell with Anomalous Diffusion—The Discovery of Slowness. Biophysical Journal, 94(1), pp.90–94.
 
 [9] Ernst, D., Köhler, J. & Weiss, M., 2014. Probing the type of anomalous diffusion with single-particle tracking. Physical chemistry chemical physics : PCCP, 16(17), pp.7686–91.
+
+[10] Helmuth, J.A. et al., 2007., A novel supervised trajectory segmentation algorithm identifies distinct types of human adenovirus motion in host cells., Journal of structural biology, 159(3), pp.347–58.
 
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012. (Already implemented in NanoTrackJ - I just have to port it)
