@@ -1,34 +1,35 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>de.biomedical-imaging.TraJ</groupId>
 	<artifactId>traj</artifactId>
 	<version>0.5.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
- 
+
 	<name>Library for diffusion trajectory analysis</name>
 	<url>https://github.com/thorstenwagner/TraJ.git</url>
-	
-	<profiles>
-	  <profile>
-		<id>doclint-java8-disable</id>
-		<activation>
-		  <jdk>[1.8,)</jdk>
-		</activation>
 
-		<build>
-		  <plugins>
-		    <plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-javadoc-plugin</artifactId>
-		      <configuration>
-		        <additionalparam>-Xdoclint:none</additionalparam>
-		      </configuration>
-		    </plugin>
-		  </plugins>
-		</build>
-	  </profile>
-	  <profile>
+	<profiles>
+		<profile>
+			<id>doclint-java8-disable</id>
+			<activation>
+				<jdk>[1.8,)</jdk>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<id>release</id>
 			<build>
 				<plugins>
@@ -58,83 +59,83 @@
 							</execution>
 						</executions>
 					</plugin>
-	
+
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
-	
+
 	<distributionManagement>
-	    <repository>
-	        <id>internal.repo</id>
-	        <name>Temporary Staging Repository</name>
-	        <url>file://${project.build.directory}/mvn-repo</url>
-	    </repository>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
 	</distributionManagement>
-	
+
 	<repositories>
-	  <!-- NB: for project parent -->
-	  <repository>
-	    <id>ossrh</id>
-	    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-	  </repository>
+		<!-- NB: for project parent -->
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
 	</repositories>
-	
- 	<dependencies>
- 		<dependency>
-    			<groupId>javax.vecmath</groupId>
-    			<artifactId>vecmath</artifactId>
-    			<version>1.5.2</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.vecmath</groupId>
+			<artifactId>vecmath</artifactId>
+			<version>1.5.2</version>
 		</dependency>
 		<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    		<version>4.12</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-math3</artifactId>
-		    <version>3.5</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.5</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.4</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.knowm.xchart</groupId>
-    		<artifactId>xchart</artifactId>
-    		<version>2.6.1</version>
+			<groupId>org.knowm.xchart</groupId>
+			<artifactId>xchart</artifactId>
+			<version>2.6.1</version>
 		</dependency>
 		<dependency>
-		  <groupId>net.sourceforge.parallelcolt</groupId>
-		  <artifactId>parallelcolt</artifactId>
-		  <version>0.11.2-SNAPSHOT</version>
+			<groupId>net.sourceforge.parallelcolt</groupId>
+			<artifactId>parallelcolt</artifactId>
+			<version>0.11.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-   	 		<groupId>net.imagej</groupId>
-   	 		<artifactId>ij</artifactId>
-  	 		<version>1.49r</version>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+			<version>1.49r</version>
 		</dependency>
 		<dependency>
-   	 		<groupId>de.biomedical-imaging.edu.wlu.cs.levy.cg</groupId>
-   	 		<artifactId>kdtree</artifactId>
-  	 		<version>1.0.3</version>
+			<groupId>de.biomedical-imaging.edu.wlu.cs.levy.cg</groupId>
+			<artifactId>kdtree</artifactId>
+			<version>1.0.3</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.rosuda.REngine</groupId>
-		    <artifactId>Rserve</artifactId>
-		    <version>1.8.1</version>
+			<groupId>org.rosuda.REngine</groupId>
+			<artifactId>Rserve</artifactId>
+			<version>1.8.1</version>
 		</dependency>
 		<dependency>
-		  <groupId>de.biomedical-imaging.jom</groupId>
-		  <artifactId>jom</artifactId>
-		  <version>0.1.17-SNAPSHOT</version>
+			<groupId>de.biomedical-imaging.jom</groupId>
+			<artifactId>jom</artifactId>
+			<version>0.1.17-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-		    <groupId>net.java.dev.jna</groupId>
-		    <artifactId>jna</artifactId>
-		    <version>4.2.2</version>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>4.2.2</version>
 		</dependency>
 	</dependencies>
 	<developers>
@@ -147,43 +148,71 @@
 			</properties>
 		</developer>
 	</developers>
-	
+
+
 	<build>
 		<pluginManagement>
-          <plugins>
-          		<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>2.2.1</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-                <plugin>
-                     <groupId>org.apache.maven.plugins</groupId>
-                     <artifactId>maven-release-plugin</artifactId>
-                     <version>2.5</version>
-                     <configuration>
-                          <useReleaseProfile>false</useReleaseProfile>
-                          <releaseProfiles>release</releaseProfiles>
-                          <goals>deploy</goals>
-                     </configuration>
-                </plugin>
-          </plugins>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<useReleaseProfile>false</useReleaseProfile>
+						<releaseProfiles>release</releaseProfiles>
+						<goals>deploy</goals>
+					</configuration>
+				</plugin>
+			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 
 	<scm>
 		<url>https://github.com/thorstenwagner/TraJ.git</url>
 		<connection>scm:git:git://github.com/thorstenwagner/TraJ.git</connection>
 		<developerConnection>scm:git:git@github.com:thorstenwagner/TraJ.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 
 	<issueManagement>

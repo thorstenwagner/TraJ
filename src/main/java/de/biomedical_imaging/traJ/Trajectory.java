@@ -26,7 +26,9 @@ package de.biomedical_imaging.traJ;
 
 
 import java.util.ArrayList;
+
 import javax.vecmath.Point3d;
+import javax.vecmath.Tuple3d;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
@@ -151,6 +153,18 @@ public  class Trajectory extends ArrayList<Point3d> {
 	public void scale(double v){
 		for(int i = 0; i < this.size(); i++){
 			this.get(i).scale(v);;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public void offset(double x, double y, double z){
+		for(int i = 0; i < this.size(); i++){
+			this.get(i).add(new Point3d(x, y, z));
 		}
 	}
 	
