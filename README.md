@@ -62,6 +62,7 @@ References:
 [10] Helmuth, J.A. et al., 2007., A novel supervised trajectory segmentation algorithm identifies distinct types of human adenovirus motion in host cells., Journal of structural biology, 159(3), pp.347–58.
 
 [11] Meijering, Erik; Dzyubachyk, Oleh; Smal, Ihor (2012): „Methods for Cell and Particle Tracking“. In: Imaging and Spectroscopic Analysis of Living Cells - Optical and Spectroscopic Techniques., S. 183-200, DOI: 10.1016/b978-0-12-391857-4.00009-4.
+
 To Do:
 - Size distribution estimation for trajectory sets according to: J. G. Walker, “Improved nano-particle tracking analysis,” Meas. Sci. Technol., vol. 23, no. 6, p. 065605, Jun. 2012. (Already implemented in NanoTrackJ - I just have to port it)
 - Simulation: Add anomalous diffusion with brownian motion obstacles and Ornstein-Uhlenbeck obstacles
