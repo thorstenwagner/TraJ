@@ -63,6 +63,12 @@ public class TrajectoryUtil {
 		return c;
 	}
 	
+	/**
+	 * Concatenates the trajectory a and b
+	 * @param a The end of this trajectory will be connected to the start of trajectory b
+	 * @param b The start of this trajectory will be connected to the end of trajectory a
+	 * @return Concatenated trajectory
+	 */
 	public static Trajectory concactTrajectorie(Trajectory a, Trajectory b){
 		if(a.getDimension()!=b.getDimension()){
 			throw new IllegalArgumentException("Combination not possible: The trajectorys does not have the same dimension");
@@ -91,6 +97,11 @@ public class TrajectoryUtil {
 		
 	}
 	
+	/**
+	 * Checks if a value should interpreted as zero
+	 * @param v value
+	 * @return true, when it should be interpred as zero
+	 */
 	public static boolean isZero(double v){
 		return Math.abs(v)<Math.pow(10, -14);
 	}
@@ -98,9 +109,9 @@ public class TrajectoryUtil {
 	/**
 	 * Splits a trajectory in overlapping / non-overlapping sub-trajectories.
 	 * @param t
-	 * @param windowWidth
-	 * @param overlapping
-	 * @return
+	 * @param windowWidth Window width. Each sub-trajectory will have this length
+	 * @param overlapping Allows the window to overlap
+	 * @return ArrayList with sub-trajectories
 	 */
 	public static ArrayList<Trajectory> splitTrackInSubTracks(Trajectory t, int windowWidth, boolean overlapping){
 		int increment = 1;
@@ -130,10 +141,10 @@ public class TrajectoryUtil {
 	}
 	
 	/**
-	 * 
+	 * Finds trajectory by ID
 	 * @param t List of Trajectories
 	 * @param id ID of the trajectorie
-	 * @return
+	 * @return Trajectory with ID=id
 	 */
 	public static Trajectory getTrajectoryByID(List<? extends Trajectory> t, int id){
 		Trajectory track = null;

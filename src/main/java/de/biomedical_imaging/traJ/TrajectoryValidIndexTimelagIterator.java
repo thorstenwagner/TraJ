@@ -62,6 +62,7 @@ public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{
 		currentIndex = 0;
 		
 	}
+	
 	public boolean hasNext() {
 		for(int i = currentIndex; i < t.size(); i++){
 			if(i+timelag>=t.size()){
@@ -93,11 +94,6 @@ public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{
 			}
 		}
 		return null;
-	}
-
-	public void remove() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
