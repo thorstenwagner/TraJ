@@ -128,33 +128,6 @@ public  class Trajectory extends ArrayList<Point3d> {
 		return result;
 	}
 	
-	/**
-	 * Plots the trajectory
-	 * @param title Title of the plot
-	 */
-	public void showTrajectory(String title){
-		if(dimension==2){
-		 	double[] xData = new double[this.size()];
-		    double[] yData = new double[this.size()];
-		    for(int i = 0; i < this.size(); i++){
-		    	xData[i] = this.get(i).x;
-		    	yData[i] = this.get(i).y;
-		    	
-		    }
-		    // Create Chart
-		    Chart chart = QuickChart.getChart(title, "X", "Y", "y(x)", xData, yData);
-	
-		    //Show it
-		    new SwingWrapper(chart).displayChart();
-		} 
-	}
-	/**
-	 * Plots the trajectory
-	 */
-	public void showTrajectory(){
-		showTrajectory("No Title");
-	}
-	
 	@Override
 	/**
 	 * Adds an position the trajectory. Between two position should the same timelag.
