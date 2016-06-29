@@ -128,6 +128,7 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	
 		return res;
 	}
+	
 
 	@Override
 	public String getName() {

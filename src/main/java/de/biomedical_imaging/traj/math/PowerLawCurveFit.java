@@ -86,6 +86,7 @@ public class PowerLawCurveFit {
 			}
 			//fitter.doFit(CurveFitter.POWER_REGRESSION);
 			fitter.doCustomFit("y=sqrt(a*a)*log(x)+log(4*sqrt(b*b))", init, false);
+		
 			double params[] = fitter.getParams();
 			alpha = Math.abs(params[0]);
 			dc = Math.abs(params[1]); 
