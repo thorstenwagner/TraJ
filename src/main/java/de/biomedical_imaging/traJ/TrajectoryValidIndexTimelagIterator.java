@@ -93,7 +93,14 @@ public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{
 				return i;
 			}
 		}
+		
 		return null;
+	}
+	
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
