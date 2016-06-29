@@ -46,8 +46,20 @@ public class AnomalousDiffusionWMSimulation extends AbstractSimulator {
 		 * abline(fit)
 		 * print(fit)
 		 */
-		double fact = 2*Math.sqrt(diffusioncoefficient/(Math.exp(6.7426-0.9704*Math.log(numberOfSteps))))*
-				Math.sqrt(diffusioncoefficient/Math.exp(-2.327-1.177*Math.log(alpha))); 
+	//	double fact = 2*Math.sqrt(diffusioncoefficient/(Math.exp(6.7426-0.9704*Math.log(numberOfSteps))))*
+		//		Math.sqrt(diffusioncoefficient/Math.exp(-2.327-1.177*Math.log(alpha))); 
+		//RESACLE
+		double msdx = 0;
+		double msdy = 0;
+		for(int i = 0; i < incrx.length; i++){
+			msdx += incrx[i]*incrx[i];
+			msdy += incry[i]*incry[i];
+		}
+		msdx /= incrx.length;
+		msdy /= incry.length;
+		double expectedMSD = 2*diffusioncoefficient*timelag;
+		
+		double fact = expectedMSD/msdx;
 	
 		for(int i = 1; i <= numberOfSteps; i++) {
 			Point3d pos = new Point3d();
