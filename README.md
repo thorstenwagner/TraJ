@@ -8,11 +8,12 @@ Implemented features so far:
 - Stokes-Einstein converter to get hydrodynamic diameter
 - Global linear drift calculator
 - Static drift corrector
-- Simulation: Brownian motion (free diffusion)
-- Simulation: Active Transport
-- Simulation: Confined diffusion
-- Simulation: Anomalous diffusion with fixed obstacles (spheres)
-- Simulation: Anomalous diffusion by weierstrass-mandelbrot approach [8]
+- Simulation
+  - Brownian motion (free diffusion)
+  - Active Transport
+  - Confined diffusion
+  - Anomalous diffusion with fixed obstacles (spheres)
+  - Anomalous diffusion by weierstrass-mandelbrot approach [8]
 - Trajectories are combineable
 - Numerous unit tests to ensure correct functioning
 - Trajectory characterization:
