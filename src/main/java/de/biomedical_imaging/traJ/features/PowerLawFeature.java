@@ -109,6 +109,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 			double x = data[i][0];
 			double y = data[i][1];
 			int np = (int)data[i][2];
+			
 			for(int j = 0; j < np; j++){
 				xDataList.add(x);
 				yDataList.add(y);

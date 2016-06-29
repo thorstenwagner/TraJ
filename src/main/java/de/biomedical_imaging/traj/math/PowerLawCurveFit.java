@@ -77,11 +77,18 @@ public class PowerLawCurveFit {
 			if(useInitialGuess){
 				fitter.setInitialParameters(new double[]{initalDiffCoeff,alpha});
 			}
-			fitter.doFit(CurveFitter.POWER_REGRESSION);
-
+			double init[] =null;
+			if(useInitialGuess){
+				init = new double[]{initalAlpha,initalDiffCoeff};
+			}
+			for(int i = 0; i < ydata.length; i++){
+				ydata[i] = Math.log(ydata[i]);
+			}
+			//fitter.doFit(CurveFitter.POWER_REGRESSION);
+			fitter.doCustomFit("y=sqrt(a*a)*log(x)+log(4*sqrt(b*b))", init, false);
 			double params[] = fitter.getParams();
-			alpha = params[1];
-			dc = params[0]/4; 
+			alpha = Math.abs(params[0]);
+			dc = Math.abs(params[1]); 
 			goodness = fitter.getFitGoodness();
 			break;
 			
