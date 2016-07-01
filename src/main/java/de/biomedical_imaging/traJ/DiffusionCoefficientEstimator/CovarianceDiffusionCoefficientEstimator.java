@@ -141,7 +141,8 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractTrajectoryF
 
 	@Override
 	public double[] evaluate() {
-		return getDiffusionCoefficient(t, fps);
+		result = getDiffusionCoefficient(t, fps);
+		return result;
 	}
 
 	@Override
