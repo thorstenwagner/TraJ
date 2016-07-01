@@ -42,25 +42,24 @@ public class MaxDistanceForGivenTimelagFeature extends AbstractTrajectoryFeature
 				distance = d;
 			}
 		}
-		return new double[]{distance};
+		result = new double[]{distance};
+		return result;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Max distance for a given timelag";
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "MAX-DIST-LAG";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
-		
+		result = null;
 	}
 
 }

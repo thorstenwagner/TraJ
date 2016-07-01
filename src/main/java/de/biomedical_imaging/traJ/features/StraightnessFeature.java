@@ -38,8 +38,8 @@ public class StraightnessFeature extends AbstractTrajectoryFeature {
 	
 	@Override
 	public double[] evaluate() {
-		
-		return new double[]{getStraightness()};
+		result = new double[]{getStraightness()};
+		return result;
 	}
 	
 	public double getStraightness(){
@@ -56,7 +56,6 @@ public class StraightnessFeature extends AbstractTrajectoryFeature {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Straightness";
 	}
 
@@ -69,6 +68,7 @@ public class StraightnessFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

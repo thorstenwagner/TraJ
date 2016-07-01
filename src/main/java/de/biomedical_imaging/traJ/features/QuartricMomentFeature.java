@@ -49,8 +49,8 @@ public class QuartricMomentFeature extends AbstractTrajectoryFeature {
 					Math.pow(t.get(i).getZ()-t.get(i+timelag).getZ(),4);
 			N++;
 		}
-		
-		return new double[] {sum/N};
+		result = new double[] {sum/N};
+		return result;
 	}
 	
 	public void setTimelag(int timelag){
@@ -74,6 +74,7 @@ public class QuartricMomentFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

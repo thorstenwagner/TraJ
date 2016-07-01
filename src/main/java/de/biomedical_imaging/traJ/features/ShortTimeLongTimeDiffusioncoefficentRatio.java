@@ -47,7 +47,8 @@ public class ShortTimeLongTimeDiffusioncoefficentRatio extends AbstractTrajector
 		RegressionDiffusionCoefficientEstimator rgLong = new RegressionDiffusionCoefficientEstimator(t.size()/10 - numberOfPoints, t.size()/10);
 		double Dshort = rgShort.getDiffusionCoefficient(t, 1)[0];
 		double Dlong = rgLong.getDiffusionCoefficient(t, 1)[0];
-		return new double[]{Dlong/Dshort};
+		result = new double[]{Dlong/Dshort};
+		return result;
 	}
 
 	@Override
@@ -58,13 +59,13 @@ public class ShortTimeLongTimeDiffusioncoefficentRatio extends AbstractTrajector
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "StLtDcRatio";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

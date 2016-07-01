@@ -48,8 +48,8 @@ public class CenterOfGravityFeature extends AbstractTrajectoryFeature {
 		x = x/t.size();
 		y = y/t.size();
 		z = z/t.size();
-		
-		return new double[] {x,y,z};
+		result = new double[] {x,y,z};
+		return result;
 	}
 
 	@Override
@@ -59,13 +59,13 @@ public class CenterOfGravityFeature extends AbstractTrajectoryFeature {
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "COG";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

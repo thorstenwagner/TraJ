@@ -29,7 +29,7 @@ import java.util.Iterator;
 /**
  * This iterator iterates over a trajectory. It returns the index i where i and i+timelag is valid for that track.
  * This iterator is especally helpfull, when the trajectory contain gaps (null positions).
- * @author Thorsten Wagner
+ * @author Thorsten Wagner (wagner at biomedical minus imaging dot de)
  *
  */
 public class TrajectoryValidIndexTimelagIterator implements Iterator<Integer>{

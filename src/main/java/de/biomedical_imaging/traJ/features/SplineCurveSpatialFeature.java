@@ -80,7 +80,6 @@ public class SplineCurveSpatialFeature extends AbstractTrajectoryFeature{
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Spline curve spatial feature";
 	}
 

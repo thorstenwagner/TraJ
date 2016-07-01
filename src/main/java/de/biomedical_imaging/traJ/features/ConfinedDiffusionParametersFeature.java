@@ -124,15 +124,14 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		ConfinedDiffusionMSDCurveFit cmsdfit = new ConfinedDiffusionMSDCurveFit();
 		cmsdfit.setInitParameters(initialParams);
 		cmsdfit.doFit(xData, yData, fitmethod);
-		double[] res = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC()};
+		result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC()};
 	
-		return res;
+		return result;
 	}
 	
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Confinement Parameters";
 	}
 	
@@ -146,14 +145,13 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "CONFPARAM";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
-		
+		result = null;
 	}
 
 }

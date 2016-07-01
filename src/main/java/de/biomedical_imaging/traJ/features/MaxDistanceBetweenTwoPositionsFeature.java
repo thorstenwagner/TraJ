@@ -44,24 +44,24 @@ public class MaxDistanceBetweenTwoPositionsFeature extends AbstractTrajectoryFea
 				}
 			}
 		}
-		return new double[] {maxDistance};
+		result = new double[] {maxDistance};
+		return result;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Maximum distance between two positions";
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "MAX-DIST-POS";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 	}
 
 }

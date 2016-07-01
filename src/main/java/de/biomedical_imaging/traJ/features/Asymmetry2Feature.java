@@ -58,7 +58,8 @@ public class Asymmetry2Feature extends AbstractTrajectoryFeature {
 		double e2 = eigdec.getRealEigenvalue(1);
 		
 		double asym = e2/e1; //-1*Math.log(1-Math.pow(e1-e2, 2)/(2*Math.pow(e1+e2, 2)));
-		return new double[]{asym};
+		result = new double[]{asym};
+		return result;
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class Asymmetry2Feature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
-		
+		result = null;
 	}
 
 }

@@ -47,7 +47,8 @@ public class SkewnessFeature extends AbstractTrajectoryFeature {
 	@Override
 	public double[] evaluate() {
 		MomentsCalculator moments = new MomentsCalculator(t);
-		return new double[] {moments.calculateNthMoment(3)};
+		result = new double[] {moments.calculateNthMoment(3)};
+		return result;
 	}
 
 	@Override
@@ -65,6 +66,7 @@ public class SkewnessFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t =t;
+		result = null;
 		
 	}
 

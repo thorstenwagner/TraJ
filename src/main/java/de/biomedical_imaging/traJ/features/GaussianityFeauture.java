@@ -58,24 +58,24 @@ public class GaussianityFeauture extends AbstractTrajectoryFeature {
 		double q = qart.evaluate()[0];
 		
 		double res = (2*q)/(3*msd*msd) - 1;
-		return new double[] {res};
+		result = new double[] {res};
+		return result;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return sname;
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

@@ -28,14 +28,14 @@ package de.biomedical_imaging.traJ;
 import java.util.ArrayList;
 
 import javax.vecmath.Point3d;
-import javax.vecmath.Tuple3d;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.QuickChart;
-import org.knowm.xchart.SwingWrapper;
 
 import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 
+/**
+ * @author Thorsten Wagner (wagner at biomedical minus imaging dot de)
+ *
+ */
 public  class Trajectory extends ArrayList<Point3d> {
 	
 

@@ -119,11 +119,6 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		double[] xData = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
 		double[] yData = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		
-		
-		/*
-		 * HIER POWER LAW FIT EINBAUEN
-		 */
-		
 		PowerLawCurveFit pwFit = new PowerLawCurveFit();
 		
 		if(useInitialGuess){
@@ -159,7 +154,6 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "POWER";
 	}
 

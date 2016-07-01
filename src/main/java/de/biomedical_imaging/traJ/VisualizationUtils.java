@@ -24,7 +24,10 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
+import ij.gui.NonBlockingGenericDialog;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
@@ -33,6 +36,10 @@ import org.knowm.xchart.SwingWrapper;
 import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 
+/**
+ * Some helper methods for visualization
+ * @author Thorsten Wagner (wagner at biomedical minus imaging dot de)
+ */
 public class VisualizationUtils {
 	
 	/**
@@ -40,7 +47,7 @@ public class VisualizationUtils {
 	 * @param title Title of the plot
 	 * @param t Trajectory to be plotted
 	 */
-	public static void showTrajectory(String title, Trajectory t){
+	public static Chart showTrajectory(String title, Trajectory t){
 		if(t.getDimension()==2){
 		 	double[] xData = new double[t.size()];
 		    double[] yData = new double[t.size()];
@@ -52,17 +59,20 @@ public class VisualizationUtils {
 		    // Create Chart
 		    Chart chart = QuickChart.getChart(title, "X", "Y", "y(x)", xData, yData);
 	
+		    return chart;
 		    //Show it
-		    new SwingWrapper(chart).displayChart();
+		 //   SwingWrapper swr = new SwingWrapper(chart);
+		  //  swr.displayChart();
 		} 
+		return null;
 	}
 	
 	/**
 	 * Plots the trajectory t
 	 * @param t Trajectory to be plotted
 	 */
-	public static void showTrajectory(Trajectory t){
-		showTrajectory("No Title", t);
+	public static Chart showTrajectory(Trajectory t){
+		return showTrajectory("No Title", t);
 	}
 
 	/**
@@ -72,7 +82,7 @@ public class VisualizationUtils {
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 * @param msdeval Evaluates the mean squared displacment
 	 */
-	public static void plotMSDLine(Trajectory t, int lagMin, int lagMax,
+	public static Chart plotMSDLine(Trajectory t, int lagMin, int lagMax,
 			AbstractMeanSquaredDisplacmentEvaluator msdeval) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -91,7 +101,8 @@ public class VisualizationUtils {
 				xData, yData);
 
 		// Show it
-		new SwingWrapper(chart).displayChart();
+		//new SwingWrapper(chart).displayChart();
+		return chart;
 	}
 
 	/**
@@ -105,7 +116,7 @@ public class VisualizationUtils {
 	 * @param c Shape parameter 2
 	 * @param d Diffusion coefficient
 	 */
-	public static void plotMSDLineWithConfinedModel(Trajectory t, int lagMin,
+	public static Chart plotMSDLineWithConfinedModel(Trajectory t, int lagMin,
 			int lagMax, double timelag, double a, double b, double c, double d) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -130,7 +141,8 @@ public class VisualizationUtils {
 		chart.addSeries("Model", xData, modelData);
 
 		// Show it
-		new SwingWrapper(chart).displayChart();
+		//new SwingWrapper(chart).displayChart();
+		return chart;
 	}
 	
 	/**
@@ -142,7 +154,7 @@ public class VisualizationUtils {
 	 * @param a Exponent alpha of power law function
 	 * @param D Diffusion coeffcient 
 	 */
-	public static void plotMSDLineWithPowerModel(Trajectory t, int lagMin,
+	public static Chart plotMSDLineWithPowerModel(Trajectory t, int lagMin,
 			int lagMax, double timelag, double a, double D) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -166,7 +178,8 @@ public class VisualizationUtils {
 		chart.addSeries("Model", xData, modelData);
 
 		// Show it
-		new SwingWrapper(chart).displayChart();
+		//new SwingWrapper(chart).displayChart();
+		return chart;
 	}
 
 	/**
@@ -176,7 +189,7 @@ public class VisualizationUtils {
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 * @param msdeval Evaluates the mean squared displacment
 	 */
-	public static void plotMSDLine(ArrayList<? extends Trajectory> t, int lagMin,
+	public static Chart plotMSDLine(ArrayList<? extends Trajectory> t, int lagMin,
 			int lagMax, AbstractMeanSquaredDisplacmentEvaluator msdeval) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -202,7 +215,8 @@ public class VisualizationUtils {
 				xData, yData);
 
 		// Show it
-		new SwingWrapper(chart).displayChart();
+	//	new SwingWrapper(chart).displayChart();
+		return chart;
 	}
 
 	/**
@@ -211,8 +225,8 @@ public class VisualizationUtils {
 	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 */
-	public static void plotMSDLine(Trajectory t, int lagMin, int lagMax) {
-		plotMSDLine(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t,
+	public static Chart plotMSDLine(Trajectory t, int lagMin, int lagMax) {
+		return plotMSDLine(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t,
 				lagMin));
 	}
 
@@ -222,10 +236,26 @@ public class VisualizationUtils {
 	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 */
-	public static void plotMSDLine(ArrayList<Trajectory> t, int lagMin,
+	public static Chart plotMSDLine(ArrayList<Trajectory> t, int lagMin,
 			int lagMax) {
-		plotMSDLine(t, lagMin, lagMax,
+		return plotMSDLine(t, lagMin, lagMax,
 				new MeanSquaredDisplacmentFeature(t.get(0), lagMin));
+	}
+	
+	/**
+	 * Plots a list of charts in matrix with 2 columns.
+	 * @param charts
+	 */
+	public static void ploatCharts(List<Chart> charts){
+		int numRows =1;
+		int numCols =1;
+		if(charts.size()>1){
+			numRows = (int) Math.ceil(charts.size()/2.0);
+			numCols = 2;
+		}
+		
+		
+		new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
 	}
 
 }

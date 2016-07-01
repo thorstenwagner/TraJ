@@ -33,7 +33,7 @@ import javax.vecmath.Point3d;
 
 /**
  * 
- * @author Thorsten Wagner
+ * @author Thorsten Wagner (wagner at biomedical minus imaging dot de)
  */
 public class TrajectoryUtil {
 	

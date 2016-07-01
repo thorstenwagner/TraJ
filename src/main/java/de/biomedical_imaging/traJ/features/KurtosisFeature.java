@@ -47,24 +47,24 @@ public class KurtosisFeature extends AbstractTrajectoryFeature {
 	@Override
 	public double[] evaluate() {
 		MomentsCalculator moments = new MomentsCalculator(t);
-		return new double[] {moments.calculateNthMoment(4)};
+		result = new double[] {moments.calculateNthMoment(4)};
+		return result;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Kurtosis";
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "KURT";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t =t ;
+		result = null;
 		
 	}
 

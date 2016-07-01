@@ -87,7 +87,6 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Standard deviation direction-dt-"+timelag;
 	}
 

@@ -51,26 +51,24 @@ public class MaxDistanceFromStartPointFeature extends AbstractTrajectoryFeature{
 				maxDist = d;
 			}
 		}
-	
-		return new double[]{maxDist};
+		result = new double[]{maxDist};
+		return result;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Max distances from start point";
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
-		return "MaxDist";
+		return "MAX-DIST-START";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
-		
+		result = null;
 	}
 
 }

@@ -62,8 +62,8 @@ public class MeanSpeedFeature extends AbstractTrajectoryFeature {
 		
 		double netDistance = t.get(0).distance(t.get(t.size()-1));
 		double straightLineSpeed = netDistance/((t.size()-1)*timelag);
-		
-		return new double[]{meanspeed,straightLineSpeed};
+		result = new double[]{meanspeed,straightLineSpeed};
+		return result;
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class MeanSpeedFeature extends AbstractTrajectoryFeature {
 
 	@Override
 	public void setTrajectory(Trajectory t) {
-		// TODO Auto-generated method stub
-		
+		this.t = t;
+		result = null;
 	}
 
 }

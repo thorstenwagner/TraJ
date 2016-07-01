@@ -60,7 +60,8 @@ public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 		double time = t.size();
 
 		double p = 1- Math.exp(0.2048-2.5117*(D*time/(r*r)));
-		return new double[]{p};
+		result = new double[]{p};
+		return result;
 	}
 
 	@Override
@@ -77,6 +78,7 @@ public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 		
 	}
 

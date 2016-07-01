@@ -27,7 +27,7 @@ package de.biomedical_imaging.traJ;
 
 /**
  * Converts an diffusion coefficient into the hydrodynamic diameter
- * @author Thorsten Wagner (wagner@biomedical-imaging.de)
+ * @author Thorsten Wagner (wagner at biomedical minus imaging dot de)
  *
  */
 public class StokesEinsteinConverter {

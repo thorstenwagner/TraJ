@@ -78,19 +78,18 @@ public class MeanSquaredDisplacmentCurvature extends AbstractTrajectoryFeature {
 
 	@Override
 	public String getName() {
-		
 		return "Mean Squared Displacment Curvature";
 	}
 
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
+		result = null;
 	}
 
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
-		return "MSD-CURV";
+		return "MSDCURV";
 	}
 
 	

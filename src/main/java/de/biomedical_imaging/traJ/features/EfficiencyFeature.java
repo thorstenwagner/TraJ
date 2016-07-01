@@ -44,8 +44,8 @@ public class EfficiencyFeature extends AbstractTrajectoryFeature {
 	
 	@Override
 	public double[] evaluate() {
-		
-		return new double[]{getEfficiency()};
+		result = new double[]{getEfficiency()};
+		return result;
 	}
 	
 	public double getEfficiency(){
@@ -64,7 +64,6 @@ public class EfficiencyFeature extends AbstractTrajectoryFeature {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Efficiency";
 	}
 
@@ -77,7 +76,7 @@ public class EfficiencyFeature extends AbstractTrajectoryFeature {
 	@Override
 	public void setTrajectory(Trajectory t) {
 		this.t = t;
-		
+		result = null;
 	}
 
 }

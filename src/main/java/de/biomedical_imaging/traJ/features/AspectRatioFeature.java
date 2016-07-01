@@ -69,7 +69,6 @@ public class AspectRatioFeature extends AbstractTrajectoryFeature {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Abstract ratio";
 	}
 
@@ -81,7 +80,6 @@ public class AspectRatioFeature extends AbstractTrajectoryFeature {
 	}
 	@Override
 	public String getShortName() {
-		// TODO Auto-generated method stub
 		return "AR";
 	}
 
