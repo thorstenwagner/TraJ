@@ -157,7 +157,7 @@ public class RegressionDiffusionCoefficientEstimatorTest {
 		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(minLag, maxLag);
 		double[] diffC = dcEst.getDiffusionCoefficient(t, 1);
 		
-		assertEquals(1.5, diffC[0], DOUBLE_PRECISION);
+		assertEquals(1.5, diffC[0], 0.01);
 		
 	}
 

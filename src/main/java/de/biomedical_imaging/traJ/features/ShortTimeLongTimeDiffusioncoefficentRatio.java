@@ -59,7 +59,7 @@ public class ShortTimeLongTimeDiffusioncoefficentRatio extends AbstractTrajector
 
 	@Override
 	public String getShortName() {
-		return "StLtDcRatio";
+		return "LTST.RATIO";
 	}
 
 	@Override

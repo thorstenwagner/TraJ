@@ -26,6 +26,7 @@ package de.biomedical_imaging.traJ.DiffusionCoefficientEstimator;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
@@ -35,6 +36,7 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
 import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
+import de.biomedical_imaging.traj.math.StraightLineFit;
 /**
  * 
  * @author Thorsten Wagner
@@ -70,24 +72,32 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 		if(t.size()==1){
 			return null;
 		}
-		SimpleRegression reg = new SimpleRegression(true);
+		ArrayList<Double> xDataList = new ArrayList<Double>();
+		ArrayList<Double> yDataList = new ArrayList<Double>();
 		double msdhelp = 0;
 		if(lagMin==lagMax){
-			reg.addData(0, 0);
+			xDataList.add(0.0);
+			yDataList.add(0.0);
 		}
 		msdevaluator.setTrajectory(t);
 		msdevaluator.setTimelag(lagMin);
+		
 		for(int i = lagMin; i < lagMax+1; i++){
 			msdevaluator.setTimelag(i);
 			double[] res = msdevaluator.evaluate();
 			msdhelp= res[0];
 			int N = (int)res[2];
 			for(int j = 0; j < N; j++){
-				reg.addData(i*1.0/fps, msdhelp);
+				xDataList.add(i*1.0/fps);
+				yDataList.add(msdhelp) ;
 			}
 		}
-		double[] D = {reg.getSlope()/(2.0*t.getDimension()),reg.getSlope(),reg.getIntercept()}; 
-		return D;
+		double[] xdata = ArrayUtils.toPrimitive(xDataList.toArray(new Double[0]));
+		double[] ydata = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
+		StraightLineFit fdf = new StraightLineFit();
+		fdf.doFit(xdata, ydata);
+		result = new double[]{fdf.getB()/(2.0*t.getDimension()),fdf.getB()*2.0*t.getDimension(),fdf.getA()};
+		return result;
 	}
 	
 	public void setTimelags(int lagMin, int lagMax){
