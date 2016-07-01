@@ -81,16 +81,24 @@ public class PowerLawCurveFit {
 			if(useInitialGuess){
 				init = new double[]{initalAlpha,initalDiffCoeff};
 			}
-			for(int i = 0; i < ydata.length; i++){
-				ydata[i] = Math.log(ydata[i]);
-			}
-			//fitter.doFit(CurveFitter.POWER_REGRESSION);
-			fitter.doCustomFit("y=sqrt(a*a)*log(x)+log(4*sqrt(b*b))", init, false);
-		
+			fitter.doFit(CurveFitter.POWER_REGRESSION);
 			double params[] = fitter.getParams();
-			alpha = Math.abs(params[0]);
-			dc = Math.abs(params[1]); 
+			alpha = params[1];
+			dc = params[0]/4.0; 
 			goodness = fitter.getFitGoodness();
+			
+			if(alpha<0 ||dc <0){
+				for(int i = 0; i < ydata.length; i++){
+					ydata[i] = Math.log(ydata[i]);
+				}
+				//fitter.doFit(CurveFitter.POWER_REGRESSION);
+				fitter.doCustomFit("y=sqrt(a*a)*log(x)+log(4*sqrt(b*b))", init, false);
+				params = fitter.getParams();
+				alpha = Math.abs(params[0]);
+				dc = Math.abs(params[1]); 
+				goodness = fitter.getFitGoodness();
+			}
+			
 			break;
 			
 		case JOM_CONSTRAINED:
