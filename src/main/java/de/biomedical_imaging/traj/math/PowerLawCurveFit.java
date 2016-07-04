@@ -86,8 +86,9 @@ public class PowerLawCurveFit {
 			alpha = params[1];
 			dc = params[0]/4.0; 
 			goodness = fitter.getFitGoodness();
-			
+		
 			if(alpha < 0 || dc < 0){
+		
 				fitter = new CurveFitter(xdata, ydata);
 				for(int i = 0; i < ydata.length; i++){
 					ydata[i] = Math.log(ydata[i]);

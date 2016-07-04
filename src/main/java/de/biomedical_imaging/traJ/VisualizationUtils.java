@@ -24,13 +24,12 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
-import ij.gui.NonBlockingGenericDialog;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.Series;
 import org.knowm.xchart.SwingWrapper;
 
 import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
@@ -47,7 +46,7 @@ public class VisualizationUtils {
 	 * @param title Title of the plot
 	 * @param t Trajectory to be plotted
 	 */
-	public static Chart showTrajectory(String title, Trajectory t){
+	public static Chart getTrajectoryChart(String title, Trajectory t){
 		if(t.getDimension()==2){
 		 	double[] xData = new double[t.size()];
 		    double[] yData = new double[t.size()];
@@ -71,8 +70,8 @@ public class VisualizationUtils {
 	 * Plots the trajectory t
 	 * @param t Trajectory to be plotted
 	 */
-	public static Chart showTrajectory(Trajectory t){
-		return showTrajectory("No Title", t);
+	public static Chart getTrajectoryChart(Trajectory t){
+		return getTrajectoryChart("No Title", t);
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class VisualizationUtils {
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 * @param msdeval Evaluates the mean squared displacment
 	 */
-	public static Chart plotMSDLine(Trajectory t, int lagMin, int lagMax,
+	public static Chart getMSDLineChart(Trajectory t, int lagMin, int lagMax,
 			AbstractMeanSquaredDisplacmentEvaluator msdeval) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -116,7 +115,7 @@ public class VisualizationUtils {
 	 * @param c Shape parameter 2
 	 * @param d Diffusion coefficient
 	 */
-	public static Chart plotMSDLineWithConfinedModel(Trajectory t, int lagMin,
+	public static Chart getMSDLineWithConfinedModelChart(Trajectory t, int lagMin,
 			int lagMax, double timelag, double a, double b, double c, double d) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -138,7 +137,7 @@ public class VisualizationUtils {
 		// Create Chart
 		Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD",
 				xData, yData);
-		chart.addSeries("Model", xData, modelData);
+		chart.addSeries("y=a*(1-b)*exp(-4*c*D*t/a)", xData, modelData);
 
 		// Show it
 		//new SwingWrapper(chart).displayChart();
@@ -154,7 +153,7 @@ public class VisualizationUtils {
 	 * @param a Exponent alpha of power law function
 	 * @param D Diffusion coeffcient 
 	 */
-	public static Chart plotMSDLineWithPowerModel(Trajectory t, int lagMin,
+	public static Chart getMSDLineWithPowerModelChart(Trajectory t, int lagMin,
 			int lagMax, double timelag, double a, double D) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -175,7 +174,44 @@ public class VisualizationUtils {
 		// Create Chart
 		Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD",
 				xData, yData);
-		chart.addSeries("Model", xData, modelData);
+		chart.addSeries("y=4*D*t^alpha", xData, modelData);
+
+		// Show it
+		//new SwingWrapper(chart).displayChart();
+		return chart;
+	}
+	
+	/**
+	 * Plots the MSD curve with the trajectory t and adds the fitted model for anomalous diffusion above.
+	 * @param t
+	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
+	 * @param lagMax lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
+	 * @param timelag Elapsed time between two frames.
+	 * @param diffusionCoefficient Diffusion coefficient
+	 * @param intercept 
+	 */
+	public static Chart getMSDLineWithFreeModelChart(Trajectory t, int lagMin,
+			int lagMax, double timelag, double diffusionCoefficient, double intercept) {
+
+		double[] xData = new double[lagMax - lagMin + 1];
+		double[] yData = new double[lagMax - lagMin + 1];
+		double[] modelData = new double[lagMax - lagMin + 1];
+		MeanSquaredDisplacmentFeature msdeval = new MeanSquaredDisplacmentFeature(
+				t, lagMin);
+		msdeval.setTrajectory(t);
+		msdeval.setTimelag(lagMin);
+		for (int i = lagMin; i < lagMax + 1; i++) {
+			msdeval.setTimelag(i);
+			double msdhelp = msdeval.evaluate()[0];
+			xData[i - lagMin] = i;
+			yData[i - lagMin] = msdhelp;
+			modelData[i - lagMin] = intercept + 4*diffusionCoefficient*(i*timelag);//4 * D * Math.pow(i * timelag, a);
+		}
+
+		// Create Chart
+		Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD",
+				xData, yData);
+		chart.addSeries("y=4*D*t + a", xData, modelData);
 
 		// Show it
 		//new SwingWrapper(chart).displayChart();
@@ -189,7 +225,7 @@ public class VisualizationUtils {
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 * @param msdeval Evaluates the mean squared displacment
 	 */
-	public static Chart plotMSDLine(ArrayList<? extends Trajectory> t, int lagMin,
+	public static Chart getMSDLineChart(ArrayList<? extends Trajectory> t, int lagMin,
 			int lagMax, AbstractMeanSquaredDisplacmentEvaluator msdeval) {
 
 		double[] xData = new double[lagMax - lagMin + 1];
@@ -225,8 +261,8 @@ public class VisualizationUtils {
 	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 */
-	public static Chart plotMSDLine(Trajectory t, int lagMin, int lagMax) {
-		return plotMSDLine(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t,
+	public static Chart getMSDLineChart(Trajectory t, int lagMin, int lagMax) {
+		return getMSDLineChart(t, lagMin, lagMax, new MeanSquaredDisplacmentFeature(t,
 				lagMin));
 	}
 
@@ -236,9 +272,9 @@ public class VisualizationUtils {
 	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
 	 * @param lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
 	 */
-	public static Chart plotMSDLine(ArrayList<Trajectory> t, int lagMin,
+	public static Chart getMSDLineChart(ArrayList<Trajectory> t, int lagMin,
 			int lagMax) {
-		return plotMSDLine(t, lagMin, lagMax,
+		return getMSDLineChart(t, lagMin, lagMax,
 				new MeanSquaredDisplacmentFeature(t.get(0), lagMin));
 	}
 	
@@ -246,7 +282,7 @@ public class VisualizationUtils {
 	 * Plots a list of charts in matrix with 2 columns.
 	 * @param charts
 	 */
-	public static void ploatCharts(List<Chart> charts){
+	public static void plotCharts(List<Chart> charts){
 		int numRows =1;
 		int numCols =1;
 		if(charts.size()>1){
