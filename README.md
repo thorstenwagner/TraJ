@@ -5,43 +5,47 @@
 
 
 # TraJ
-Java library for diffusion trajectory (2D) analysis
+Java library for diffusion trajectory (2D) analysis. 
 
-Implemented features so far:
+# Features
+## Trajectory characterization
 - Covariance estimator for diffusion coefficient [1]
 - Regression estimator for diffusion coefficient
 - Stokes-Einstein converter to get hydrodynamic diameter
+- Aspect ratio
+- Asymmetry features [7][10]
+- Center of gravity
+- Efficency [6]
+- Elongation
+- Exponent in power law fit to MSD curve [4]
+- Fractal path dimension [2]
+- Gaussianity [9]
+- Kurtosis [6]
+- Maximum distance between two positions
+- Maximum distance for given timelag
+- Mean speed [11]
+- Mean squared displacment curve curvature [3]
+- Mean squared displacment
+- Short-time long-time diffusion coefficent ratio 
+- Skeweness [6]
+- Spline curve analysis features according to [5]
+![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
+- Standard deviation in direction
+- Trapped probability [7]
+
+## Simulation
+- Brownian motion (free diffusion)
+- Active Transport
+- Confined diffusion
+- Anomalous diffusion with fixed obstacles (spheres)
+- Anomalous diffusion by weierstrass-mandelbrot approach [8]
+
+## Other
 - Global linear drift calculator
 - Static drift corrector
-- Simulation
-  - Brownian motion (free diffusion)
-  - Active Transport
-  - Confined diffusion
-  - Anomalous diffusion with fixed obstacles (spheres)
-  - Anomalous diffusion by weierstrass-mandelbrot approach [8]
 - Trajectories are combineable
-- Numerous unit tests to ensure correct functioning
-- Trajectory characterization:
-  - Aspect ratio
-  - Asymmetry features [7][10]
-  - Center of gravity
-  - Efficency [6]
-  - Elongation
-  - Exponent in power law fit to MSD curve [4]
-  - Fractal path dimension [2]
-  - Gaussianity [9]
-  - Kurtosis [6]
-  - Maximum distance between two positions
-  - Maximum distance for given timelag
-  - Mean speed [11]
-  - Mean squared displacment curve curvature [3]
-  - Mean squared displacment
-  - Short-time long-time diffusion coefficent ratio 
-  - Skeweness [6]
-  - Spline curve analysis features according to [5]
-![Spline fit](https://dl.dropboxusercontent.com/u/560426/traj/splinefit.png "Spline fit")
-  - Standard deviation in direction
-  - Trapped probability [7]
+
+  
 
 #Maven artifacts
 TraJ can be found on maven central:
