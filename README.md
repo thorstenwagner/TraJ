@@ -9,9 +9,9 @@ Java library for diffusion trajectory (2D) analysis.
 
 # Features
 ## Trajectory characterization
-- Covariance estimator for diffusion coefficient [1]
-- Regression estimator for diffusion coefficient
-- Stokes-Einstein converter to get hydrodynamic diameter
+- Diffusion coefficient via covariance estimator [1]
+- Diffusion coefficient via regression estimator 
+- Hydrodynamic diameter by Stokes-Einstein converter
 - Aspect ratio
 - Asymmetry features [7][10]
 - Center of gravity
