@@ -30,7 +30,6 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traj.math.PowerLawCurveFit;
-import de.biomedical_imaging.traj.math.PowerLawCurveFit.FitMethod;
 
 /**
  * Fits a power law curve to the msd data and returns the exponent
@@ -45,7 +44,6 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	private int maxlag;
 	private AbstractMeanSquaredDisplacmentEvaluator msdeval;
 	private int evaluateIndex = 0;
-	private FitMethod fitmethod;
 	private boolean useInitialGuess;
 	private double initalDiffusionCoefficient;
 	private double initalAlpha;
@@ -57,30 +55,17 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
-		fitmethod = FitMethod.SIMPLEX;
 		useInitialGuess = false;
 	
 	}
 	
-	public PowerLawFeature(Trajectory t, int minlag, int maxlag, FitMethod fitmethod) {
+	public PowerLawFeature(Trajectory t, int minlag, int maxlag, double initalAlpha, double initialDiffusionCoefficient) {
 		this.t = t;
 		this.minlag = minlag;
 		this.maxlag = maxlag;
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
-		this.fitmethod = fitmethod;
-		useInitialGuess = false;
-	}
-	
-	public PowerLawFeature(Trajectory t, int minlag, int maxlag, FitMethod fitmethod, double initalAlpha, double initialDiffusionCoefficient) {
-		this.t = t;
-		this.minlag = minlag;
-		this.maxlag = maxlag;
-		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
-		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
-		evaluateIndex = 0;
-		this.fitmethod = fitmethod;
 		useInitialGuess = true;
 		this.initalAlpha = initalAlpha;
 		this.initalDiffusionCoefficient = initialDiffusionCoefficient;
@@ -122,9 +107,9 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		PowerLawCurveFit pwFit = new PowerLawCurveFit();
 		
 		if(useInitialGuess){
-			pwFit.doFit(xData,yData,fitmethod,initalAlpha,initalDiffusionCoefficient);
+			pwFit.doFit(xData,yData,initalAlpha,initalDiffusionCoefficient);
 		}else{
-			pwFit.doFit(xData,yData,fitmethod);
+			pwFit.doFit(xData,yData);
 		}
 		result = new double[]{pwFit.getAlpha(),pwFit.getDiffusionCoefficient(),pwFit.getGoodness()};
 		

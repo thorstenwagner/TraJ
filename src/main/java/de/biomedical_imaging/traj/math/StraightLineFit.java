@@ -1,9 +1,6 @@
 package de.biomedical_imaging.traj.math;
 
-import org.apache.commons.math3.analysis.function.Max;
-
 import de.biomedical_imaging.traJ.TrajectoryUtil;
-import ij.IJ;
 import ij.measure.CurveFitter;
 
 public class StraightLineFit {

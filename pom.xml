@@ -127,11 +127,6 @@
 			<version>2.6.1</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.parallelcolt</groupId>
-			<artifactId>parallelcolt</artifactId>
-			<version>0.11.2-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>net.imagej</groupId>
 			<artifactId>ij</artifactId>
 			<version>1.49r</version>
@@ -145,16 +140,6 @@
 			<groupId>org.rosuda.REngine</groupId>
 			<artifactId>Rserve</artifactId>
 			<version>1.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.biomedical-imaging.jom</groupId>
-			<artifactId>jom</artifactId>
-			<version>0.1.17-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>4.2.2</version>
 		</dependency>
 	</dependencies>
 	<developers>

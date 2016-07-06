@@ -30,7 +30,6 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.AbstractDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
 import de.biomedical_imaging.traj.math.ConfinedDiffusionMSDCurveFit;
-import de.biomedical_imaging.traj.math.ConfinedDiffusionMSDCurveFit.FitMethod;
 
 /**
  * Fits a function to
@@ -54,7 +53,6 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	private Trajectory t;
 	private double timelag;
 	private AbstractDiffusionCoefficientEstimator dcEst;
-	private FitMethod fitmethod;
 	
 
 	/**
@@ -68,7 +66,6 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		this.t = t;
 		this.timelag = timelag;
 		dcEst = new RegressionDiffusionCoefficientEstimator(null, 1/timelag, 1, 2);
-		fitmethod = FitMethod.SIMPLEX;
 	}
 	
 	/**
@@ -77,11 +74,10 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	 * @param timelag Timelag between two steps
 	 * @param dcEst Estimateor for the diffusion coefficient.
 	 */
-	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag, AbstractDiffusionCoefficientEstimator dcEst, FitMethod fitmethod) {
+	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag, AbstractDiffusionCoefficientEstimator dcEst) {
 		this.t = t;
 		this.timelag = timelag;
 		this.dcEst = dcEst;
-		this.fitmethod = fitmethod;
 	}
 	
 	@Override
@@ -123,7 +119,7 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		 */
 		ConfinedDiffusionMSDCurveFit cmsdfit = new ConfinedDiffusionMSDCurveFit();
 		cmsdfit.setInitParameters(initialParams);
-		cmsdfit.doFit(xData, yData, fitmethod);
+		cmsdfit.doFit(xData, yData);
 		result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC()};
 	
 		return result;
@@ -133,14 +129,6 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	@Override
 	public String getName() {
 		return "Confinement Parameters";
-	}
-	
-	public void setFitMethod(FitMethod fitmethod){
-		this.fitmethod = fitmethod;
-	}
-	
-	public FitMethod getFitMethod(){
-		return fitmethod;
 	}
 
 	@Override
