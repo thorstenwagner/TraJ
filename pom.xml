@@ -94,7 +94,6 @@
 	</distributionManagement>
 
 	<repositories>
-		<!-- NB: for project parent -->
 		<repository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -191,9 +190,10 @@
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.5</version>
 					<configuration>
-						<useReleaseProfile>false</useReleaseProfile>
-						<releaseProfiles>release</releaseProfiles>
-						<goals>deploy</goals>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+					    <useReleaseProfile>false</useReleaseProfile>
+					    <releaseProfiles>release</releaseProfiles>
+					    <goals>deploy</goals>
 					</configuration>
 				</plugin>
 			</plugins>

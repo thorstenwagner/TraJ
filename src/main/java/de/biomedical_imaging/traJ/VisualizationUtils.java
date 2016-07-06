@@ -24,13 +24,20 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ;
 
+import ij.IJ;
+
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.Series;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 
 import de.biomedical_imaging.traJ.features.AbstractMeanSquaredDisplacmentEvaluator;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
@@ -290,8 +297,23 @@ public class VisualizationUtils {
 			numCols = 2;
 		}
 		
-		
-		new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
+	    final JFrame frame = new JFrame("");
+	    frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.getContentPane().setLayout(new GridLayout(numRows, numCols));
+	    for (Chart chart : charts) {
+	          if (chart != null) {
+	            JPanel chartPanel = new XChartPanel(chart);
+	            frame.add(chartPanel);
+	          }
+	          else {
+	            JPanel chartPanel = new JPanel();
+	            frame.getContentPane().add(chartPanel);
+	          }
+
+	        }
+	    // Display the window.
+        frame.pack();
+        frame.setVisible(true);
 	}
 
 }
