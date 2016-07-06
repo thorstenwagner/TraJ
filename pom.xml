@@ -8,6 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>TraJ</name>
+	
 	<description>Library for diffusion trajectory analysis</description>
 	<url>https://github.com/thorstenwagner/TraJ.git</url>
 
