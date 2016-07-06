@@ -43,6 +43,15 @@ Implemented features so far:
   - Standard deviation in direction
   - Trapped probability [7]
 
+#Maven artifacts
+TraJ can be found on maven central:
+```
+<dependency>
+    <groupId>de.biomedical-imaging.TraJ</groupId>
+    <artifactId>traj</artifactId>
+    <version>MOST RECENT RELEASE</version>
+</dependency>
+```
   
 References:
 
