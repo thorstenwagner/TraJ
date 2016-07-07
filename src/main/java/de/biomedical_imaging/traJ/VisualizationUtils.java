@@ -189,7 +189,7 @@ public class VisualizationUtils {
 	}
 	
 	/**
-	 * Plots the MSD curve with the trajectory t and adds the fitted model for anomalous diffusion above.
+	 * Plots the MSD curve with the trajectory t and adds the fitted model for free diffusion.
 	 * @param t
 	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
 	 * @param lagMax lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
@@ -219,6 +219,43 @@ public class VisualizationUtils {
 		Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD",
 				xData, yData);
 		chart.addSeries("y=4*D*t + a", xData, modelData);
+
+		// Show it
+		//new SwingWrapper(chart).displayChart();
+		return chart;
+	}
+	
+	/**
+	 * Plots the MSD curve with the trajectory t and adds the fitted model for directed motion above.
+	 * @param t
+	 * @param lagMin Minimum timelag (e.g. 1,2,3..) lagMin*timelag = elapsed time in seconds 
+	 * @param lagMax lagMax Maximum timelag (e.g. 1,2,3..) lagMax*timelag = elapsed time in seconds 
+	 * @param timelag Elapsed time between two frames.
+	 * @param diffusionCoefficient Diffusion coefficient
+	 * @param velocity velocity of the active transport
+	 */
+	public static Chart getMSDLineWithActiveTransportModelChart(Trajectory t, int lagMin,
+			int lagMax, double timelag, double diffusionCoefficient, double velocity) {
+
+		double[] xData = new double[lagMax - lagMin + 1];
+		double[] yData = new double[lagMax - lagMin + 1];
+		double[] modelData = new double[lagMax - lagMin + 1];
+		MeanSquaredDisplacmentFeature msdeval = new MeanSquaredDisplacmentFeature(
+				t, lagMin);
+		msdeval.setTrajectory(t);
+		msdeval.setTimelag(lagMin);
+		for (int i = lagMin; i < lagMax + 1; i++) {
+			msdeval.setTimelag(i);
+			double msdhelp = msdeval.evaluate()[0];
+			xData[i - lagMin] = i;
+			yData[i - lagMin] = msdhelp;
+			modelData[i - lagMin] = Math.pow(velocity*(i*timelag), 2) + 4*diffusionCoefficient*(i*timelag);//4 * D * Math.pow(i * timelag, a);
+		}
+
+		// Create Chart
+		Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD",
+				xData, yData);
+		chart.addSeries("y=4*D*t + (v*t)^2", xData, modelData);
 
 		// Show it
 		//new SwingWrapper(chart).displayChart();
