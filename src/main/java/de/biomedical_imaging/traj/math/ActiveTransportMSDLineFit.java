@@ -9,7 +9,7 @@ import de.biomedical_imaging.traJ.TrajectoryUtil;
  * @author Thorsten Wagner
  *
  */
-public class ActiveTransportLineFit {
+public class ActiveTransportMSDLineFit {
 	/*
 	 * Fits:
 	 * msd(dt) = (v*dt)^2 + 4*D*dt
@@ -23,7 +23,7 @@ public class ActiveTransportLineFit {
 		CurveFitter fitter = new CurveFitter(xdata, ydata);
 
 		fitter = new CurveFitter(xdata, ydata);
-	
+		
 		fitter.doCustomFit("y=a*a*x*x + 4*sqrt(b*b)*x", new double[]{0,0}, false);
 		a = Math.abs(fitter.getParams()[0]);
 		b = Math.abs(fitter.getParams()[1]);
