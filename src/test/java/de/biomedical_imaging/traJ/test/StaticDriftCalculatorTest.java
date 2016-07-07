@@ -34,7 +34,7 @@ public class StaticDriftCalculatorTest {
 		ArrayList<Trajectory> tracks = new ArrayList<Trajectory>();
 		tracks.add(t);
 		
-		StaticDriftCalculator gdc = new StaticDriftCalculator();
+		StaticDriftCalculator<Trajectory> gdc = new StaticDriftCalculator<Trajectory>();
 		double[] drift = gdc.calculateDrift(tracks);
 		double[] expected = {1,0,0};
 		

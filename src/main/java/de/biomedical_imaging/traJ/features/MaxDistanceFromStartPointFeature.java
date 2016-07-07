@@ -32,13 +32,21 @@ import de.biomedical_imaging.traJ.Trajectory;
  * @author Thorsten Wagner
  *
  */
-public class MaxDistanceFromStartPointFeature extends AbstractTrajectoryFeature{
-	Trajectory t;
+public class MaxDistanceFromStartPointFeature extends AbstractTrajectoryFeature {
 	
+	private Trajectory t;
+	
+	/**
+	 * 
+	 * @param t Trajectory for which the distance is to be calculated.
+	 */
 	public MaxDistanceFromStartPointFeature(Trajectory t) {
 		this.t = t;
 	}
 	
+	/**
+	 * @return An double array with the elements [0] = maximum distance
+	 */
 	@Override
 	public double[] evaluate() {
 		double maxDist = Double.MIN_VALUE;

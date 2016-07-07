@@ -42,7 +42,7 @@ public class GaussianityFeauture extends AbstractTrajectoryFeature {
 	private String sname = "GAUSS";
 	
 	/**
-	 * @param t The trajectory
+	 * @param t The trajectory for which the gaussianity is to be calulated.
 	 * @param timelag Timelag as dimensionless interger (1,2,3...)
 	 */
 	public GaussianityFeauture(Trajectory t, int timelag) {

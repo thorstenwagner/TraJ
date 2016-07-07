@@ -26,7 +26,14 @@ package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * 
+ * Abstract trajectory feature. Should be the base class for all new features.
+ * @author Thorsten Wagner
+ * 
+ */
 public abstract class AbstractTrajectoryFeature {
+
 	protected double[] result = null;
 	
 	/**
@@ -43,7 +50,15 @@ public abstract class AbstractTrajectoryFeature {
 		}
 		return result;
 	}
+	/**
+	 * 
+	 * @return The name of the feature
+	 */
 	public abstract String getName();
+	/**
+	 * Short name of the feature. Should not contain any spaces.
+	 * @return A shortened name of the feature
+	 */
 	public abstract String getShortName();
 	public abstract void setTrajectory(Trajectory t);
 	

@@ -34,16 +34,11 @@ import de.biomedical_imaging.traj.math.ConfinedDiffusionMSDCurveFit;
 /**
  * Fits a function to
  * <r^2> = A [1-B*exp(-4*C*D*t/A)]
- * Where A is the squared corral size (radius), and B&C shape parameters of the corral and D the diffusion coefficient.
+ * Where A is the squared corral size (radius), and B&C shape parameters of the corral and D the diffusion coefficient. A, B, C and D 
+ * are restricted to be positive.
  * This follows the description for correlad (confined) diffusion in
  * Saxton, M.J. & Jacobson, K., 1997. Single-particle tracking: applications to membrane dynamics. 
  * Annual review of biophysics and biomolecular structure, 26, pp.373–399.
- * 
- * The class provides different fitting methods:
- *  - SIMPLEX use the simplex algorithm to estimate A,B,C and D. No constraints regarding the parameters are possible. This means, that
- *  it is possible that the fit give non-sense values.
- *  - JOM_CONSTRAINED try to find the optimal solution for A,B,C and D using the Java Optimization Modeler (ipopt). The solution is constrained to positive values. 
- *  For this mode, you have to ipopt solver installed. 
  *  
  * @author Thorsten Wagner
  *
@@ -82,8 +77,8 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	
 	@Override
 	/**
-	 * @return [0] = squared radius, [1] = shape parameter 1, [2] shape parameter 2, [3] Fit goodness.
-	 * When onlyRadius==true then [0] = squared radius, [1] Fit goodness
+	 * @return Returns an double array with the elements [0] = squared radius (A), [1] = Diffusion coefficent (D) [2] = shape parameter 1 (B), 
+	 * [3] shape parameter 2 (C) and  [4] Fit goodness.
 	 */
 	public double[] evaluate() {
 		MeanSquaredDisplacmentFeature msd = new MeanSquaredDisplacmentFeature(t, 1);
@@ -120,7 +115,7 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		ConfinedDiffusionMSDCurveFit cmsdfit = new ConfinedDiffusionMSDCurveFit();
 		cmsdfit.setInitParameters(initialParams);
 		cmsdfit.doFit(xData, yData);
-		result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC()};
+		result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC(),cmsdfit.getGoodness()};
 	
 		return result;
 	}

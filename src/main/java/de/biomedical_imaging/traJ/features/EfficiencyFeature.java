@@ -37,11 +37,17 @@ import de.biomedical_imaging.traJ.Trajectory;
 public class EfficiencyFeature extends AbstractTrajectoryFeature {
 	
 	private Trajectory t;
-	
+	/**
+	 * 
+	 * @param t Trajectory for which the efficiency is to be calculated.
+	 */
 	public EfficiencyFeature(Trajectory t) {
 		this.t = t;
 	}
 	
+	/**
+	 * @return Returns an double array with the elements [0]=Efficiency
+	 */
 	@Override
 	public double[] evaluate() {
 		result = new double[]{getEfficiency()};

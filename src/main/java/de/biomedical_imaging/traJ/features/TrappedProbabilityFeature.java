@@ -34,7 +34,7 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffus
  * 
  * For this feature R is estiamted by the maximum distance between two positions and
  * D is estimated by the the covariance estimator.
- * @author thorsten
+ * @author Thorsten Wagner
  *
  */
 public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
@@ -43,7 +43,6 @@ public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 	/**
 	 * 
 	 * @param t Trajectory
-	 * @param timelag Timelag between two steps
 	 */
 	public TrappedProbabilityFeature(Trajectory t) {
 		this.t = t;

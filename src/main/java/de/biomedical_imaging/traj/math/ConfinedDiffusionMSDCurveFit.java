@@ -42,6 +42,7 @@ public class ConfinedDiffusionMSDCurveFit {
 	private double b;
 	private double c;
 	private double D;
+	private double goodness;
 	private double initA;
 	private double initB;
 	private double initC;
@@ -60,7 +61,6 @@ public class ConfinedDiffusionMSDCurveFit {
 	 * 
 	 * @param xdata
 	 * @param ydata
-	 * @param method
 	 */
 	public void doFit(double[] xdata, double[] ydata){
 			CurveFitter fitter = new CurveFitter(xdata, ydata);
@@ -77,6 +77,7 @@ public class ConfinedDiffusionMSDCurveFit {
 			b = Math.abs(params[1]);
 			c = Math.abs(params[2]);
 			D = Math.abs(params[3]);
+			goodness = fitter.getFitGoodness();
 	}
 	
 	public void setInitParameters(double[] p){
@@ -100,6 +101,10 @@ public class ConfinedDiffusionMSDCurveFit {
 	
 	public double getD(){
 		return D;
+	}
+	
+	public double getGoodness(){
+		return goodness;
 	}
 
 }

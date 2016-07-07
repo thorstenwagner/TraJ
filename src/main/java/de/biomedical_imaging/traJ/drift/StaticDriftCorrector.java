@@ -39,7 +39,7 @@ public class StaticDriftCorrector extends AbstractDriftCorrector {
 
 	/**
 	 * 
-	 * @param [0] = Drift in x direction, [1] = Drift in y direction, [2] = Drift in z direction
+	 * @param drift An array with the elements [0] = Drift in x direction, [1] = Drift in y direction, [2] = Drift in z direction
 	 */
 	public StaticDriftCorrector(double[] drift) {
 		this.drift = drift;

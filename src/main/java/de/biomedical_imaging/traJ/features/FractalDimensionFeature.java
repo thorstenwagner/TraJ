@@ -26,7 +26,7 @@ package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
 /**
- * Implements the path dimension according to
+ * Implements the fractal path dimension according to
  * M. J. Katz and E. B. George, “Fractals and the analysis of growth paths,” Bull. Math. Biol., vol. 47, no. 2, pp. 273–286, 1985.
  * @author Thorsten Wagner
  *
@@ -34,6 +34,10 @@ import de.biomedical_imaging.traJ.Trajectory;
 public class FractalDimensionFeature extends AbstractTrajectoryFeature{
 
 	Trajectory t;
+	/**
+	 * 
+	 * @param t Trajectory for which the fractal dimension is to be calculated.
+	 */
 	public FractalDimensionFeature(Trajectory t) {
 		this.t = t;
 		if(t.getDimension() != 2){
@@ -41,6 +45,9 @@ public class FractalDimensionFeature extends AbstractTrajectoryFeature{
 		}
 	}
 	
+	/**
+	 * @return Returns an double array with the elements [0] = fractal path dimension
+	 */
 	@Override
 	public double[] evaluate() {
 		double largestDistance = Double.MIN_VALUE;

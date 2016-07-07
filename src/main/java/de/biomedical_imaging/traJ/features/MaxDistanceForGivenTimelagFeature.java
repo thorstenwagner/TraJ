@@ -25,14 +25,29 @@ package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * 
+ * Calculates the maximum distance between any two points with a given timelag.
+ * 
+ * @author Thorsten Wagner
+ *
+ */
 public class MaxDistanceForGivenTimelagFeature extends AbstractTrajectoryFeature {
 	private Trajectory t;
 	private int lag;
 	
+	/**
+	 * @param t Trajectory for which the distance is to be calculated
+	 * @param lag Allowed timelag between two positions.
+	 */
 	public MaxDistanceForGivenTimelagFeature(Trajectory t, int lag) {
 		this.t = t;
 		this.lag = lag;
 	}
+	
+	/**
+	 * @return An double array with the elements [0] = max distance 
+	 */
 	@Override
 	public double[] evaluate() {
 		double distance = Double.MIN_NORMAL;

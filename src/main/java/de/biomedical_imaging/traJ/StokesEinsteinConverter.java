@@ -109,7 +109,7 @@ public class StokesEinsteinConverter {
 
 	/**
 	 * Converts kelvin to celsius
-	 * @param tempInCelsius Temperture in kelvin
+	 * @param tempInKelvin Temperture in kelvin
 	 * @return Temperatur in celsius
 	 */
 	public static double convertKelvinToCelsius(double tempInKelvin){

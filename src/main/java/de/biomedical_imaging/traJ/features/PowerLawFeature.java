@@ -32,7 +32,7 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traj.math.PowerLawCurveFit;
 
 /**
- * Fits a power law curve to the msd data and returns the exponent
+ * Fits the function y = 4*a*x^b to the MSD data and calculates the exponent alpha (b) and the diffusion coefficient (a).
  * @author Thorsten Wagner
  *
  */
@@ -48,6 +48,11 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	private double initalDiffusionCoefficient;
 	private double initalAlpha;
 	
+	/**
+	 * @param t Trajectory for which alpha and diffusion coefficient is to be calculated.
+	 * @param minlag Minimum timelag for the MSD curve calculation
+	 * @param maxlag Maximum timelag for the MSD curve calculation
+	 */
 	public PowerLawFeature(Trajectory t, int minlag, int maxlag) {
 		this.t = t;
 		this.minlag = minlag;
@@ -59,6 +64,14 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	
 	}
 	
+	/**
+	 * 
+	 * @param t Trajectory for which alpha and diffusion coefficient is to be calculated.
+	 * @param minlag Minimum timelag for the MSD curve calculation
+	 * @param maxlag Maximum timelag for the MSD curve calculation
+	 * @param initalAlpha Initial guess for alpha
+	 * @param initialDiffusionCoefficient Initial guess for the diffusion coefficient.
+	 */
 	public PowerLawFeature(Trajectory t, int minlag, int maxlag, double initalAlpha, double initialDiffusionCoefficient) {
 		this.t = t;
 		this.minlag = minlag;
@@ -71,6 +84,9 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		this.initalDiffusionCoefficient = initialDiffusionCoefficient;
 	}
 	
+	/**
+	 * @return An double array with the elements [0]= alpha, [1]=diffusion coefficient [2]=goodness of fit
+	 */
 	@Override
 	public double[] evaluate() {
 		
@@ -116,6 +132,10 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 		return result;
 	}
 	
+	/**
+	 * If a custim mean squared displacement evaluator is used, evaluateIndex should be the array index of the MSD value.
+	 * @param evaluateIndex
+	 */
 	public void setEvaluateIndex(int evaluateIndex){
 		this.evaluateIndex = evaluateIndex;
 	}

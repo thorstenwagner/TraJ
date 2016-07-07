@@ -26,10 +26,12 @@ package de.biomedical_imaging.traJ.features;
 import de.biomedical_imaging.traJ.Trajectory;
 
 /**
- * Implements the mean curvilinear speed and the mean straight-line speed according to
+ * Implements the mean curvilinear speed (MCS) and the mean straight-line speed (MSS) according to
+ * 
+ *$MCS=\sum_{n=1}^{N}\frac{p_{n}-p_{n-1}}{\triangle t$
  * http://doi.org/10.1016/B978-0-12-391857-4.00009-4
  * 
- * @author thorsten
+ * @author Thorsten Wagner
  *
  */
 public class MeanSpeedFeature extends AbstractTrajectoryFeature {
@@ -39,7 +41,7 @@ public class MeanSpeedFeature extends AbstractTrajectoryFeature {
 	
 	/**
 	 * 
-	 * @param t Trajectory where the speed should be calculated for.
+	 * @param t Trajectory for which the speed is to be calculated.
 	 * @param timelag Timelag between two steps.
 	 */
 	public MeanSpeedFeature(Trajectory t,double timelag) {
@@ -50,7 +52,7 @@ public class MeanSpeedFeature extends AbstractTrajectoryFeature {
 	@Override
 	/**
 	 * Calculates the mean curvlinear speed and the mean straight-line speed.
-	 * @return Double array where the first element is the mean curvilinear speed and the second the mean straight-line speed.
+	 * @return An double array where the first element is the mean curvilinear speed and the second the mean straight-line speed.
 	 */
 	public double[] evaluate() {
 		double sum = 0;

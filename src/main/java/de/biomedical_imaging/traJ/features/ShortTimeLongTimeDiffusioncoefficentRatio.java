@@ -28,7 +28,7 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffus
 
 /**
  * The ratio of the long time diffusion coefficent and the short  time diffusion coefficient
- * @author thorsten
+ * @author Thorsten Wagner
  *
  */
 public class ShortTimeLongTimeDiffusioncoefficentRatio extends AbstractTrajectoryFeature {

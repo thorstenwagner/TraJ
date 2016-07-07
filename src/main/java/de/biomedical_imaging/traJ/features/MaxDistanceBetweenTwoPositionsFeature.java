@@ -25,14 +25,27 @@ package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * Caclulates the maximum distance between any two position of a trajectory.
+ * @author Thorsten Wagner
+ *
+ */
 public class MaxDistanceBetweenTwoPositionsFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
 	
+	/**
+	 * 
+	 * @param t Trajectory for which the maximum distance is to be calculated.
+	 */
 	public MaxDistanceBetweenTwoPositionsFeature(Trajectory t) {
 		this.t = t;
 	}
 	
+	/**
+	 * 
+	 * @return An double array with the elements [0] = max distance 
+	 */
 	@Override
 	public double[] evaluate() {
 		double maxDistance = Double.MIN_VALUE;

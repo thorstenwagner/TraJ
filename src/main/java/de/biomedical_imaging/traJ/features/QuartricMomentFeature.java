@@ -26,6 +26,11 @@ package de.biomedical_imaging.traJ.features;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryValidIndexTimelagIterator;
 
+/**
+ * 
+ * @author Thorsten Wagner
+ *
+ */
 public class QuartricMomentFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;

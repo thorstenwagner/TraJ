@@ -46,10 +46,16 @@ public class AsymmetryFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
 	
+	/**
+	 * 
+	 * @param t Trajectory for which the asymmetry is to be calculated.
+	 */
 	public AsymmetryFeature(Trajectory t) {
 		this.t = t;
 	}
-	
+	/**
+	 * @return Returns an double array with the following elements [0]=Asymmetry
+	 */
 	@Override
 	public double[] evaluate() {
 		Array2DRowRealMatrix gyr = RadiusGyrationTensor2D.getRadiusOfGyrationTensor(t);

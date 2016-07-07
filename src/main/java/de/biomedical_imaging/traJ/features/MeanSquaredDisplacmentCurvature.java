@@ -38,17 +38,24 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffus
 public class MeanSquaredDisplacmentCurvature extends AbstractTrajectoryFeature {
 	private Trajectory t;
 	
+	/**
+	 * 
+	 * @param t Trajectory for which the MSD curvature is to be calculated.
+	 */
 	public MeanSquaredDisplacmentCurvature(Trajectory t){
 		this.t = t;
 		result = null;
 	}
 	
+	/**
+	 * @return An double array with the elements [0] MSD curvature
+	 */
 	@Override
 	public double[] evaluate() {
 		
 		
 		int Ndiff = 2;
-		if((int)(t.size()*0.1)>2){
+		if((int)(t.size()*0.05)>2){
 			Ndiff = (int)(t.size()*0.05);
 		}
 		RegressionDiffusionCoefficientEstimator regEst = new RegressionDiffusionCoefficientEstimator(1, Ndiff);

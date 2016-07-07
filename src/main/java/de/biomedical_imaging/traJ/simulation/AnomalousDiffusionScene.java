@@ -66,7 +66,7 @@ public class AnomalousDiffusionScene {
 	 
 	/**
 	 * Estimate excluded volume fraction by monte carlo method
-	 * @return
+	 * @return excluded volume fraction
 	 */
 	public double estimateExcludedVolumeFraction(){
 		//Calculate volume/area of the of the scene without obstacles

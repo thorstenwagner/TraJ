@@ -30,13 +30,14 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traj.math.RadiusGyrationTensor2D;
 
 /**
- * The features characterizes  the asymetry of the trajectory. 
+ * The features characterizes the asymetry of the trajectory. 
  * 
  * It was implemented according to
  * 
  * Helmuth, J.A. et al., 2007. 
  * A novel supervised trajectory segmentation algorithm identifies distinct types of human adenovirus motion in host cells. 
  * Journal of structural biology, 159(3), pp.347–58.
+ * 
  * @author Thorsten Wagner
  *
  */
@@ -44,10 +45,17 @@ public class Asymmetry3Feature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
 	
+	/**
+	 * 
+	 * @param t Trajectory for which the asymmetry is to be calculated.
+	 */
 	public Asymmetry3Feature(Trajectory t) {
 		this.t = t;
 	}
 	
+	/**
+	 * @return Returns an double array with the following elements [0]=Asymmetry
+	 */
 	@Override
 	public double[] evaluate() {
 		Array2DRowRealMatrix gyr = RadiusGyrationTensor2D.getRadiusOfGyrationTensor(t);

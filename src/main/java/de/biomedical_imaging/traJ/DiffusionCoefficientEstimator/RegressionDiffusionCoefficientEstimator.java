@@ -40,8 +40,6 @@ import de.biomedical_imaging.traj.math.StraightLineFit;
 /**
  * 
  * @author Thorsten Wagner
- *
- * @TODO: Should use a weighted fit!
  */
 public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryFeature implements AbstractDiffusionCoefficientEstimator {
 	private int lagMin;

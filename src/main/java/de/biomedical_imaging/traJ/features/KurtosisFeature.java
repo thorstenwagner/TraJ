@@ -27,23 +27,28 @@ import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traj.math.MomentsCalculator;
 
 /**
- * Evaluates the skewness of the trajectory. Therefore the radius of gyration tensor is estimated.
+ * Evaluates the kurtosis of the trajectory. Therefore the radius of gyration tensor is estimated.
  * For the calculation, the positions are projected on the dominant eigenvector of the radius of gyration
  * tensor.:
- * Skewness = 1/N sum( (x_i - mean)^3 / sd^3)
+ * Kurtosis = 1/N sum( (x_i - mean)^4 / sd^4)
  * where N is the number of positions, mean the mean position and sd the standard deviation
  * @author Thorsten Wagner
- *
  */
 public class KurtosisFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
 	
+	/**
+	 * 
+	 * @param t Trajectory for which the kurtosis is to be calculated.
+	 */
 	public KurtosisFeature(Trajectory t) {
 		this.t = t;
 	}
 	
-	
+	/**
+	 * @return An double array with the elements [0] = Kurtosis
+	 */
 	@Override
 	public double[] evaluate() {
 		MomentsCalculator moments = new MomentsCalculator(t);

@@ -42,14 +42,16 @@ public class ElongationFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
 	
+	/**
+	 * 
+	 * @param t Trajectory for which the elongation is to be calcualted.
+	 */
 	public ElongationFeature(Trajectory t) {
 		this.t = t;
 	}
 	
 	/**
-	 * Estimates the the elongation by 1 - S/L where S is the short side
-	 * and L the long side of the minimum bounding rectangle. When the trajectory
-	 * consits of colinear points, the elgonation is 1 by default.
+	 * @return Returns an double array with the elements [0]=Elongation
 	 */
 	@Override
 	public double[] evaluate() {

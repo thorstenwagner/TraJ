@@ -24,46 +24,45 @@
 package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
-
 /**
- * Relates the net dispalcement to the sum of step lengths
+ * Calculates ratio of the MSD for two give timelags.
  * @author Thorsten Wagner
+ *
  */
-public class StraightnessFeature extends AbstractTrajectoryFeature {
-	
+public class MSDRatioFeature  extends AbstractTrajectoryFeature {
+	private int timelag1;
+	private int timelag2;
 	private Trajectory t;
-	
-	public StraightnessFeature(Trajectory t) {
+	/**
+	 * 
+	 * @param t Trajectory for which the MSD ratio is to be calculated
+	 * @param timelag1 Timelag for the numerator MSD
+	 * @param timelag2 Timelag for the denominator MSD
+	 */
+	public MSDRatioFeature(Trajectory t, int timelag1, int timelag2) {
 		this.t = t;
+		this.timelag1 = timelag1;
+		this.timelag2 = timelag2;
 	}
-	
+	/**
+	 * @return An double array with the elements [0] = MSD Ratio
+	 */
 	@Override
 	public double[] evaluate() {
-		result = new double[]{getStraightness()};
-		return result;
-	}
-	
-	public double getStraightness(){
-		double sum = 0;
-		for(int i = 1; i < t.size(); i++){
-			sum += t.get(i).distance(t.get(i-1));
-		}
-		if(sum<Math.pow(10, -10)){
-			return 0;
-		}
-		double straightness = (t.get(0).distance(t.get(t.size()-1)))/sum;
-		return straightness;
+		MeanSquaredDisplacmentFeature msdf1 = new MeanSquaredDisplacmentFeature(t, timelag1);
+		MeanSquaredDisplacmentFeature msdf2 = new MeanSquaredDisplacmentFeature(t, timelag2);
+		double result = msdf1.evaluate()[0]/msdf2.evaluate()[0];
+		return new double[]{result};
 	}
 
 	@Override
 	public String getName() {
-		return "Straightness";
+		return "Mean squared displacment ratio";
 	}
 
 	@Override
 	public String getShortName() {
-		
-		return "STRAIGHTNESS";
+		return "MSDR";
 	}
 
 	@Override

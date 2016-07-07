@@ -31,15 +31,27 @@ import java.util.EmptyStackException;
 import cg.RotatingCalipers;
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * Calculates the aspect ratio as the ratio of long and short side of the minimum bounding rectangle.
+ * @author Thorsten Wagner
+ *
+ */
 public class AspectRatioFeature extends AbstractTrajectoryFeature {
 	private Trajectory t; 
 	
+	/**
+	 * @param t Trajectory for which the aspect ratio is to be calculated
+	 */
 	public AspectRatioFeature(Trajectory t) {
 		this.t = t;
 		if(t.getDimension()!=2){
 			throw new IllegalArgumentException("Works only with 2D trajectorys");
 		}
 	}
+	
+	/**
+	 * @return Returns an double array with the following elements [0]: aspect ratio
+	 */
 	@Override
 	public double[] evaluate() {
 		

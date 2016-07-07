@@ -40,7 +40,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 	
 	/**
 	 * 
-	 * @param t Trajectory
+	 * @param t Trajectory for which the MSD is to be calculated.
 	 * @param timelag Timeleg for msd caluclation (>= 1)
 	 */
 	public MeanSquaredDisplacmentFeature(Trajectory t, int timelag) {
@@ -103,7 +103,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 
 	@Override
 	/**
-	 * @return Mean squared displacment (in length unit squared) 
+	 * @return An double array with elements [0] = Mean squared displacment (in length unit squared), [1] = estimated variance, [2] = number of used datapoints
 	 */
 	public double[] evaluate() {
 		// TODO Auto-generated method stub
@@ -112,7 +112,7 @@ public class MeanSquaredDisplacmentFeature extends AbstractTrajectoryFeature imp
 	
 	/**
 	 * 
-	 * @return Return the relative variance of MSD according to:
+	 * @return Return the relative variance of MSD according formula (6) of:
 	 * S. Huet, E. Karatekin, V. S. Tran, I. Fanget, S. Cribier, and J.-P. Henry, 
 	 * “Analysis of transient behavior in complex trajectories: application to secretory vesicle dynamics.,” 
 	 * Biophys. J., vol. 91, no. 9, pp. 3542–3559, 2006.

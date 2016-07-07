@@ -25,14 +25,24 @@ package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
 
+/**
+ * Caculates the center of gravity of an trajectory.
+ * @author Thorsten Wagner
+ *
+ */
 public class CenterOfGravityFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
-	
+	/**
+	 * 
+	 * @param t Trajectory for which the COG is to be calculated.
+	 */
 	public CenterOfGravityFeature(Trajectory t) {
 		this.t = t;
 	}
-	
+	/**
+	 * @return Returns an double array with the elements [0]= COG X, [1]= COG Y, [2]=COG Z
+	 */
 	@Override
 	public double[] evaluate() {
 		double x = 0;
