@@ -87,11 +87,11 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		ArrayList<Double> xDataList = new ArrayList<Double>();
 		ArrayList<Double> yDataList = new ArrayList<Double>();
 		
-		for(int i = 1; i < t.size(); i++){
+		for(int i = 1; i < t.size()/3; i++){
 			msd.setTimelag(i);
 			double[] res = msd.evaluate();
 			double msdvalue = res[0];
-			int N = (int)Math.sqrt(res[2]); 
+			int N = (int)res[2]; 
 			for(int j = 0; j < N; j++){
 				xDataList.add((double) i*timelag);
 				yDataList.add(msdvalue);
