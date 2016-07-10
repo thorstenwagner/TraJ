@@ -20,12 +20,16 @@ public class BoundednessFeature extends AbstractTrajectoryFeature {
 		
 		double D = dcEst.evaluate()[0];
 		double r = dtwop.evaluate()[0]/2;
-		double cov_area = a(t.size())*D*timelag;
-		double res = cov_area/(4*r*r);
+		double res = calculateBoundedness(D, t.size(), timelag, r); 
 		result = new double[]{res};
 		return result;
 	}
-	
+	public static double calculateBoundedness(double D, int N, double timelag, double confRadius){
+		double r = confRadius;
+		double cov_area = a(N)*D*timelag;
+		double res = cov_area/(4*r*r);
+		return res;
+	}
 	public static double a(int length){
 		return -79.751+4.051*length;
 	}
