@@ -51,20 +51,21 @@ public class AnomalousDiffusionWMSimulation extends AbstractSimulator {
 		//RESACLE
 		double msdx = 0;
 		double msdy = 0;
+		System.out.println("incrx: " + incrx.length);
 		for(int i = 0; i < incrx.length; i++){
 			msdx += incrx[i]*incrx[i];
 			msdy += incry[i]*incry[i];
 		}
-		msdx /= incrx.length;
-		msdy /= incry.length;
+		msdx = msdx/incrx.length;
+		msdy = msdy/incry.length;
 		double expectedMSD = 2*diffusioncoefficient*timelag;
 		
-		double fact = expectedMSD/msdx;
-	
+		double factx = expectedMSD/msdx;
+		double facty = expectedMSD/msdy;
 		for(int i = 1; i <= numberOfSteps; i++) {
 			Point3d pos = new Point3d();
-			pos.setX(t.get(i-1).x + incrx[i-1]*fact);//)*fact2); Math.sqrt(2*diffusioncoefficient*timelag)
-			pos.setY(t.get(i-1).y + incry[i-1]*fact);//*fact2);
+			pos.setX(t.get(i-1).x + incrx[i-1]*Math.sqrt(factx));//)*fact2); Math.sqrt(2*diffusioncoefficient*timelag)
+			pos.setY(t.get(i-1).y + incry[i-1]*Math.sqrt(facty));//*fact2);
 			t.add(pos);
 		}
 
