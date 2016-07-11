@@ -51,7 +51,7 @@ public class AnomalousDiffusionWMSimulation extends AbstractSimulator {
 		//RESACLE
 		double msdx = 0;
 		double msdy = 0;
-		System.out.println("incrx: " + incrx.length);
+		
 		for(int i = 0; i < incrx.length; i++){
 			msdx += incrx[i]*incrx[i];
 			msdy += incry[i]*incry[i];
