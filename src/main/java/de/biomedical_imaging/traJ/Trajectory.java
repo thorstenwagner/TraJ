@@ -103,6 +103,14 @@ public  class Trajectory extends ArrayList<Point3d> {
 		features.add(feature);
 	}
 	
+	public Trajectory getCopy(){
+		Trajectory t = new Trajectory(dimension);
+		for(int i = 0; i < this.size(); i++){
+			t.add(t.get(i));
+		}
+		return t;
+	}
+	
 	/**
 	 * Converts the positions to a 2D double array
 	 * @return 2d double array [i][j], i=Time index, j=coordinate index

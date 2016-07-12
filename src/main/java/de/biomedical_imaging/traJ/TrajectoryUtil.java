@@ -98,6 +98,22 @@ public class TrajectoryUtil {
 	}
 	
 	/**
+	 * Resamples a trajectory
+	 * @param t Trajectory to resample
+	 * @param n Resample rate
+	 * @return Returns a resampled trajectory which contains every n'th position of t
+	 */
+	public static Trajectory resample(Trajectory t, int n){
+		Trajectory t1 = new Trajectory(2);
+		
+		for(int i = 0; i < t.size(); i=i+n){
+			t1.add(t.get(i));
+		}
+		
+		return t1;
+	}
+	
+	/**
 	 * Checks if a value should interpreted as zero
 	 * @param v value
 	 * @return true, when it should be interpred as zero

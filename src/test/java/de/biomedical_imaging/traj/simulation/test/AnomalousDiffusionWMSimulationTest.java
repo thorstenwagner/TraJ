@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.TrajectoryUtil;
 import de.biomedical_imaging.traJ.features.MeanSquaredDisplacmentFeature;
 import de.biomedical_imaging.traJ.features.PowerLawFeature;
 import de.biomedical_imaging.traJ.simulation.AnomalousDiffusionWMSimulation;
@@ -41,7 +42,23 @@ public class AnomalousDiffusionWMSimulationTest {
 	}
 	
 	@Test
-	public void MSD_CORRECT_alpha1() {
+	public void MSD_CORRECT_nstep_10000_cut1000() {
+		CentralRandomNumberGenerator.getInstance().setSeed(1);
+		double diffusioncoefficient = 1;
+		double timelag = 1.0/30;
+		int numberOfSteps = 10000;
+		double alpha = 1;
+		AnomalousDiffusionWMSimulation ads = new AnomalousDiffusionWMSimulation(diffusioncoefficient, timelag, 2, numberOfSteps, alpha);
+		Trajectory t = ads.generateTrajectory();
+		t = t.subList(0, 1000);
+		MeanSquaredDisplacmentFeature msdf = new MeanSquaredDisplacmentFeature(t, 1);
+		
+		double res = msdf.evaluate()[0];
+		assertEquals(4*diffusioncoefficient*timelag, res,0.01);
+	}
+	
+	@Test
+	public void check_alpha1() {
 		CentralRandomNumberGenerator.getInstance().setSeed(1);
 		double diffusioncoefficient = 1;
 		double timelag = 1.0/30;
@@ -55,7 +72,7 @@ public class AnomalousDiffusionWMSimulationTest {
 	}
 	
 	@Test
-	public void MSD_CORRECT_alpha05() {
+	public void check_alpha05() {
 		CentralRandomNumberGenerator.getInstance().setSeed(1);
 		double diffusioncoefficient = 1;
 		double timelag = 1.0/30;
