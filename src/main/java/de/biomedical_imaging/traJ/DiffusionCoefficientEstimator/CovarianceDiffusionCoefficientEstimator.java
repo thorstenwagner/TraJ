@@ -73,7 +73,7 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractTrajectoryF
 	
 
 	/**
-	 * @return [0] diffusion coefficient [1] localization noise in x-direction [2] loc. noise in y-diretction [3] loc. noise in z-direction
+	 * @return [0] diffusion coefficient [1] localization noise (sigma) in x-direction [2] loc. noise (sigma) in y-diretction [3] loc. noise (sigma) in z-direction
 	 */
 	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
 		double[] cov = getCovData(t, fps,0);
@@ -112,7 +112,6 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractTrajectoryF
 		double msdZ = (sumZ/(N));
 		
 		double covX = (sumX2/(M) );
-		
 		double covY = (sumY2/(M) );
 		double covZ = (sumZ2/(M) );
 		
@@ -132,9 +131,9 @@ public class CovarianceDiffusionCoefficientEstimator extends AbstractTrajectoryF
 		
 		double[] data  = new double[4]; //[0] = Diffusioncoefficient, [1] = LocNoiseX, [2] = LocNoiseY
 		data[0] = D;
-		data[1] = R*msdX + (2*R-1)+covX;
-		data[2] = R*msdY + (2*R-1)+covY;
-		data[3] = R*msdZ + (2*R-1)+covZ;
+		data[1] = Math.sqrt(Math.abs(covX)); //R*msdX + (2*R-1)+covX;
+		data[2] = Math.sqrt(Math.abs(covY)); //R*msdY + (2*R-1)+covY;
+		data[3] = Math.sqrt(Math.abs(covZ)); //R*msdZ + (2*R-1)+covZ;
 		
 		return data;
 	}
