@@ -128,7 +128,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 			pwFit.doFit(xData,yData);
 		}
 		result = new double[]{pwFit.getAlpha(),pwFit.getDiffusionCoefficient(),pwFit.getGoodness()};
-		
+	
 		return result;
 	}
 	

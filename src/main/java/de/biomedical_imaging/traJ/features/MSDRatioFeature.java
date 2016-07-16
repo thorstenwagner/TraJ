@@ -24,8 +24,10 @@
 package de.biomedical_imaging.traJ.features;
 
 import de.biomedical_imaging.traJ.Trajectory;
+import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffusionCoefficientEstimator;
 /**
  * Calculates ratio of the MSD for two give timelags.
+ * 
  * @author Thorsten Wagner
  *
  */
@@ -51,8 +53,12 @@ public class MSDRatioFeature  extends AbstractTrajectoryFeature {
 	public double[] evaluate() {
 		MeanSquaredDisplacmentFeature msdf1 = new MeanSquaredDisplacmentFeature(t, timelag1);
 		MeanSquaredDisplacmentFeature msdf2 = new MeanSquaredDisplacmentFeature(t, timelag2);
-		double result = msdf1.evaluate()[0]/msdf2.evaluate()[0];
-		return new double[]{result};
+
+		double msd1 = msdf1.evaluate()[0];
+		double msd2 = msdf2.evaluate()[0];
+		double res = (msd1)/(msd2) - 1.0*timelag1/timelag2;
+		result = new double[]{res};
+		return result;
 	}
 
 	@Override

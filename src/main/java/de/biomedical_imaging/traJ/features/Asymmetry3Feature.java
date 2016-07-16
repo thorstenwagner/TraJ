@@ -64,6 +64,7 @@ public class Asymmetry3Feature extends AbstractTrajectoryFeature {
 		double e2 = eigdec.getRealEigenvalue(1);
 		double asym = -1*Math.log(1-Math.pow(e1-e2,2)/(2*Math.pow(e1+e2, 2)));
 		result = new double[]{asym};
+
 		return result;
 	}
 
