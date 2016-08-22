@@ -322,6 +322,14 @@ public class VisualizationUtils {
 				new MeanSquaredDisplacmentFeature(t.get(0), lagMin));
 	}
 	
+	public static void plotChart(Chart chart)
+	{
+		ArrayList<Chart> cl = new ArrayList<Chart>();
+		cl.add(chart);
+		plotCharts(cl);
+		
+	}
+	
 	/**
 	 * Plots a list of charts in matrix with 2 columns.
 	 * @param charts

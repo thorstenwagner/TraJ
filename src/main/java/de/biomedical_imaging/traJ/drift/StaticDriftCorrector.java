@@ -24,6 +24,8 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ.drift;
 
+import java.util.ArrayList;
+
 import javax.vecmath.Point3d;
 
 import de.biomedical_imaging.traJ.Trajectory;
@@ -43,6 +45,16 @@ public class StaticDriftCorrector extends AbstractDriftCorrector {
 	 */
 	public StaticDriftCorrector(double[] drift) {
 		this.drift = drift;
+	}
+	
+	public ArrayList<Trajectory> removeDrift(ArrayList<Trajectory> tracks){
+		ArrayList<Trajectory> noDrift = new ArrayList<Trajectory>();
+		
+		for (Trajectory trajectory : tracks) {
+			noDrift.add(removeDrift(trajectory));
+		}
+		
+		return noDrift;
 	}
 
 	@Override

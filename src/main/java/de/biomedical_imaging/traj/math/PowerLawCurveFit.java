@@ -23,7 +23,9 @@
 
 package de.biomedical_imaging.traj.math;
 
+import ij.IJ;
 import ij.measure.CurveFitter;
+import ij.measure.Minimizer;
 
 
 public class PowerLawCurveFit {
@@ -55,11 +57,17 @@ public class PowerLawCurveFit {
 			}
 			fitter.doFit(CurveFitter.POWER_REGRESSION);
 			double params[] = fitter.getParams();
-			alpha = params[1];
-			dc = params[0]/4.0; 
-			goodness = fitter.getFitGoodness();
-		
-			if(alpha < 0 || dc < 0){
+			boolean failed = (fitter.getStatus()!=Minimizer.SUCCESS);
+			if(failed){
+				alpha = -1;
+				dc = -1;
+				goodness = 0;
+			}else{
+				alpha = params[1];
+				dc = params[0]/4.0; 
+				goodness = fitter.getFitGoodness();
+			}
+			if(failed || alpha < 0 || dc < 0){
 		
 				fitter = new CurveFitter(xdata, ydata);
 				for(int i = 0; i < ydata.length; i++){

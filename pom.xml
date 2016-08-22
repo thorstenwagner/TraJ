@@ -4,7 +4,7 @@
 
 	<groupId>de.biomedical-imaging.TraJ</groupId>
 	<artifactId>traj</artifactId>
-	<version>0.5.5-SNAPSHOT</version>
+	<version>0.5.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>TraJ</name>

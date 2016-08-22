@@ -66,7 +66,7 @@ public class AnomalousDiffusionWMSimulationTest {
 		double alpha = 1;
 		AnomalousDiffusionWMSimulation ads = new AnomalousDiffusionWMSimulation(diffusioncoefficient, timelag, 2, numberOfSteps, alpha);
 		Trajectory t = ads.generateTrajectory();
-		PowerLawFeature pwf = new PowerLawFeature(t, 1, t.size()/3);
+		PowerLawFeature pwf = new PowerLawFeature(t, 1/timelag,1, t.size()/3);
 		double res = pwf.evaluate()[0];
 		assertEquals(alpha, res,0.01);
 	}
@@ -80,7 +80,7 @@ public class AnomalousDiffusionWMSimulationTest {
 		double alpha = 0.5;
 		AnomalousDiffusionWMSimulation ads = new AnomalousDiffusionWMSimulation(diffusioncoefficient, timelag, 2, numberOfSteps, alpha);
 		Trajectory t = ads.generateTrajectory();
-		PowerLawFeature pwf = new PowerLawFeature(t, 1, t.size()/3);
+		PowerLawFeature pwf = new PowerLawFeature(t, 1/timelag,1, t.size()/3);
 		double res = pwf.evaluate()[0];
 		assertEquals(alpha, res,0.04);
 	}

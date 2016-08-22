@@ -23,7 +23,7 @@ public class PowerLawFeatureTest {
 		CentralRandomNumberGenerator.getInstance().setSeed(12);
 		FreeDiffusionSimulator sim = new FreeDiffusionSimulator(diffusioncoefficient, timelag, dimension, numberOfSteps);
 		Trajectory t = sim.generateTrajectory();
-		PowerLawFeature plf = new PowerLawFeature(t, 1, t.size()/200);
+		PowerLawFeature plf = new PowerLawFeature(t, 1/timelag,1, t.size()/200);
 		double alpha = plf.evaluate()[0];
 		assertEquals(1.0, alpha,0.01);
 		

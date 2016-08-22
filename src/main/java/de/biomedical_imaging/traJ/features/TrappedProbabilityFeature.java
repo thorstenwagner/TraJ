@@ -23,8 +23,10 @@
 
 package de.biomedical_imaging.traJ.features;
 
+import ij.IJ;
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffusionCoefficientEstimator;
+import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.RegressionDiffusionCoefficientEstimator;
 
 /**
  * Following Saxton [1], the probability p that a trajectory is trapped
@@ -32,7 +34,7 @@ import de.biomedical_imaging.traJ.DiffusionCoefficientEstimator.CovarianceDiffus
  *   p = 1 - exp(0.2048-2.5117(D*t/R^2))
  * where D is the diffusion coefficient, and t is time duration of the trajectory.
  * 
- * For this feature R is estiamted by the maximum distance between two positions and
+ * For this feature R is estimated by the maximum distance between two positions and
  * D is estimated by the the covariance estimator.
  * @author Thorsten Wagner
  *
@@ -53,8 +55,8 @@ public class TrappedProbabilityFeature extends AbstractTrajectoryFeature{
 		MaxDistanceBetweenTwoPositionsFeature dtwop = new MaxDistanceBetweenTwoPositionsFeature(t);
 		double r = dtwop.evaluate()[0]/2;
 		
-		CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator(t, 1);
-		
+		//CovarianceDiffusionCoefficientEstimator dcEst = new CovarianceDiffusionCoefficientEstimator(t, 1);
+		RegressionDiffusionCoefficientEstimator dcEst = new RegressionDiffusionCoefficientEstimator(t,1,1, 2);
 		double D = dcEst.evaluate()[0];
 		double time = t.size();
 

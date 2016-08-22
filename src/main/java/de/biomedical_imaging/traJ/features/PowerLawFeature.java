@@ -47,16 +47,20 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	private boolean useInitialGuess;
 	private double initalDiffusionCoefficient;
 	private double initalAlpha;
+	private double fps;
+	private double timelag;
 	
 	/**
 	 * @param t Trajectory for which alpha and diffusion coefficient is to be calculated.
 	 * @param minlag Minimum timelag for the MSD curve calculation
 	 * @param maxlag Maximum timelag for the MSD curve calculation
 	 */
-	public PowerLawFeature(Trajectory t, int minlag, int maxlag) {
+	public PowerLawFeature(Trajectory t, double fps, int minlag, int maxlag) {
 		this.t = t;
 		this.minlag = minlag;
 		this.maxlag = maxlag;
+		this.fps = fps;
+		this.timelag = 1/fps;
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
@@ -72,10 +76,12 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 	 * @param initalAlpha Initial guess for alpha
 	 * @param initialDiffusionCoefficient Initial guess for the diffusion coefficient.
 	 */
-	public PowerLawFeature(Trajectory t, int minlag, int maxlag, double initalAlpha, double initialDiffusionCoefficient) {
+	public PowerLawFeature(Trajectory t, double fps, int minlag, int maxlag, double initalAlpha, double initialDiffusionCoefficient) {
 		this.t = t;
 		this.minlag = minlag;
 		this.maxlag = maxlag;
+		this.fps = fps;
+		this.timelag = 1/fps;
 		msdeval = new MeanSquaredDisplacmentFeature(null, 0);
 		((MeanSquaredDisplacmentFeature)msdeval).setOverlap(false);
 		evaluateIndex = 0;
@@ -97,7 +103,7 @@ public class PowerLawFeature extends AbstractTrajectoryFeature {
 
 		for(int i = minlag; i <= maxlag; i++){
 			msdeval.setTimelag(i);
-			data[i-minlag][0] = i*(1.0/30);
+			data[i-minlag][0] = i*timelag;
 			double[] res = msdeval.evaluate();
 			data[i-minlag][1] = res[evaluateIndex];
 			data[i-minlag][2] = (int)res[2];

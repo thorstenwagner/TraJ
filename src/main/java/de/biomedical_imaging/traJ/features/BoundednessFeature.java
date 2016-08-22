@@ -31,7 +31,7 @@ public class BoundednessFeature extends AbstractTrajectoryFeature {
 		return res;
 	}
 	public static double a(int length){
-		return -79.751+4.051*length;
+		return 4*length;//-79.751+4.051*length;
 	}
 
 	@Override
