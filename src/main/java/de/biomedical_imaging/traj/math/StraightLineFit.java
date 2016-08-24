@@ -11,12 +11,13 @@ public class StraightLineFit {
 	 */
 	double a;
 	double b;
-	
+	double goodness;
 
 	public void doFit(double[] xdata, double[] ydata){
 		
 		CurveFitter fitter = new CurveFitter(xdata, ydata);
 		fitter.doFit(CurveFitter.STRAIGHT_LINE);
+		goodness =fitter.getFitGoodness();
 		a = fitter.getParams()[0];
 		a = TrajectoryUtil.isZero(a)?0:a;
 		b = fitter.getParams()[1];
@@ -27,6 +28,7 @@ public class StraightLineFit {
 			fitter.doCustomFit("y=sqrt(a*a)+sqrt(b*b)*x", new double[]{0,0}, false);
 			a = Math.abs(fitter.getParams()[0]);
 			b = Math.abs(fitter.getParams()[1]);
+			goodness = fitter.getFitGoodness();
 		}
 	}
 	
@@ -36,6 +38,10 @@ public class StraightLineFit {
 	
 	public double getB(){
 		return b;
+	}
+	
+	public double getGoodness(){
+		return goodness;
 	}
 
 }

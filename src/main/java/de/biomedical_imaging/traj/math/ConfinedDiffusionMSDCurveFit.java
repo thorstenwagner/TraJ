@@ -62,22 +62,35 @@ public class ConfinedDiffusionMSDCurveFit {
 	 * @param xdata
 	 * @param ydata
 	 */
-	public void doFit(double[] xdata, double[] ydata){
+	public void doFit(double[] xdata, double[] ydata, boolean reduced){
 			CurveFitter fitter = new CurveFitter(xdata, ydata);
-			double ia = Double.isNaN(initA)?0:initA;
-			double ib = Double.isNaN(initB)?0:initB;
-			double ic = Double.isNaN(initC)?0:initC;
-			double id = Double.isNaN(initD)?0:initD;
-			double[] initialParams = new double[]{ia,ib,ic,id};//,regest.evaluate()[0]};
-			fitter.setInitialParameters(initialParams);
-			//fitter.doCustomFit("y=a*(1-b*exp(-4*c*d*x/a))", initialParams, false);
-			fitter.doCustomFit("y=sqrt(a*a)*(1-sqrt(b*b)*exp(-4*sqrt(c*c)*sqrt(d*d)*x/sqrt(a*a)))", initialParams, false);
-			double[] params = fitter.getParams();
-			a = Math.abs(params[0]);
-			b = Math.abs(params[1]);
-			c = Math.abs(params[2]);
-			D = Math.abs(params[3]);
-			goodness = fitter.getFitGoodness();
+			if(reduced==false){
+				double ia = Double.isNaN(initA)?0:initA;
+				double ib = Double.isNaN(initB)?0:initB;
+				double ic = Double.isNaN(initC)?0:initC;
+				double id = Double.isNaN(initD)?0:initD;
+				double[] initialParams = new double[]{ia,ib,ic,id};//,regest.evaluate()[0]};
+				fitter.setInitialParameters(initialParams);
+				//fitter.doCustomFit("y=a*(1-b*exp(-4*c*d*x/a))", initialParams, false);
+				fitter.doCustomFit("y=sqrt(a*a)*(1-sqrt(b*b)*exp(-4*sqrt(c*c)*sqrt(d*d)*x/sqrt(a*a)))", initialParams, false);
+				double[] params = fitter.getParams();
+				a = Math.abs(params[0]);
+				b = Math.abs(params[1]);
+				c = Math.abs(params[2]);
+				D = Math.abs(params[3]);
+				goodness = fitter.getFitGoodness();
+			}else{
+				double ia = Double.isNaN(initA)?0:initA;
+				double id = Double.isNaN(initD)?0:initD;
+				double[] initialParams = new double[]{ia,id};//,regest.evaluate()[0]};
+				fitter.setInitialParameters(initialParams);
+				//fitter.doCustomFit("y=a*(1-b*exp(-4*c*d*x/a))", initialParams, false);
+				fitter.doCustomFit("y=sqrt(a*a)*(1-exp(-4*sqrt(b*b)*x/sqrt(a*a)))", initialParams, false);
+				double[] params = fitter.getParams();
+				a = Math.abs(params[0]);
+				D = Math.abs(params[1]);
+				goodness = fitter.getFitGoodness();
+			}
 	}
 	
 	public void setInitParameters(double[] p){

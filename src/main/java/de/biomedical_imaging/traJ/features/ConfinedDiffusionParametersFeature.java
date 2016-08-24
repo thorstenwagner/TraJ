@@ -48,6 +48,7 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	private Trajectory t;
 	private double timelag;
 	private AbstractDiffusionCoefficientEstimator dcEst;
+	private boolean useReducedModel;
 	
 
 	/**
@@ -57,10 +58,11 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	 * @param t Trajectory for which the features should be estimated.
 	 * @param timelag Timelag between two steps
 	 */
-	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag) {
+	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag, boolean useReducedModel) {
 		this.t = t;
 		this.timelag = timelag;
 		dcEst = new RegressionDiffusionCoefficientEstimator(null, 1/timelag, 1, 2);
+		this.useReducedModel = useReducedModel;
 	}
 	
 	/**
@@ -69,16 +71,17 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 	 * @param timelag Timelag between two steps
 	 * @param dcEst Estimateor for the diffusion coefficient.
 	 */
-	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag, AbstractDiffusionCoefficientEstimator dcEst) {
+	public ConfinedDiffusionParametersFeature(Trajectory t, double timelag, boolean useReducedModel, AbstractDiffusionCoefficientEstimator dcEst) {
 		this.t = t;
 		this.timelag = timelag;
 		this.dcEst = dcEst;
+		this.useReducedModel = useReducedModel;
 	}
 	
 	@Override
 	/**
 	 * @return Returns an double array with the elements [0] = squared radius (A), [1] = Diffusion coefficent (D) [2] = shape parameter 1 (B), 
-	 * [3] shape parameter 2 (C) and  [4] Fit goodness.
+	 * [3] shape parameter 2 (C) and  [4] Fit goodness. If reduced model was selected then it return [0] = squared radius, [1] = diffusion coefficient, [3] = goodness
 	 */
 	public double[] evaluate() {
 		MeanSquaredDisplacmentFeature msd = new MeanSquaredDisplacmentFeature(t, 1);
@@ -112,10 +115,15 @@ public class ConfinedDiffusionParametersFeature extends AbstractTrajectoryFeatur
 		/*
 		 * Do the fit and report the results
 		 */
+		
 		ConfinedDiffusionMSDCurveFit cmsdfit = new ConfinedDiffusionMSDCurveFit();
 		cmsdfit.setInitParameters(initialParams);
-		cmsdfit.doFit(xData, yData);
-		result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC(),cmsdfit.getGoodness()};
+		cmsdfit.doFit(xData, yData,useReducedModel);
+		if(useReducedModel){
+			result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getGoodness()};
+		}else{
+			result = new double[]{cmsdfit.getA(),cmsdfit.getD(),cmsdfit.getB(),cmsdfit.getC(),cmsdfit.getGoodness()};
+		}
 	
 		return result;
 	}

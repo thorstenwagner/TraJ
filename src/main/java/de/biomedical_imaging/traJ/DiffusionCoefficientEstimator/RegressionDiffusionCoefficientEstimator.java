@@ -63,7 +63,7 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 	}
 	
 	/**
-	 * @return [0] = diffusion coefficent, [2] = slope, [3] = Intercept
+	 * @return [0] = diffusion coefficent, [1] = slope, [2] = Intercept, [3] Goodness
 	 */
 
 	public double[] getDiffusionCoefficient(Trajectory t, double fps) {
@@ -94,7 +94,8 @@ public class RegressionDiffusionCoefficientEstimator extends AbstractTrajectoryF
 		double[] ydata = ArrayUtils.toPrimitive(yDataList.toArray(new Double[0]));
 		StraightLineFit fdf = new StraightLineFit();
 		fdf.doFit(xdata, ydata);
-		result = new double[]{fdf.getB()/(2.0*t.getDimension()),fdf.getB()*2.0*t.getDimension(),fdf.getA()};
+		
+		result = new double[]{fdf.getB()/(2.0*t.getDimension()),fdf.getB()*2.0*t.getDimension(),fdf.getA(), fdf.getGoodness()};
 		return result;
 	}
 	

@@ -33,7 +33,7 @@ import de.biomedical_imaging.traJ.Trajectory;
 public class MaxDistanceBetweenTwoPositionsFeature extends AbstractTrajectoryFeature {
 
 	private Trajectory t;
-	
+
 	/**
 	 * 
 	 * @param t Trajectory for which the maximum distance is to be calculated.

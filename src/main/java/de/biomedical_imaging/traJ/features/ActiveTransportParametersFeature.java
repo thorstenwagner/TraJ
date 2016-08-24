@@ -57,7 +57,8 @@ public class ActiveTransportParametersFeature extends AbstractTrajectoryFeature 
 		
 		ActiveTransportMSDLineFit afit = new ActiveTransportMSDLineFit();
 		afit.doFit(xdata, ydata);
-		result = new double[]{afit.getDiffusionCoefficient(),afit.getVelocity()};
+		
+		result = new double[]{afit.getDiffusionCoefficient(),afit.getVelocity(),afit.getFitGoodness()};
 		return result;
 	}
 
