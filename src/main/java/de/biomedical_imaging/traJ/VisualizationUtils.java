@@ -144,7 +144,11 @@ public class VisualizationUtils {
 		// Create Chart
 		Chart chart = QuickChart.getChart("MSD Line", "LAG", "MSD", "MSD",
 				xData, yData);
-		chart.addSeries("y=a*(1-b)*exp(-4*c*D*t/a)", xData, modelData);
+		if(Math.abs(1-b)<0.00001 && Math.abs(1-a)<0.00001){
+			chart.addSeries("y=a*(1-exp(-4*D*t/a))", xData, modelData);
+		}else{
+			chart.addSeries("y=a*(1-b*exp(-4*c*D*t/a))", xData, modelData);
+		}
 
 		// Show it
 		//new SwingWrapper(chart).displayChart();
