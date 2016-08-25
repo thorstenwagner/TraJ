@@ -23,7 +23,7 @@
 
 package de.biomedical_imaging.traj.math;
 
-import javax.vecmath.Vector2d;
+import org.scijava.vecmath.Vector2d;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.EigenDecomposition;

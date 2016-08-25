@@ -1,6 +1,6 @@
 package de.biomedical_imaging.traJ.test;
 
-import javax.vecmath.Point3d;
+import org.scijava.vecmath.Point3d;
 
 import org.junit.Assert;
 import org.junit.Test;

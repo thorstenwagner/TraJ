@@ -1,6 +1,6 @@
 package de.biomedical_imaging.traJ.test;
 
-import javax.vecmath.Point3d;
+import org.scijava.vecmath.Point3d;
 
 import org.apache.commons.math3.analysis.function.Sqrt;
 import org.junit.Test;

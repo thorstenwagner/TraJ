@@ -27,8 +27,7 @@ package de.biomedical_imaging.traJ;
 
 import java.util.ArrayList;
 
-import javax.vecmath.Point3d;
-
+import org.scijava.vecmath.Point3d;
 
 import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 

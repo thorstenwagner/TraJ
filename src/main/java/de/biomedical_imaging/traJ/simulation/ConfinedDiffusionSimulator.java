@@ -24,7 +24,7 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ.simulation;
 
-import javax.vecmath.Point3d;
+import org.scijava.vecmath.Point3d;
 
 
 import de.biomedical_imaging.traJ.Trajectory;

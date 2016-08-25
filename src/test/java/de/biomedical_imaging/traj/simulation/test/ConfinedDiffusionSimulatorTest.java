@@ -2,7 +2,7 @@ package de.biomedical_imaging.traj.simulation.test;
 
 import static org.junit.Assert.*;
 
-import javax.vecmath.Point3d;
+import org.scijava.vecmath.Point3d;
 
 import org.junit.Test;
 

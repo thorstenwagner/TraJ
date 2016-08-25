@@ -2,7 +2,7 @@ package de.biomedical_imaging.traJ.simulation;
 
 import java.util.Random;
 
-import javax.vecmath.Point3d;
+import org.scijava.vecmath.Point3d;
 
 import org.apache.commons.math3.ode.sampling.StepHandler;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import javax.vecmath.Point3d;
+import org.scijava.vecmath.Point3d;
 
 import org.junit.Test;
 

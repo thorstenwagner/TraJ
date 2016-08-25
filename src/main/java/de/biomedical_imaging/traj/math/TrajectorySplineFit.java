@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.vecmath.Vector2d;
+import org.scijava.vecmath.Vector2d;
 
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;

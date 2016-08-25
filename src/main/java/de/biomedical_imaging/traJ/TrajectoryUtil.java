@@ -29,8 +29,7 @@ package de.biomedical_imaging.traJ;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.vecmath.Point3d;
-
+import org.scijava.vecmath.Point3d;
 /**
  * 
  * @author Thorsten Wagner (wagner at biomedical minus imaging dot de)

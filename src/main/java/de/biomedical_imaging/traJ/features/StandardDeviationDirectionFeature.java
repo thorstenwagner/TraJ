@@ -24,9 +24,9 @@ SOFTWARE.
 
 package de.biomedical_imaging.traJ.features;
 
-import javax.vecmath.Vector3d;
 
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
+import org.scijava.vecmath.Vector3d;
 
 import de.biomedical_imaging.traJ.Trajectory;
 import de.biomedical_imaging.traJ.TrajectoryUtil;
