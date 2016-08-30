@@ -3,7 +3,7 @@ package de.biomedical_imaging.traJ;
 import de.biomedical_imaging.traJ.features.AbstractTrajectoryFeature;
 
 public class FeatureWorker extends Thread {
-	enum EVALTYPE{
+	public enum EVALTYPE{
 		FIRST,RATIO_01,RATIO_10,RATIO_12;
 	}
 	double[] result;

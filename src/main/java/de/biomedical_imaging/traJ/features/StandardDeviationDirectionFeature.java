@@ -51,7 +51,7 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 	@Override
 	public double[] evaluate() {
 		StandardDeviation sd = new StandardDeviation();
-		double[] values = new double[t.size()-timelag];
+		double[] values = new double[t.size()-timelag-1];
 		double subx = 0;
 		double suby = 0;
 		double subz = 0;
@@ -70,18 +70,19 @@ public class StandardDeviationDirectionFeature extends AbstractTrajectoryFeature
 			Vector3d v2 = new Vector3d(t.get(i).x-subx,t.get(i).y-suby,t.get(i).z-subz);
 		
 			double v = v1.angle(v2);
+			
 			boolean v1IsZero = TrajectoryUtil.isZero(v1.x) && TrajectoryUtil.isZero(v1.y) && TrajectoryUtil.isZero(v1.z);  
 			boolean v2IsZero = TrajectoryUtil.isZero(v2.x) && TrajectoryUtil.isZero(v2.y) && TrajectoryUtil.isZero(v2.z);  
 			if(v1IsZero || v2IsZero){
 				v = 0;
 			}
-		
-			values[i-timelag] = v;
+			values[i-timelag-1] = v;
 			//System.out.println("da " + v1.angle(v2));
 		}
 	
 		sd.setData(values);
 		result = new double[]{sd.evaluate()};
+
 		return result;
 	}
 

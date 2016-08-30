@@ -28,6 +28,8 @@ import de.biomedical_imaging.traJ.Trajectory;
 /**
  * Implements the fractal path dimension according to
  * M. J. Katz and E. B. George, “Fractals and the analysis of growth paths,” Bull. Math. Biol., vol. 47, no. 2, pp. 273–286, 1985.
+ * 
+ * It takes between around 1 for directed trajectories, values around 2 and values around 3 for confined or subdiffusion.
  * @author Thorsten Wagner
  *
  */
@@ -63,9 +65,12 @@ public class FractalDimensionFeature extends AbstractTrajectoryFeature{
 				totalLength += t.get(i).distance(t.get(i-1));
 			}
 		}
+	
 		double n = t.size()-1;
 		double fractalDImension = Math.log(n)/(Math.log(n)+Math.log(largestDistance/totalLength));
 		result = new double[] {fractalDImension};
+
+	
 		return result;
 	}
 

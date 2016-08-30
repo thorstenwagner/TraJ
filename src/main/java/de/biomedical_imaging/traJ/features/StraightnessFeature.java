@@ -26,7 +26,7 @@ package de.biomedical_imaging.traJ.features;
 import de.biomedical_imaging.traJ.Trajectory;
 
 /**
- * Relates the net dispalcement to the sum of step lengths
+ * Relates the net displacement to the sum of step lengths
  * @author Thorsten Wagner
  */
 public class StraightnessFeature extends AbstractTrajectoryFeature {
