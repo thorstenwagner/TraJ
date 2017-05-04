@@ -11,13 +11,22 @@ public class MeanSpeedFeatureTest {
 
 	@Test
 	public void MeanSpeedTest() {
-		Trajectory t  = new Trajectory(2);
 		
-		t.add(0, 0, 0);
-	
+		//Create trajectory object 
+		int dimension=2;
+		Trajectory t  = new Trajectory(dimension);
+		
+		//Add Positions
+		int x = 0;
+		int y = 0;
+		int z = 0; // As the dimension is 2, it will ignore this component.
+		t.add(x, y, z);
 		for(int i = 1; i < 20; i++){
-			t.add(0,i,0);
+			y=i;
+			t.add(x,y,z);
 		}
+		
+		//Calculate the mean speed of the trajectory
 		double timelag = 1.0/30;
 		MeanSpeedFeature speed = new MeanSpeedFeature(t, timelag);
 		
